@@ -1,4 +1,6 @@
-# How to training and evaluating promtp learning methods
+# OpenPL
+This is a benchmark for prompt learning in VLM based on Dynamic Classes Changes, Dynamic Distribution Shifts and Dynamic Co-evolution of Distribution and Class Variation.
+# How to training and evaluating prompt learning methods
 
 ## Environment
 
