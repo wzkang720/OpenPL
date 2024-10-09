@@ -1,0 +1,330 @@
+***************
+** Arguments **
+***************
+backbone: 
+config_file: configs/trainers/TCP/vit_b16_c4_ep50_batch4.yaml
+dataset_config_file: configs/datasets/sun397.yaml
+eval_only: True
+head: 
+load_epoch: 50
+model_dir: output_4/base2new/train_base/sun397/shots_16_8.0/TCP/vit_b16_c4_ep50_batch4/seed2
+no_train: False
+opts: ['TRAINER.COOP.N_CTX', '4', 'TRAINER.COOP.CSC', 'False', 'TRAINER.COOP.CLASS_TOKEN_POSITION', 'end', 'DATASET.NUM_SHOTS', '16', 'DATASET.SUBSAMPLE_CLASSES', 'new_ratio3']
+output_dir: output_4_eval/base2new/test_new_ratio3/sun397/shots_16_8.0/TCP/vit_b16_c4_ep50_batch4/seed2
+resume: 
+root: /mnt/hdd/DATA
+seed: 2
+source_domains: None
+target_domains: None
+trainer: TCP
+transforms: None
+************
+** Config **
+************
+DATALOADER:
+  K_TRANSFORMS: 1
+  NUM_WORKERS: 8
+  RETURN_IMG0: False
+  TEST:
+    BATCH_SIZE: 100
+    SAMPLER: SequentialSampler
+  TRAIN_U:
+    BATCH_SIZE: 32
+    N_DOMAIN: 0
+    N_INS: 16
+    SAME_AS_X: True
+    SAMPLER: RandomSampler
+  TRAIN_X:
+    BATCH_SIZE: 4
+    N_DOMAIN: 0
+    N_INS: 16
+    SAMPLER: RandomSampler
+DATASET:
+  ALL_AS_UNLABELED: False
+  CIFAR_C_LEVEL: 1
+  CIFAR_C_TYPE: 
+  NAME: SUN397
+  NUM_LABELED: -1
+  NUM_SHOTS: 16
+  ROOT: /mnt/hdd/DATA
+  SOURCE_DOMAINS: ()
+  STL10_FOLD: -1
+  SUBSAMPLE_CLASSES: new_ratio3
+  TARGET_DOMAINS: ()
+  VAL_PERCENT: 0.1
+INPUT:
+  COLORJITTER_B: 0.4
+  COLORJITTER_C: 0.4
+  COLORJITTER_H: 0.1
+  COLORJITTER_S: 0.4
+  CROP_PADDING: 4
+  CUTOUT_LEN: 16
+  CUTOUT_N: 1
+  GB_K: 21
+  GB_P: 0.5
+  GN_MEAN: 0.0
+  GN_STD: 0.15
+  INTERPOLATION: bicubic
+  NO_TRANSFORM: False
+  PIXEL_MEAN: [0.48145466, 0.4578275, 0.40821073]
+  PIXEL_STD: [0.26862954, 0.26130258, 0.27577711]
+  RANDAUGMENT_M: 10
+  RANDAUGMENT_N: 2
+  RGS_P: 0.2
+  RRCROP_SCALE: (0.08, 1.0)
+  SIZE: (224, 224)
+  TRANSFORMS: ('random_resized_crop', 'random_flip', 'normalize')
+LOSS:
+  ALPHA: 0.0
+  GM: False
+  LAMBDA: 1.0
+  NAME: 
+  T: 1.0
+MODEL:
+  BACKBONE:
+    NAME: ViT-B/16
+    PRETRAINED: True
+  HEAD:
+    ACTIVATION: relu
+    BN: True
+    DROPOUT: 0.0
+    HIDDEN_LAYERS: ()
+    NAME: 
+  INIT_WEIGHTS: 
+OPTIM:
+  ADAM_BETA1: 0.9
+  ADAM_BETA2: 0.999
+  BASE_LR_MULT: 0.1
+  GAMMA: 0.1
+  LR: 0.002
+  LR_SCHEDULER: cosine
+  MAX_EPOCH: 50
+  MOMENTUM: 0.9
+  NAME: sgd
+  NEW_LAYERS: ()
+  RMSPROP_ALPHA: 0.99
+  SGD_DAMPNING: 0
+  SGD_NESTEROV: False
+  STAGED_LR: False
+  STEPSIZE: (-1,)
+  WARMUP_CONS_LR: 1e-05
+  WARMUP_EPOCH: 1
+  WARMUP_MIN_LR: 1e-05
+  WARMUP_RECOUNT: True
+  WARMUP_TYPE: constant
+  WEIGHT_DECAY: 0.0005
+OUTPUT_DIR: output_4_eval/base2new/test_new_ratio3/sun397/shots_16_8.0/TCP/vit_b16_c4_ep50_batch4/seed2
+RESUME: 
+SEED: 2
+TEST:
+  COMPUTE_CMAT: False
+  EVALUATOR: Classification
+  FINAL_MODEL: last_step
+  NO_TEST: False
+  PER_CLASS_RESULT: False
+  SPLIT: test
+TRAIN:
+  CHECKPOINT_FREQ: 0
+  COUNT_ITER: train_x
+  PRINT_FREQ: 20
+TRAINER:
+  CDAC:
+    CLASS_LR_MULTI: 10
+    P_THRESH: 0.95
+    RAMPUP_COEF: 30
+    RAMPUP_ITRS: 1000
+    STRONG_TRANSFORMS: ()
+    TOPK_MATCH: 5
+  COCOOP:
+    CTX_INIT: False
+    N_CTX: 16
+    PREC: fp16
+  COOP:
+    ALPHA: 1.0
+    CLASS_TOKEN_POSITION: end
+    CSC: False
+    CTX_INIT: False
+    N_CTX: 4
+    PREC: fp16
+    W: 1.0
+  CROSSGRAD:
+    ALPHA_D: 0.5
+    ALPHA_F: 0.5
+    EPS_D: 1.0
+    EPS_F: 1.0
+  DAEL:
+    CONF_THRE: 0.95
+    STRONG_TRANSFORMS: ()
+    WEIGHT_U: 0.5
+  DAELDG:
+    CONF_THRE: 0.95
+    STRONG_TRANSFORMS: ()
+    WEIGHT_U: 0.5
+  DDAIG:
+    ALPHA: 0.5
+    CLAMP: False
+    CLAMP_MAX: 1.0
+    CLAMP_MIN: -1.0
+    G_ARCH: 
+    LMDA: 0.3
+    WARMUP: 0
+  DOMAINMIX:
+    ALPHA: 1.0
+    BETA: 1.0
+    TYPE: crossdomain
+  ENTMIN:
+    LMDA: 0.001
+  FIXMATCH:
+    CONF_THRE: 0.95
+    STRONG_TRANSFORMS: ()
+    WEIGHT_U: 1.0
+  M3SDA:
+    LMDA: 0.5
+    N_STEP_F: 4
+  MCD:
+    N_STEP_F: 4
+  MEANTEACHER:
+    EMA_ALPHA: 0.999
+    RAMPUP: 5
+    WEIGHT_U: 1.0
+  MIXMATCH:
+    MIXUP_BETA: 0.75
+    RAMPUP: 20000
+    TEMP: 2.0
+    WEIGHT_U: 100.0
+  MME:
+    LMDA: 0.1
+  NAME: TCP
+  SE:
+    CONF_THRE: 0.95
+    EMA_ALPHA: 0.999
+    RAMPUP: 300
+USE_CUDA: True
+VERBOSE: True
+VERSION: 1
+Collecting env info ...
+** System info **
+PyTorch version: 2.2.2+cu121
+Is debug build: False
+CUDA used to build PyTorch: 12.1
+ROCM used to build PyTorch: N/A
+
+OS: Debian GNU/Linux 12 (bookworm) (x86_64)
+GCC version: (Debian 12.2.0-14) 12.2.0
+Clang version: Could not collect
+CMake version: Could not collect
+Libc version: glibc-2.36
+
+Python version: 3.11.2 (main, Mar 13 2023, 12:18:29) [GCC 12.2.0] (64-bit runtime)
+Python platform: Linux-6.5.13-3-pve-x86_64-with-glibc2.36
+Is CUDA available: True
+CUDA runtime version: 11.8.89
+CUDA_MODULE_LOADING set to: LAZY
+GPU models and configuration: 
+GPU 0: NVIDIA A800 80GB PCIe
+GPU 1: NVIDIA A800 80GB PCIe
+
+Nvidia driver version: 525.147.05
+cuDNN version: Could not collect
+HIP runtime version: N/A
+MIOpen runtime version: N/A
+Is XNNPACK available: True
+
+CPU:
+Architecture:                       x86_64
+CPU op-mode(s):                     32-bit, 64-bit
+Address sizes:                      46 bits physical, 57 bits virtual
+Byte Order:                         Little Endian
+CPU(s):                             64
+On-line CPU(s) list:                0-24,26-32
+Off-line CPU(s) list:               25,33-63
+Vendor ID:                          GenuineIntel
+Model name:                         Intel(R) Xeon(R) Gold 6326 CPU @ 2.90GHz
+CPU family:                         6
+Model:                              106
+Thread(s) per core:                 2
+Core(s) per socket:                 16
+Socket(s):                          2
+Stepping:                           6
+CPU(s) scaling MHz:                 96%
+CPU max MHz:                        3500.0000
+CPU min MHz:                        800.0000
+BogoMIPS:                           5800.00
+Flags:                              fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid dca sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb cat_l3 invpcid_single intel_ppin ssbd mba ibrs ibpb stibp ibrs_enhanced tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid cqm rdt_a avx512f avx512dq rdseed adx smap avx512ifma clflushopt clwb intel_pt avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local split_lock_detect wbnoinvd dtherm ida arat pln pts vnmi avx512vbmi umip pku ospke avx512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg tme avx512_vpopcntdq la57 rdpid fsrm md_clear pconfig flush_l1d arch_capabilities
+Virtualization:                     VT-x
+L1d cache:                          1.5 MiB (32 instances)
+L1i cache:                          1 MiB (32 instances)
+L2 cache:                           40 MiB (32 instances)
+L3 cache:                           48 MiB (2 instances)
+NUMA node(s):                       2
+NUMA node0 CPU(s):                  0-15,32-47
+NUMA node1 CPU(s):                  16-31,48-63
+Vulnerability Gather data sampling: Vulnerable: No microcode
+Vulnerability Itlb multihit:        Not affected
+Vulnerability L1tf:                 Not affected
+Vulnerability Mds:                  Not affected
+Vulnerability Meltdown:             Not affected
+Vulnerability Mmio stale data:      Mitigation; Clear CPU buffers; SMT vulnerable
+Vulnerability Retbleed:             Not affected
+Vulnerability Spec rstack overflow: Not affected
+Vulnerability Spec store bypass:    Mitigation; Speculative Store Bypass disabled via prctl
+Vulnerability Spectre v1:           Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:           Mitigation; Enhanced / Automatic IBRS, IBPB conditional, RSB filling, PBRSB-eIBRS SW sequence
+Vulnerability Srbds:                Not affected
+Vulnerability Tsx async abort:      Not affected
+
+Versions of relevant libraries:
+[pip3] flake8==3.7.9
+[pip3] numpy==1.26.4
+[pip3] torch==2.2.2
+[pip3] torchaudio==2.2.2
+[pip3] torchvision==0.17.2
+[pip3] triton==2.2.0
+[conda] Could not collect
+        Pillow (10.3.0)
+
+Loading trainer: TCP
+Loading dataset: SUN397
+Reading split from /mnt/hdd/DATA/sun397/split_zhou_SUN397.json
+Loading preprocessed few-shot data from /mnt/hdd/DATA/sun397/split_fewshot/shot_16_shuffled-seed_2.pkl
+SUBSAMPLE NEW_RATIO3 CLASSES!
+Building transform_train
++ random resized crop (size=(224, 224), scale=(0.08, 1.0))
++ random flip
++ to torch tensor of range [0, 1]
++ normalization (mean=[0.48145466, 0.4578275, 0.40821073], std=[0.26862954, 0.26130258, 0.27577711])
+Building transform_test
++ resize the smaller edge to 224
++ 224x224 center crop
++ to torch tensor of range [0, 1]
++ normalization (mean=[0.48145466, 0.4578275, 0.40821073], std=[0.26862954, 0.26130258, 0.27577711])
+---------  ------
+Dataset    SUN397
+# classes  199
+# train_x  3,184
+# val      796
+# test     9,950
+---------  ------
+['drugstore', 'clothing_store', 'lecture_room', 'indoor badminton_court', 'kitchen', 'residential_neighborhood', 'outdoor oil_refinery', 'fire_escape', 'indoor market', 'corral', 'outdoor cathedral', 'plunge waterfall', 'indoor cathedral', 'outdoor podium', 'classroom', 'restaurant', 'indoor movie_theater', 'outdoor basketball_court', 'football stadium', 'bookstore', 'galley', 'motel', 'baseball stadium', 'discotheque', 'game_room', 'outdoor tent', 'mountain_snowy', 'pagoda', 'street', 'utility_room', 'indoor jail', 'vegetable_garden', 'attic', 'outdoor synagogue', 'exterior balcony', 'indoor florist_shop', 'playground', 'trench', 'aquarium', 'forest_path', 'racecourse', 'hayfield', 'indoor booth', 'topiary_garden', 'barn', 'sea_cliff', 'supermarket', 'outdoor parking_garage', 'tower', 'outdoor kennel', 'driveway', 'indoor cloister', 'landfill', 'engine_room', 'outdoor hotel', 'viaduct', 'dam', 'picnic_area', 'ice_shelf', 'martial_arts_gym', 'indoor_procenium theater', 'valley', 'phone_booth', 'locker_room', 'door elevator', 'indoor firing_range', 'basilica', 'marsh', 'indoor stage', 'barndoor', 'television_studio', 'physics_laboratory', 'boxing_ring', 'basement', 'cheese_factory', 'anechoic_chamber', 'excavation', 'orchard', 'indoor pub', 'outdoor planetarium', 'clean_room', 'bedroom', 'outdoor outhouse', 'sandbar', 'delicatessen', 'industrial_area', 'railroad_track', 'tree_house', 'ski_slope', 'dock', 'boathouse', 'dining_car', 'coast', 'bathroom', 'outdoor apartment_building', 'outdoor doorway', 'manufactured_home', 'water_tower', 'boat_deck', 'village', 'pantry', 'thriftshop', 'music_studio', 'tree_farm', 'indoor factory', 'outdoor mosque', 'backseat car_interior', 'indoor chicken_coop', 'outdoor bazaar', 'schoolhouse', 'indoor_seats theater', 'chemistry_lab', 'operating_room', 'house', 'watering_hole', 'outdoor power_plant', 'needleleaf forest', 'jewelry_shop', 'runway', 'dining_room', 'carrousel', 'creek', 'childs_room', 'bamboo_forest', 'indoor gymnasium', 'broadleaf forest', 'recreation_room', 'bayou', 'outdoor diner', 'hill', 'outdoor tennis_court', 'indoor cavern', 'outdoor arrival_gate', 'home_office', 'igloo', 'rice_paddy', 'assembly_line', 'crosswalk', 'stable', 'kitchenette', 'outdoor hunting_lodge', 'ocean', 'coffee_shop', 'dentists_office', 'alley', 'art_studio', 'wild field', 'fan waterfall', 'indoor swimming_pool', 'courtroom', 'lobby', 'rock_arch', 'control_room', 'auditorium', 'urban canal', 'fountain', 'biology_laboratory', 'closet', 'promenade_deck', 'veranda', 'home dinette', 'skyscraper', 'river', 'exterior covered_bridge', 'ruin', 'pasture', 'berth', 'music_store', 'restaurant_kitchen', 'candy_store', 'formal_garden', 'vineyard', 'outdoor labyrinth', 'van_interior', 'indoor apse', 'train_railway', 'home poolroom', 'reception', 'butchers_shop', 'jail_cell', 'outdoor observatory', 'outdoor track', 'indoor tennis_court', 'frontseat car_interior', 'raft', 'pharmacy', 'squash_court', 'kindergarden_classroom', 'gas_station', 'nursery', 'outdoor lido_deck', 'iceberg', 'lift_bridge', 'indoor jacuzzi', 'gift_shop', 'indoor shopping_mall', 'arch', 'chalet', 'outdoor control_tower']
+Loading CLIP (backbone: ViT-B/16)
+Building custom CLIP
+Initializing a generic context
+Initial context: "X X X X"
+Number of context words (tokens): 4
+['X X X X drugstore.', 'X X X X clothing store.', 'X X X X lecture room.', 'X X X X indoor badminton court.', 'X X X X kitchen.', 'X X X X residential neighborhood.', 'X X X X outdoor oil refinery.', 'X X X X fire escape.', 'X X X X indoor market.', 'X X X X corral.', 'X X X X outdoor cathedral.', 'X X X X plunge waterfall.', 'X X X X indoor cathedral.', 'X X X X outdoor podium.', 'X X X X classroom.', 'X X X X restaurant.', 'X X X X indoor movie theater.', 'X X X X outdoor basketball court.', 'X X X X football stadium.', 'X X X X bookstore.', 'X X X X galley.', 'X X X X motel.', 'X X X X baseball stadium.', 'X X X X discotheque.', 'X X X X game room.', 'X X X X outdoor tent.', 'X X X X mountain snowy.', 'X X X X pagoda.', 'X X X X street.', 'X X X X utility room.', 'X X X X indoor jail.', 'X X X X vegetable garden.', 'X X X X attic.', 'X X X X outdoor synagogue.', 'X X X X exterior balcony.', 'X X X X indoor florist shop.', 'X X X X playground.', 'X X X X trench.', 'X X X X aquarium.', 'X X X X forest path.', 'X X X X racecourse.', 'X X X X hayfield.', 'X X X X indoor booth.', 'X X X X topiary garden.', 'X X X X barn.', 'X X X X sea cliff.', 'X X X X supermarket.', 'X X X X outdoor parking garage.', 'X X X X tower.', 'X X X X outdoor kennel.', 'X X X X driveway.', 'X X X X indoor cloister.', 'X X X X landfill.', 'X X X X engine room.', 'X X X X outdoor hotel.', 'X X X X viaduct.', 'X X X X dam.', 'X X X X picnic area.', 'X X X X ice shelf.', 'X X X X martial arts gym.', 'X X X X indoor procenium theater.', 'X X X X valley.', 'X X X X phone booth.', 'X X X X locker room.', 'X X X X door elevator.', 'X X X X indoor firing range.', 'X X X X basilica.', 'X X X X marsh.', 'X X X X indoor stage.', 'X X X X barndoor.', 'X X X X television studio.', 'X X X X physics laboratory.', 'X X X X boxing ring.', 'X X X X basement.', 'X X X X cheese factory.', 'X X X X anechoic chamber.', 'X X X X excavation.', 'X X X X orchard.', 'X X X X indoor pub.', 'X X X X outdoor planetarium.', 'X X X X clean room.', 'X X X X bedroom.', 'X X X X outdoor outhouse.', 'X X X X sandbar.', 'X X X X delicatessen.', 'X X X X industrial area.', 'X X X X railroad track.', 'X X X X tree house.', 'X X X X ski slope.', 'X X X X dock.', 'X X X X boathouse.', 'X X X X dining car.', 'X X X X coast.', 'X X X X bathroom.', 'X X X X outdoor apartment building.', 'X X X X outdoor doorway.', 'X X X X manufactured home.', 'X X X X water tower.', 'X X X X boat deck.', 'X X X X village.', 'X X X X pantry.', 'X X X X thriftshop.', 'X X X X music studio.', 'X X X X tree farm.', 'X X X X indoor factory.', 'X X X X outdoor mosque.', 'X X X X backseat car interior.', 'X X X X indoor chicken coop.', 'X X X X outdoor bazaar.', 'X X X X schoolhouse.', 'X X X X indoor seats theater.', 'X X X X chemistry lab.', 'X X X X operating room.', 'X X X X house.', 'X X X X watering hole.', 'X X X X outdoor power plant.', 'X X X X needleleaf forest.', 'X X X X jewelry shop.', 'X X X X runway.', 'X X X X dining room.', 'X X X X carrousel.', 'X X X X creek.', 'X X X X childs room.', 'X X X X bamboo forest.', 'X X X X indoor gymnasium.', 'X X X X broadleaf forest.', 'X X X X recreation room.', 'X X X X bayou.', 'X X X X outdoor diner.', 'X X X X hill.', 'X X X X outdoor tennis court.', 'X X X X indoor cavern.', 'X X X X outdoor arrival gate.', 'X X X X home office.', 'X X X X igloo.', 'X X X X rice paddy.', 'X X X X assembly line.', 'X X X X crosswalk.', 'X X X X stable.', 'X X X X kitchenette.', 'X X X X outdoor hunting lodge.', 'X X X X ocean.', 'X X X X coffee shop.', 'X X X X dentists office.', 'X X X X alley.', 'X X X X art studio.', 'X X X X wild field.', 'X X X X fan waterfall.', 'X X X X indoor swimming pool.', 'X X X X courtroom.', 'X X X X lobby.', 'X X X X rock arch.', 'X X X X control room.', 'X X X X auditorium.', 'X X X X urban canal.', 'X X X X fountain.', 'X X X X biology laboratory.', 'X X X X closet.', 'X X X X promenade deck.', 'X X X X veranda.', 'X X X X home dinette.', 'X X X X skyscraper.', 'X X X X river.', 'X X X X exterior covered bridge.', 'X X X X ruin.', 'X X X X pasture.', 'X X X X berth.', 'X X X X music store.', 'X X X X restaurant kitchen.', 'X X X X candy store.', 'X X X X formal garden.', 'X X X X vineyard.', 'X X X X outdoor labyrinth.', 'X X X X van interior.', 'X X X X indoor apse.', 'X X X X train railway.', 'X X X X home poolroom.', 'X X X X reception.', 'X X X X butchers shop.', 'X X X X jail cell.', 'X X X X outdoor observatory.', 'X X X X outdoor track.', 'X X X X indoor tennis court.', 'X X X X frontseat car interior.', 'X X X X raft.', 'X X X X pharmacy.', 'X X X X squash court.', 'X X X X kindergarden classroom.', 'X X X X gas station.', 'X X X X nursery.', 'X X X X outdoor lido deck.', 'X X X X iceberg.', 'X X X X lift bridge.', 'X X X X indoor jacuzzi.', 'X X X X gift shop.', 'X X X X indoor shopping mall.', 'X X X X arch.', 'X X X X chalet.', 'X X X X outdoor control tower.']
+Turning off gradients in both the image and the text encoder
+prompt_learner.ctx
+prompt_learner.meta_net.linear1.weight
+prompt_learner.meta_net.linear1.bias
+prompt_learner.meta_net.linear2.weight
+prompt_learner.meta_net.linear2.bias
+Loading evaluator: Classification
+['prompt_learner']
+Loading weights to prompt_learner from "output_4/base2new/train_base/sun397/shots_16_8.0/TCP/vit_b16_c4_ep50_batch4/seed2/prompt_learner/model.pth.tar-50" (epoch = 50)
+Evaluate on the *test* set
+=> result
+* total: 9,950
+* correct: 7,576
+* accuracy: 76.14%
+* error: 23.86%
+* macro_f1: 75.34%

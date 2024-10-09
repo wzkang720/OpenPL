@@ -1,0 +1,812 @@
+***************
+** Arguments **
+***************
+backbone: 
+config_file: configs/trainers/ProGrad/vit_b16_ep50_batch4_c4.yaml
+dataset_config_file: configs/datasets/food101.yaml
+eval_only: False
+head: 
+load_epoch: None
+model_dir: 
+no_train: False
+opts: ['LOSS.LAMBDA', '0.8', 'TRAINER.COOP.N_CTX', '4', 'TRAINER.COOP.CSC', 'False', 'TRAINER.COOP.CLASS_TOKEN_POSITION', 'end', 'DATASET.NUM_SHOTS', '16', 'DATASET.SUBSAMPLE_CLASSES', 'base']
+output_dir: output/base2new/train_base/food101/shots_16/ProGrad/vit_b16_ep50_batch4_c4/seed1
+resume: 
+root: /mnt/hdd/DATA
+seed: 1
+source_domains: None
+target_domains: None
+trainer: ProGrad
+transforms: None
+************
+** Config **
+************
+DATALOADER:
+  K_TRANSFORMS: 1
+  NUM_WORKERS: 8
+  RETURN_IMG0: False
+  TEST:
+    BATCH_SIZE: 100
+    SAMPLER: SequentialSampler
+  TRAIN_U:
+    BATCH_SIZE: 32
+    N_DOMAIN: 0
+    N_INS: 16
+    SAME_AS_X: True
+    SAMPLER: RandomSampler
+  TRAIN_X:
+    BATCH_SIZE: 4
+    N_DOMAIN: 0
+    N_INS: 16
+    SAMPLER: RandomSampler
+DATASET:
+  ALL_AS_UNLABELED: False
+  CIFAR_C_LEVEL: 1
+  CIFAR_C_TYPE: 
+  NAME: Food101
+  NUM_LABELED: -1
+  NUM_SHOTS: 16
+  ROOT: /mnt/hdd/DATA
+  SOURCE_DOMAINS: ()
+  STL10_FOLD: -1
+  SUBSAMPLE_CLASSES: base
+  TARGET_DOMAINS: ()
+  VAL_PERCENT: 0.1
+INPUT:
+  COLORJITTER_B: 0.4
+  COLORJITTER_C: 0.4
+  COLORJITTER_H: 0.1
+  COLORJITTER_S: 0.4
+  CROP_PADDING: 4
+  CUTOUT_LEN: 16
+  CUTOUT_N: 1
+  GB_K: 21
+  GB_P: 0.5
+  GN_MEAN: 0.0
+  GN_STD: 0.15
+  INTERPOLATION: bicubic
+  NO_TRANSFORM: False
+  PIXEL_MEAN: [0.48145466, 0.4578275, 0.40821073]
+  PIXEL_STD: [0.26862954, 0.26130258, 0.27577711]
+  RANDAUGMENT_M: 10
+  RANDAUGMENT_N: 2
+  RGS_P: 0.2
+  SIZE: (224, 224)
+  TRANSFORMS: ('random_resized_crop', 'random_flip', 'normalize')
+LOSS:
+  ALPHA: 0.0
+  GM: False
+  LAMBDA: 0.8
+  NAME: prograd
+  T: 1.0
+MODEL:
+  BACKBONE:
+    NAME: ViT-B/16
+    PRETRAINED: True
+  HEAD:
+    ACTIVATION: relu
+    BN: True
+    DROPOUT: 0.0
+    HIDDEN_LAYERS: ()
+    NAME: 
+  INIT_WEIGHTS: 
+OPTIM:
+  ADAM_BETA1: 0.9
+  ADAM_BETA2: 0.999
+  BASE_LR_MULT: 0.1
+  GAMMA: 0.1
+  LR: 0.002
+  LR_SCHEDULER: cosine
+  MAX_EPOCH: 50
+  MOMENTUM: 0.9
+  NAME: sgd
+  NEW_LAYERS: ()
+  RMSPROP_ALPHA: 0.99
+  SGD_DAMPNING: 0
+  SGD_NESTEROV: False
+  STAGED_LR: False
+  STEPSIZE: (-1,)
+  WARMUP_CONS_LR: 1e-05
+  WARMUP_EPOCH: 1
+  WARMUP_MIN_LR: 1e-05
+  WARMUP_RECOUNT: True
+  WARMUP_TYPE: constant
+  WEIGHT_DECAY: 0.0005
+OUTPUT_DIR: output/base2new/train_base/food101/shots_16/ProGrad/vit_b16_ep50_batch4_c4/seed1
+RESUME: 
+SEED: 1
+TEST:
+  COMPUTE_CMAT: False
+  EVALUATOR: Classification
+  FINAL_MODEL: last_step
+  NO_TEST: False
+  PER_CLASS_RESULT: False
+  SPLIT: test
+TRAIN:
+  CHECKPOINT_FREQ: 0
+  COUNT_ITER: train_x
+  PRINT_FREQ: 20
+TRAINER:
+  CG:
+    ALPHA_D: 0.5
+    ALPHA_F: 0.5
+    EPS_D: 1.0
+    EPS_F: 1.0
+  COCOOP:
+    CTX_INIT: False
+    N_CTX: 16
+    PREC: fp16
+  COOP:
+    ALPHA: 1.0
+    CLASS_TOKEN_POSITION: end
+    CSC: False
+    CTX_INIT: False
+    N_CTX: 4
+    PREC: fp16
+  DAEL:
+    CONF_THRE: 0.95
+    STRONG_TRANSFORMS: ()
+    WEIGHT_U: 0.5
+  DDAIG:
+    ALPHA: 0.5
+    CLAMP: False
+    CLAMP_MAX: 1.0
+    CLAMP_MIN: -1.0
+    G_ARCH: 
+    LMDA: 0.3
+    WARMUP: 0
+  ENTMIN:
+    LMDA: 0.001
+  FIXMATCH:
+    CONF_THRE: 0.95
+    STRONG_TRANSFORMS: ()
+    WEIGHT_U: 1.0
+  M3SDA:
+    LMDA: 0.5
+    N_STEP_F: 4
+  MCD:
+    N_STEP_F: 4
+  MEANTEA:
+    EMA_ALPHA: 0.999
+    RAMPUP: 5
+    WEIGHT_U: 1.0
+  MIXMATCH:
+    MIXUP_BETA: 0.75
+    RAMPUP: 20000
+    TEMP: 2.0
+    WEIGHT_U: 100.0
+  MME:
+    LMDA: 0.1
+  NAME: ProGrad
+  SE:
+    CONF_THRE: 0.95
+    EMA_ALPHA: 0.999
+    RAMPUP: 300
+USE_CUDA: True
+VERBOSE: True
+VERSION: 1
+Collecting env info ...
+** System info **
+PyTorch version: 2.2.2+cu121
+Is debug build: False
+CUDA used to build PyTorch: 12.1
+ROCM used to build PyTorch: N/A
+
+OS: Debian GNU/Linux 12 (bookworm) (x86_64)
+GCC version: (Debian 12.2.0-14) 12.2.0
+Clang version: Could not collect
+CMake version: Could not collect
+Libc version: glibc-2.36
+
+Python version: 3.11.2 (main, Mar 13 2023, 12:18:29) [GCC 12.2.0] (64-bit runtime)
+Python platform: Linux-6.5.13-3-pve-x86_64-with-glibc2.36
+Is CUDA available: True
+CUDA runtime version: 11.8.89
+CUDA_MODULE_LOADING set to: LAZY
+GPU models and configuration: 
+GPU 0: NVIDIA A800 80GB PCIe
+GPU 1: NVIDIA A800 80GB PCIe
+
+Nvidia driver version: 525.147.05
+cuDNN version: Could not collect
+HIP runtime version: N/A
+MIOpen runtime version: N/A
+Is XNNPACK available: True
+
+CPU:
+Architecture:                       x86_64
+CPU op-mode(s):                     32-bit, 64-bit
+Address sizes:                      46 bits physical, 57 bits virtual
+Byte Order:                         Little Endian
+CPU(s):                             64
+On-line CPU(s) list:                18,20,22,23,25-27,29,31,32,34,37,46-49
+Off-line CPU(s) list:               0-17,19,21,24,28,30,33,35,36,38-45,50-63
+Vendor ID:                          GenuineIntel
+Model name:                         Intel(R) Xeon(R) Gold 6326 CPU @ 2.90GHz
+CPU family:                         6
+Model:                              106
+Thread(s) per core:                 2
+Core(s) per socket:                 16
+Socket(s):                          2
+Stepping:                           6
+CPU(s) scaling MHz:                 97%
+CPU max MHz:                        3500.0000
+CPU min MHz:                        800.0000
+BogoMIPS:                           5800.00
+Flags:                              fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid dca sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb cat_l3 invpcid_single intel_ppin ssbd mba ibrs ibpb stibp ibrs_enhanced tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid cqm rdt_a avx512f avx512dq rdseed adx smap avx512ifma clflushopt clwb intel_pt avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local split_lock_detect wbnoinvd dtherm ida arat pln pts vnmi avx512vbmi umip pku ospke avx512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg tme avx512_vpopcntdq la57 rdpid fsrm md_clear pconfig flush_l1d arch_capabilities
+Virtualization:                     VT-x
+L1d cache:                          1.5 MiB (32 instances)
+L1i cache:                          1 MiB (32 instances)
+L2 cache:                           40 MiB (32 instances)
+L3 cache:                           48 MiB (2 instances)
+NUMA node(s):                       2
+NUMA node0 CPU(s):                  0-15,32-47
+NUMA node1 CPU(s):                  16-31,48-63
+Vulnerability Gather data sampling: Vulnerable: No microcode
+Vulnerability Itlb multihit:        Not affected
+Vulnerability L1tf:                 Not affected
+Vulnerability Mds:                  Not affected
+Vulnerability Meltdown:             Not affected
+Vulnerability Mmio stale data:      Mitigation; Clear CPU buffers; SMT vulnerable
+Vulnerability Retbleed:             Not affected
+Vulnerability Spec rstack overflow: Not affected
+Vulnerability Spec store bypass:    Mitigation; Speculative Store Bypass disabled via prctl
+Vulnerability Spectre v1:           Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:           Mitigation; Enhanced / Automatic IBRS, IBPB conditional, RSB filling, PBRSB-eIBRS SW sequence
+Vulnerability Srbds:                Not affected
+Vulnerability Tsx async abort:      Not affected
+
+Versions of relevant libraries:
+[pip3] flake8==3.7.9
+[pip3] numpy==1.26.4
+[pip3] torch==2.2.2
+[pip3] torchaudio==2.2.2
+[pip3] torchvision==0.17.2
+[pip3] triton==2.2.0
+[conda] Could not collect
+        Pillow (10.3.0)
+
+Loading trainer: ProGrad
+Loading dataset: Food101
+Reading split from /mnt/hdd/DATA/food-101/split_zhou_Food101.json
+Loading preprocessed few-shot data from /mnt/hdd/DATA/food-101/split_fewshot/shot_16_shuffled-seed_1.pkl
+SUBSAMPLE BASE CLASSES!
+Building transform_train
++ random resized crop (size=(224, 224))
++ random flip
++ to torch tensor of range [0, 1]
++ normalization (mean=[0.48145466, 0.4578275, 0.40821073], std=[0.26862954, 0.26130258, 0.27577711])
+Building transform_test
++ resize the smaller edge to 224
++ 224x224 center crop
++ to torch tensor of range [0, 1]
++ normalization (mean=[0.48145466, 0.4578275, 0.40821073], std=[0.26862954, 0.26130258, 0.27577711])
+***** Dataset statistics *****
+  Dataset: Food101
+  # classes: 51
+  # train_x: 816
+  # val: 204
+  # test: 15,300
+Loading CLIP (backbone: ViT-B/16)
+Building zeroshot CLIP
+Loading CLIP (backbone: ViT-B/16)
+Prompts: ['a type of food, a photo of sashimi.', 'a type of food, a photo of pancakes.', 'a type of food, a photo of spaghetti carbonara.', 'a type of food, a photo of chocolate cake.', 'a type of food, a photo of takoyaki.', 'a type of food, a photo of tacos.', 'a type of food, a photo of filet mignon.', 'a type of food, a photo of ice cream.', 'a type of food, a photo of gyoza.', 'a type of food, a photo of beet salad.', 'a type of food, a photo of samosa.', 'a type of food, a photo of waffles.', 'a type of food, a photo of falafel.', 'a type of food, a photo of spaghetti bolognese.', 'a type of food, a photo of frozen yogurt.', 'a type of food, a photo of caesar salad.', 'a type of food, a photo of pad thai.', 'a type of food, a photo of beef tartare.', 'a type of food, a photo of greek salad.', 'a type of food, a photo of strawberry shortcake.', 'a type of food, a photo of donuts.', 'a type of food, a photo of french onion soup.', 'a type of food, a photo of chicken wings.', 'a type of food, a photo of crab cakes.', 'a type of food, a photo of ceviche.', 'a type of food, a photo of panna cotta.', 'a type of food, a photo of fried rice.', 'a type of food, a photo of tiramisu.', 'a type of food, a photo of pork chop.', 'a type of food, a photo of cannoli.', 'a type of food, a photo of ravioli.', 'a type of food, a photo of churros.', 'a type of food, a photo of grilled cheese sandwich.', 'a type of food, a photo of ramen.', 'a type of food, a photo of nachos.', 'a type of food, a photo of baby back ribs.', 'a type of food, a photo of cup cakes.', 'a type of food, a photo of beignets.', 'a type of food, a photo of steak.', 'a type of food, a photo of macaroni and cheese.', 'a type of food, a photo of pulled pork sandwich.', 'a type of food, a photo of macarons.', 'a type of food, a photo of seaweed salad.', 'a type of food, a photo of apple pie.', 'a type of food, a photo of red velvet cake.', 'a type of food, a photo of french fries.', 'a type of food, a photo of fried calamari.', 'a type of food, a photo of pho.', 'a type of food, a photo of tuna tartare.', 'a type of food, a photo of cheesecake.', 'a type of food, a photo of lasagna.']
+Building custom CLIP
+Initializing a generic context
+Initial context: "X X X X"
+Number of context words (tokens): 4
+Turning off gradients in ZS Clip model
+Turning off gradients in CoOp model
+Loading evaluator: Classification
+No checkpoint found, train from scratch
+Initializing summary writer for tensorboard with log_dir=output/base2new/train_base/food101/shots_16/ProGrad/vit_b16_ep50_batch4_c4/seed1/tensorboard
+epoch [1/50][20/204]	time 0.109 (0.514)	data 0.000 (0.037)	eta 1:27:10	xe_loss 0.9771 (1.0099)	kl_loss 0.9960 (1.0131)	acc 50.0000 (70.0000)	lr 1.000000e-05
+epoch [1/50][40/204]	time 0.158 (0.318)	data 0.000 (0.019)	eta 0:53:51	xe_loss 0.1387 (0.7200)	kl_loss 0.6029 (0.8420)	acc 100.0000 (79.3750)	lr 1.000000e-05
+epoch [1/50][60/204]	time 0.163 (0.265)	data 0.000 (0.013)	eta 0:44:48	xe_loss 2.3438 (0.7421)	kl_loss 0.8397 (0.8582)	acc 75.0000 (77.5000)	lr 1.000000e-05
+epoch [1/50][80/204]	time 0.083 (0.227)	data 0.000 (0.010)	eta 0:38:20	xe_loss 2.6406 (0.7574)	kl_loss 0.8276 (0.8480)	acc 50.0000 (76.5625)	lr 1.000000e-05
+epoch [1/50][100/204]	time 0.121 (0.205)	data 0.000 (0.008)	eta 0:34:29	xe_loss 1.8525 (0.7390)	kl_loss 0.6731 (0.8266)	acc 50.0000 (77.2500)	lr 1.000000e-05
+epoch [1/50][120/204]	time 0.117 (0.191)	data 0.000 (0.007)	eta 0:32:02	xe_loss 0.0314 (0.7407)	kl_loss 0.0939 (0.8342)	acc 100.0000 (77.0833)	lr 1.000000e-05
+epoch [1/50][140/204]	time 0.124 (0.184)	data 0.000 (0.006)	eta 0:30:47	xe_loss 0.1688 (0.7028)	kl_loss 0.3887 (0.8160)	acc 100.0000 (78.3929)	lr 1.000000e-05
+epoch [1/50][160/204]	time 0.121 (0.176)	data 0.000 (0.005)	eta 0:29:25	xe_loss 0.7373 (0.6944)	kl_loss 1.1073 (0.8031)	acc 50.0000 (78.4375)	lr 1.000000e-05
+epoch [1/50][180/204]	time 0.124 (0.169)	data 0.000 (0.005)	eta 0:28:17	xe_loss 1.0410 (0.6752)	kl_loss 1.0618 (0.7929)	acc 50.0000 (78.3333)	lr 1.000000e-05
+epoch [1/50][200/204]	time 0.115 (0.164)	data 0.000 (0.004)	eta 0:27:23	xe_loss 0.4084 (0.6863)	kl_loss 0.3985 (0.7847)	acc 75.0000 (78.1250)	lr 1.000000e-05
+epoch [2/50][20/204]	time 0.116 (0.144)	data 0.000 (0.027)	eta 0:23:55	xe_loss 0.6118 (0.4043)	kl_loss 1.0802 (0.6517)	acc 50.0000 (87.5000)	lr 2.000000e-03
+epoch [2/50][40/204]	time 0.106 (0.130)	data 0.000 (0.014)	eta 0:21:38	xe_loss 0.2208 (0.4633)	kl_loss 0.4925 (0.7582)	acc 100.0000 (86.8750)	lr 2.000000e-03
+epoch [2/50][60/204]	time 0.121 (0.127)	data 0.000 (0.009)	eta 0:21:01	xe_loss 0.1433 (0.4526)	kl_loss 0.3883 (0.7343)	acc 100.0000 (87.0833)	lr 2.000000e-03
+epoch [2/50][80/204]	time 0.132 (0.126)	data 0.000 (0.007)	eta 0:20:53	xe_loss 0.0753 (0.5015)	kl_loss 0.3783 (0.7410)	acc 100.0000 (84.6875)	lr 2.000000e-03
+epoch [2/50][100/204]	time 0.102 (0.126)	data 0.003 (0.006)	eta 0:20:42	xe_loss 0.0715 (0.4984)	kl_loss 0.3279 (0.7140)	acc 100.0000 (84.5000)	lr 2.000000e-03
+epoch [2/50][120/204]	time 0.120 (0.125)	data 0.000 (0.005)	eta 0:20:31	xe_loss 0.0323 (0.4978)	kl_loss 0.3638 (0.6970)	acc 100.0000 (84.5833)	lr 2.000000e-03
+epoch [2/50][140/204]	time 0.125 (0.124)	data 0.000 (0.004)	eta 0:20:26	xe_loss 0.0737 (0.5021)	kl_loss 0.3520 (0.6908)	acc 100.0000 (84.6429)	lr 2.000000e-03
+epoch [2/50][160/204]	time 0.127 (0.124)	data 0.000 (0.004)	eta 0:20:21	xe_loss 1.3467 (0.5153)	kl_loss 0.8050 (0.6851)	acc 75.0000 (84.3750)	lr 2.000000e-03
+epoch [2/50][180/204]	time 0.125 (0.126)	data 0.000 (0.004)	eta 0:20:38	xe_loss 0.1479 (0.5593)	kl_loss 0.9940 (0.7112)	acc 100.0000 (83.6111)	lr 2.000000e-03
+epoch [2/50][200/204]	time 0.113 (0.126)	data 0.000 (0.003)	eta 0:20:31	xe_loss 0.0729 (0.5553)	kl_loss 0.9227 (0.7006)	acc 100.0000 (83.7500)	lr 2.000000e-03
+epoch [3/50][20/204]	time 0.114 (0.146)	data 0.000 (0.028)	eta 0:23:44	xe_loss 0.2271 (0.5516)	kl_loss 0.7455 (0.7202)	acc 100.0000 (82.5000)	lr 1.998027e-03
+epoch [3/50][40/204]	time 0.056 (0.111)	data 0.000 (0.014)	eta 0:18:05	xe_loss 0.2278 (0.5974)	kl_loss 0.5609 (0.7346)	acc 75.0000 (80.6250)	lr 1.998027e-03
+epoch [3/50][60/204]	time 0.114 (0.107)	data 0.000 (0.009)	eta 0:17:21	xe_loss 0.1763 (0.5231)	kl_loss 0.4522 (0.6742)	acc 100.0000 (84.1667)	lr 1.998027e-03
+epoch [3/50][80/204]	time 0.108 (0.109)	data 0.000 (0.007)	eta 0:17:38	xe_loss 0.8374 (0.5371)	kl_loss 1.0523 (0.6746)	acc 75.0000 (83.4375)	lr 1.998027e-03
+epoch [3/50][100/204]	time 0.116 (0.111)	data 0.000 (0.006)	eta 0:17:52	xe_loss 1.9746 (0.5954)	kl_loss 1.9548 (0.7028)	acc 50.0000 (82.7500)	lr 1.998027e-03
+epoch [3/50][120/204]	time 0.107 (0.112)	data 0.000 (0.005)	eta 0:18:02	xe_loss 0.7622 (0.6083)	kl_loss 0.3929 (0.6840)	acc 75.0000 (82.9167)	lr 1.998027e-03
+epoch [3/50][140/204]	time 0.124 (0.113)	data 0.000 (0.004)	eta 0:18:09	xe_loss 0.0973 (0.6239)	kl_loss 0.3909 (0.6901)	acc 100.0000 (81.9643)	lr 1.998027e-03
+epoch [3/50][160/204]	time 0.115 (0.114)	data 0.000 (0.004)	eta 0:18:15	xe_loss 0.6909 (0.5939)	kl_loss 0.8354 (0.6839)	acc 75.0000 (82.8125)	lr 1.998027e-03
+epoch [3/50][180/204]	time 0.116 (0.114)	data 0.000 (0.004)	eta 0:18:18	xe_loss 0.7300 (0.5980)	kl_loss 0.9530 (0.7005)	acc 75.0000 (82.7778)	lr 1.998027e-03
+epoch [3/50][200/204]	time 0.171 (0.117)	data 0.000 (0.003)	eta 0:18:42	xe_loss 0.2341 (0.5814)	kl_loss 0.6839 (0.6947)	acc 100.0000 (83.2500)	lr 1.998027e-03
+epoch [4/50][20/204]	time 0.163 (0.187)	data 0.000 (0.023)	eta 0:29:51	xe_loss 0.9487 (0.5311)	kl_loss 0.9800 (0.8226)	acc 75.0000 (83.7500)	lr 1.992115e-03
+epoch [4/50][40/204]	time 0.166 (0.176)	data 0.000 (0.012)	eta 0:27:58	xe_loss 0.2520 (0.5243)	kl_loss 0.6626 (0.8012)	acc 100.0000 (84.3750)	lr 1.992115e-03
+epoch [4/50][60/204]	time 0.163 (0.171)	data 0.000 (0.008)	eta 0:27:12	xe_loss 0.6338 (0.4882)	kl_loss 1.7011 (0.7490)	acc 100.0000 (85.4167)	lr 1.992115e-03
+epoch [4/50][80/204]	time 0.163 (0.169)	data 0.000 (0.006)	eta 0:26:44	xe_loss 0.2247 (0.5397)	kl_loss 1.1634 (0.7793)	acc 100.0000 (84.6875)	lr 1.992115e-03
+epoch [4/50][100/204]	time 0.114 (0.165)	data 0.000 (0.005)	eta 0:26:07	xe_loss 0.5850 (0.5309)	kl_loss 1.0030 (0.7535)	acc 75.0000 (83.7500)	lr 1.992115e-03
+epoch [4/50][120/204]	time 0.113 (0.157)	data 0.000 (0.004)	eta 0:24:50	xe_loss 0.5884 (0.5586)	kl_loss 0.5840 (0.7519)	acc 75.0000 (82.9167)	lr 1.992115e-03
+epoch [4/50][140/204]	time 0.162 (0.158)	data 0.000 (0.003)	eta 0:24:48	xe_loss 0.0125 (0.5390)	kl_loss 0.2085 (0.7370)	acc 100.0000 (83.5714)	lr 1.992115e-03
+epoch [4/50][160/204]	time 0.157 (0.158)	data 0.000 (0.003)	eta 0:24:49	xe_loss 0.4321 (0.5536)	kl_loss 0.9979 (0.7345)	acc 100.0000 (83.7500)	lr 1.992115e-03
+epoch [4/50][180/204]	time 0.171 (0.159)	data 0.000 (0.003)	eta 0:24:53	xe_loss 0.1483 (0.5590)	kl_loss 0.3307 (0.7323)	acc 100.0000 (84.0278)	lr 1.992115e-03
+epoch [4/50][200/204]	time 0.163 (0.159)	data 0.000 (0.002)	eta 0:24:56	xe_loss 0.0922 (0.5777)	kl_loss 0.3498 (0.7325)	acc 100.0000 (83.2500)	lr 1.992115e-03
+epoch [5/50][20/204]	time 0.170 (0.185)	data 0.000 (0.022)	eta 0:28:53	xe_loss 0.3916 (0.6373)	kl_loss 1.0143 (0.8831)	acc 100.0000 (83.7500)	lr 1.982287e-03
+epoch [5/50][40/204]	time 0.117 (0.162)	data 0.000 (0.011)	eta 0:25:09	xe_loss 0.1335 (0.6189)	kl_loss 0.5452 (0.8256)	acc 100.0000 (83.1250)	lr 1.982287e-03
+epoch [5/50][60/204]	time 0.163 (0.151)	data 0.000 (0.008)	eta 0:23:24	xe_loss 0.0070 (0.6040)	kl_loss 0.0626 (0.7746)	acc 100.0000 (83.7500)	lr 1.982287e-03
+epoch [5/50][80/204]	time 0.163 (0.154)	data 0.000 (0.006)	eta 0:23:53	xe_loss 0.3118 (0.5540)	kl_loss 0.4381 (0.7417)	acc 100.0000 (84.3750)	lr 1.982287e-03
+epoch [5/50][100/204]	time 0.170 (0.156)	data 0.000 (0.005)	eta 0:24:11	xe_loss 1.8223 (0.5479)	kl_loss 1.9646 (0.7305)	acc 75.0000 (84.0000)	lr 1.982287e-03
+epoch [5/50][120/204]	time 0.165 (0.158)	data 0.000 (0.004)	eta 0:24:20	xe_loss 0.2954 (0.5634)	kl_loss 0.3360 (0.7238)	acc 75.0000 (84.1667)	lr 1.982287e-03
+epoch [5/50][140/204]	time 0.157 (0.159)	data 0.000 (0.003)	eta 0:24:25	xe_loss 0.0101 (0.5911)	kl_loss 0.0767 (0.7271)	acc 100.0000 (83.3929)	lr 1.982287e-03
+epoch [5/50][160/204]	time 0.166 (0.159)	data 0.000 (0.003)	eta 0:24:28	xe_loss 0.0237 (0.5955)	kl_loss 0.3426 (0.7286)	acc 100.0000 (82.9688)	lr 1.982287e-03
+epoch [5/50][180/204]	time 0.146 (0.157)	data 0.000 (0.003)	eta 0:24:09	xe_loss 0.2009 (0.6143)	kl_loss 0.4256 (0.7391)	acc 100.0000 (82.6389)	lr 1.982287e-03
+epoch [5/50][200/204]	time 0.159 (0.154)	data 0.000 (0.002)	eta 0:23:37	xe_loss 0.0151 (0.5968)	kl_loss 0.1112 (0.7282)	acc 100.0000 (83.0000)	lr 1.982287e-03
+epoch [6/50][20/204]	time 0.169 (0.186)	data 0.000 (0.023)	eta 0:28:23	xe_loss 0.6548 (0.5748)	kl_loss 1.2793 (0.7478)	acc 75.0000 (87.5000)	lr 1.968583e-03
+epoch [6/50][40/204]	time 0.156 (0.174)	data 0.000 (0.012)	eta 0:26:33	xe_loss 1.6895 (0.5115)	kl_loss 1.5636 (0.7306)	acc 50.0000 (86.8750)	lr 1.968583e-03
+epoch [6/50][60/204]	time 0.166 (0.171)	data 0.000 (0.008)	eta 0:25:59	xe_loss 0.3569 (0.5212)	kl_loss 0.4436 (0.7360)	acc 75.0000 (86.2500)	lr 1.968583e-03
+epoch [6/50][80/204]	time 0.162 (0.169)	data 0.000 (0.006)	eta 0:25:39	xe_loss 0.0611 (0.5309)	kl_loss 0.4280 (0.7085)	acc 100.0000 (86.8750)	lr 1.968583e-03
+epoch [6/50][100/204]	time 0.173 (0.168)	data 0.000 (0.005)	eta 0:25:28	xe_loss 0.0246 (0.5642)	kl_loss 0.1184 (0.7404)	acc 100.0000 (86.0000)	lr 1.968583e-03
+epoch [6/50][120/204]	time 0.162 (0.162)	data 0.000 (0.004)	eta 0:24:26	xe_loss 0.8755 (0.5400)	kl_loss 2.0696 (0.7473)	acc 100.0000 (86.6667)	lr 1.968583e-03
+epoch [6/50][140/204]	time 0.159 (0.162)	data 0.000 (0.003)	eta 0:24:25	xe_loss 0.1841 (0.5355)	kl_loss 0.5980 (0.7446)	acc 100.0000 (86.2500)	lr 1.968583e-03
+epoch [6/50][160/204]	time 0.169 (0.162)	data 0.000 (0.003)	eta 0:24:23	xe_loss 0.5000 (0.5317)	kl_loss 0.6091 (0.7342)	acc 75.0000 (85.7812)	lr 1.968583e-03
+epoch [6/50][180/204]	time 0.160 (0.162)	data 0.000 (0.003)	eta 0:24:20	xe_loss 0.4109 (0.5273)	kl_loss 1.0685 (0.7313)	acc 75.0000 (85.9722)	lr 1.968583e-03
+epoch [6/50][200/204]	time 0.169 (0.162)	data 0.000 (0.002)	eta 0:24:18	xe_loss 0.0627 (0.5224)	kl_loss 0.3103 (0.7360)	acc 100.0000 (86.0000)	lr 1.968583e-03
+epoch [7/50][20/204]	time 0.163 (0.186)	data 0.000 (0.024)	eta 0:27:42	xe_loss 0.1447 (0.8075)	kl_loss 0.7035 (0.7657)	acc 100.0000 (80.0000)	lr 1.951057e-03
+epoch [7/50][40/204]	time 0.112 (0.159)	data 0.000 (0.013)	eta 0:23:41	xe_loss 0.2195 (0.6635)	kl_loss 0.4377 (0.7427)	acc 100.0000 (84.3750)	lr 1.951057e-03
+epoch [7/50][60/204]	time 0.161 (0.150)	data 0.000 (0.009)	eta 0:22:18	xe_loss 0.3044 (0.6816)	kl_loss 0.6702 (0.7784)	acc 100.0000 (83.7500)	lr 1.951057e-03
+epoch [7/50][80/204]	time 0.159 (0.153)	data 0.000 (0.007)	eta 0:22:38	xe_loss 1.8721 (0.6189)	kl_loss 0.0761 (0.7261)	acc 75.0000 (85.6250)	lr 1.951057e-03
+epoch [7/50][100/204]	time 0.161 (0.155)	data 0.000 (0.005)	eta 0:22:52	xe_loss 0.0259 (0.6258)	kl_loss 0.1318 (0.7005)	acc 100.0000 (85.2500)	lr 1.951057e-03
+epoch [7/50][120/204]	time 0.173 (0.156)	data 0.004 (0.005)	eta 0:23:01	xe_loss 0.5703 (0.5995)	kl_loss 0.4631 (0.7077)	acc 75.0000 (85.4167)	lr 1.951057e-03
+epoch [7/50][140/204]	time 0.152 (0.156)	data 0.006 (0.004)	eta 0:23:02	xe_loss 0.1399 (0.6163)	kl_loss 0.3910 (0.7200)	acc 100.0000 (84.8214)	lr 1.951057e-03
+epoch [7/50][160/204]	time 0.171 (0.157)	data 0.000 (0.004)	eta 0:23:04	xe_loss 0.3445 (0.5951)	kl_loss 0.9130 (0.7277)	acc 100.0000 (85.0000)	lr 1.951057e-03
+epoch [7/50][180/204]	time 0.146 (0.155)	data 0.000 (0.003)	eta 0:22:47	xe_loss 0.3711 (0.5866)	kl_loss 1.1893 (0.7243)	acc 100.0000 (85.0000)	lr 1.951057e-03
+epoch [7/50][200/204]	time 0.153 (0.155)	data 0.000 (0.003)	eta 0:22:38	xe_loss 0.2183 (0.5679)	kl_loss 0.8703 (0.7114)	acc 100.0000 (85.3750)	lr 1.951057e-03
+epoch [8/50][20/204]	time 0.171 (0.188)	data 0.000 (0.025)	eta 0:27:23	xe_loss 0.0079 (0.6940)	kl_loss 0.0602 (0.7536)	acc 100.0000 (76.2500)	lr 1.929776e-03
+epoch [8/50][40/204]	time 0.158 (0.176)	data 0.000 (0.012)	eta 0:25:34	xe_loss 0.7759 (0.5062)	kl_loss 1.0656 (0.6566)	acc 75.0000 (83.7500)	lr 1.929776e-03
+epoch [8/50][60/204]	time 0.172 (0.172)	data 0.002 (0.009)	eta 0:24:58	xe_loss 0.3894 (0.5289)	kl_loss 1.0829 (0.7127)	acc 100.0000 (84.1667)	lr 1.929776e-03
+epoch [8/50][80/204]	time 0.158 (0.167)	data 0.000 (0.007)	eta 0:24:10	xe_loss 0.3499 (0.5834)	kl_loss 0.7940 (0.7399)	acc 75.0000 (83.1250)	lr 1.929776e-03
+epoch [8/50][100/204]	time 0.115 (0.165)	data 0.000 (0.006)	eta 0:23:46	xe_loss 0.0375 (0.5236)	kl_loss 0.2942 (0.7021)	acc 100.0000 (84.5000)	lr 1.929776e-03
+epoch [8/50][120/204]	time 0.127 (0.158)	data 0.000 (0.005)	eta 0:22:44	xe_loss 0.0490 (0.5435)	kl_loss 0.6036 (0.7137)	acc 100.0000 (84.3750)	lr 1.929776e-03
+epoch [8/50][140/204]	time 0.158 (0.157)	data 0.000 (0.004)	eta 0:22:37	xe_loss 0.2834 (0.5539)	kl_loss 0.8159 (0.7181)	acc 100.0000 (83.5714)	lr 1.929776e-03
+epoch [8/50][160/204]	time 0.171 (0.158)	data 0.000 (0.004)	eta 0:22:40	xe_loss 0.0887 (0.5338)	kl_loss 0.6124 (0.7097)	acc 100.0000 (83.7500)	lr 1.929776e-03
+epoch [8/50][180/204]	time 0.157 (0.158)	data 0.000 (0.003)	eta 0:22:41	xe_loss 0.1074 (0.5542)	kl_loss 0.3808 (0.7184)	acc 100.0000 (83.3333)	lr 1.929776e-03
+epoch [8/50][200/204]	time 0.164 (0.159)	data 0.000 (0.003)	eta 0:22:42	xe_loss 0.0128 (0.5394)	kl_loss 0.1662 (0.7036)	acc 100.0000 (83.6250)	lr 1.929776e-03
+epoch [9/50][20/204]	time 0.164 (0.189)	data 0.000 (0.025)	eta 0:26:51	xe_loss 0.2305 (0.6565)	kl_loss 0.5718 (0.7312)	acc 100.0000 (83.7500)	lr 1.904827e-03
+epoch [9/50][40/204]	time 0.174 (0.165)	data 0.000 (0.013)	eta 0:23:30	xe_loss 0.3762 (0.5402)	kl_loss 0.9131 (0.6748)	acc 100.0000 (88.1250)	lr 1.904827e-03
+epoch [9/50][60/204]	time 0.168 (0.152)	data 0.000 (0.008)	eta 0:21:30	xe_loss 0.5249 (0.5219)	kl_loss 1.0285 (0.6678)	acc 75.0000 (87.0833)	lr 1.904827e-03
+epoch [9/50][80/204]	time 0.166 (0.155)	data 0.000 (0.006)	eta 0:21:52	xe_loss 0.2313 (0.5224)	kl_loss 0.7410 (0.6854)	acc 100.0000 (86.5625)	lr 1.904827e-03
+epoch [9/50][100/204]	time 0.161 (0.156)	data 0.000 (0.005)	eta 0:22:02	xe_loss 0.0801 (0.5185)	kl_loss 0.4104 (0.6825)	acc 100.0000 (85.7500)	lr 1.904827e-03
+epoch [9/50][120/204]	time 0.164 (0.158)	data 0.000 (0.004)	eta 0:22:10	xe_loss 1.0010 (0.5461)	kl_loss 0.7787 (0.7072)	acc 75.0000 (84.1667)	lr 1.904827e-03
+epoch [9/50][140/204]	time 0.168 (0.159)	data 0.000 (0.004)	eta 0:22:16	xe_loss 0.4158 (0.5639)	kl_loss 0.4125 (0.7147)	acc 75.0000 (83.5714)	lr 1.904827e-03
+epoch [9/50][160/204]	time 0.161 (0.159)	data 0.000 (0.003)	eta 0:22:16	xe_loss 0.0310 (0.5632)	kl_loss 0.2833 (0.7095)	acc 100.0000 (83.5938)	lr 1.904827e-03
+epoch [9/50][180/204]	time 0.112 (0.157)	data 0.000 (0.003)	eta 0:21:56	xe_loss 2.0703 (0.5755)	kl_loss 0.7518 (0.6966)	acc 75.0000 (83.8889)	lr 1.904827e-03
+epoch [9/50][200/204]	time 0.117 (0.153)	data 0.000 (0.003)	eta 0:21:22	xe_loss 0.2411 (0.5831)	kl_loss 0.7416 (0.7002)	acc 100.0000 (83.6250)	lr 1.904827e-03
+epoch [10/50][20/204]	time 0.162 (0.188)	data 0.000 (0.026)	eta 0:26:11	xe_loss 0.5874 (0.5423)	kl_loss 1.1787 (0.7779)	acc 75.0000 (87.5000)	lr 1.876307e-03
+epoch [10/50][40/204]	time 0.155 (0.175)	data 0.000 (0.013)	eta 0:24:13	xe_loss 1.2900 (0.5706)	kl_loss 1.5377 (0.8120)	acc 75.0000 (83.7500)	lr 1.876307e-03
+epoch [10/50][60/204]	time 0.170 (0.171)	data 0.000 (0.009)	eta 0:23:36	xe_loss 0.0925 (0.5875)	kl_loss 0.4775 (0.7701)	acc 100.0000 (82.0833)	lr 1.876307e-03
+epoch [10/50][80/204]	time 0.152 (0.169)	data 0.000 (0.007)	eta 0:23:20	xe_loss 0.2317 (0.5580)	kl_loss 0.8859 (0.7614)	acc 100.0000 (82.8125)	lr 1.876307e-03
+epoch [10/50][100/204]	time 0.151 (0.167)	data 0.000 (0.005)	eta 0:23:02	xe_loss 0.9570 (0.5871)	kl_loss 0.4135 (0.7341)	acc 75.0000 (81.5000)	lr 1.876307e-03
+epoch [10/50][120/204]	time 0.125 (0.163)	data 0.000 (0.005)	eta 0:22:21	xe_loss 2.0547 (0.6182)	kl_loss 0.4360 (0.7438)	acc 75.0000 (81.4583)	lr 1.876307e-03
+epoch [10/50][140/204]	time 0.171 (0.160)	data 0.000 (0.004)	eta 0:21:57	xe_loss 0.2028 (0.6012)	kl_loss 0.7128 (0.7269)	acc 100.0000 (82.3214)	lr 1.876307e-03
+epoch [10/50][160/204]	time 0.167 (0.161)	data 0.000 (0.003)	eta 0:21:57	xe_loss 0.6514 (0.5961)	kl_loss 0.9620 (0.7352)	acc 75.0000 (82.6562)	lr 1.876307e-03
+epoch [10/50][180/204]	time 0.156 (0.161)	data 0.000 (0.003)	eta 0:21:57	xe_loss 0.4712 (0.6054)	kl_loss 0.5794 (0.7504)	acc 75.0000 (82.0833)	lr 1.876307e-03
+epoch [10/50][200/204]	time 0.162 (0.161)	data 0.000 (0.003)	eta 0:21:54	xe_loss 0.1118 (0.5932)	kl_loss 0.1806 (0.7521)	acc 100.0000 (82.2500)	lr 1.876307e-03
+epoch [11/50][20/204]	time 0.166 (0.192)	data 0.000 (0.026)	eta 0:26:01	xe_loss 0.5986 (0.5897)	kl_loss 0.5480 (0.6874)	acc 75.0000 (83.7500)	lr 1.844328e-03
+epoch [11/50][40/204]	time 0.106 (0.172)	data 0.000 (0.013)	eta 0:23:17	xe_loss 0.1287 (0.4931)	kl_loss 0.6618 (0.6930)	acc 100.0000 (85.0000)	lr 1.844328e-03
+epoch [11/50][60/204]	time 0.173 (0.161)	data 0.000 (0.009)	eta 0:21:41	xe_loss 0.0383 (0.5010)	kl_loss 0.1552 (0.6552)	acc 100.0000 (83.7500)	lr 1.844328e-03
+epoch [11/50][80/204]	time 0.167 (0.161)	data 0.000 (0.007)	eta 0:21:42	xe_loss 0.7168 (0.5261)	kl_loss 1.9417 (0.6819)	acc 75.0000 (83.4375)	lr 1.844328e-03
+epoch [11/50][100/204]	time 0.170 (0.161)	data 0.000 (0.005)	eta 0:21:39	xe_loss 0.2451 (0.5383)	kl_loss 0.3962 (0.7059)	acc 100.0000 (82.5000)	lr 1.844328e-03
+epoch [11/50][120/204]	time 0.166 (0.162)	data 0.002 (0.005)	eta 0:21:38	xe_loss 0.3403 (0.5192)	kl_loss 0.4434 (0.7027)	acc 75.0000 (83.5417)	lr 1.844328e-03
+epoch [11/50][140/204]	time 0.164 (0.162)	data 0.000 (0.004)	eta 0:21:38	xe_loss 0.0667 (0.4985)	kl_loss 0.2679 (0.6879)	acc 100.0000 (84.2857)	lr 1.844328e-03
+epoch [11/50][160/204]	time 0.159 (0.162)	data 0.000 (0.003)	eta 0:21:38	xe_loss 2.0391 (0.5384)	kl_loss 1.3158 (0.7023)	acc 50.0000 (83.2812)	lr 1.844328e-03
+epoch [11/50][180/204]	time 0.117 (0.160)	data 0.001 (0.003)	eta 0:21:16	xe_loss 0.0068 (0.5777)	kl_loss 0.0671 (0.7267)	acc 100.0000 (82.0833)	lr 1.844328e-03
+epoch [11/50][200/204]	time 0.140 (0.156)	data 0.000 (0.003)	eta 0:20:41	xe_loss 0.1700 (0.5761)	kl_loss 0.4084 (0.7181)	acc 100.0000 (82.8750)	lr 1.844328e-03
+epoch [12/50][20/204]	time 0.113 (0.179)	data 0.000 (0.031)	eta 0:23:40	xe_loss 0.5186 (0.4176)	kl_loss 1.0246 (0.6681)	acc 100.0000 (88.7500)	lr 1.809017e-03
+epoch [12/50][40/204]	time 0.127 (0.147)	data 0.000 (0.016)	eta 0:19:25	xe_loss 1.0938 (0.4713)	kl_loss 1.1586 (0.7212)	acc 75.0000 (85.6250)	lr 1.809017e-03
+epoch [12/50][60/204]	time 0.122 (0.137)	data 0.000 (0.011)	eta 0:18:01	xe_loss 0.0120 (0.4444)	kl_loss 0.1324 (0.7057)	acc 100.0000 (85.8333)	lr 1.809017e-03
+epoch [12/50][80/204]	time 0.114 (0.131)	data 0.000 (0.008)	eta 0:17:13	xe_loss 0.0149 (0.4428)	kl_loss 0.1297 (0.6962)	acc 100.0000 (86.8750)	lr 1.809017e-03
+epoch [12/50][100/204]	time 0.111 (0.128)	data 0.000 (0.007)	eta 0:16:42	xe_loss 1.6045 (0.4957)	kl_loss 1.3434 (0.7135)	acc 50.0000 (85.5000)	lr 1.809017e-03
+epoch [12/50][120/204]	time 0.108 (0.125)	data 0.000 (0.006)	eta 0:16:19	xe_loss 1.0791 (0.5290)	kl_loss 1.0283 (0.7013)	acc 75.0000 (85.4167)	lr 1.809017e-03
+epoch [12/50][140/204]	time 0.118 (0.124)	data 0.000 (0.005)	eta 0:16:06	xe_loss 0.9272 (0.5714)	kl_loss 0.2714 (0.7006)	acc 75.0000 (85.0000)	lr 1.809017e-03
+epoch [12/50][160/204]	time 0.152 (0.123)	data 0.013 (0.004)	eta 0:15:58	xe_loss 0.2015 (0.5576)	kl_loss 0.5874 (0.6928)	acc 100.0000 (85.4688)	lr 1.809017e-03
+epoch [12/50][180/204]	time 0.114 (0.123)	data 0.000 (0.004)	eta 0:15:55	xe_loss 1.0391 (0.5559)	kl_loss 1.1504 (0.6942)	acc 75.0000 (85.8333)	lr 1.809017e-03
+epoch [12/50][200/204]	time 0.122 (0.122)	data 0.000 (0.004)	eta 0:15:49	xe_loss 1.1865 (0.5509)	kl_loss 0.7790 (0.6958)	acc 75.0000 (85.7500)	lr 1.809017e-03
+epoch [13/50][20/204]	time 0.124 (0.144)	data 0.000 (0.026)	eta 0:18:35	xe_loss 1.5342 (0.5912)	kl_loss 0.4646 (0.7773)	acc 75.0000 (83.7500)	lr 1.770513e-03
+epoch [13/50][40/204]	time 0.182 (0.147)	data 0.000 (0.013)	eta 0:18:56	xe_loss 1.7871 (0.5415)	kl_loss 1.2681 (0.7191)	acc 50.0000 (85.6250)	lr 1.770513e-03
+epoch [13/50][60/204]	time 0.117 (0.142)	data 0.000 (0.009)	eta 0:18:10	xe_loss 0.8984 (0.5696)	kl_loss 0.8248 (0.7225)	acc 75.0000 (83.3333)	lr 1.770513e-03
+epoch [13/50][80/204]	time 0.107 (0.135)	data 0.000 (0.007)	eta 0:17:17	xe_loss 0.4160 (0.5405)	kl_loss 0.8093 (0.7185)	acc 75.0000 (84.6875)	lr 1.770513e-03
+epoch [13/50][100/204]	time 0.122 (0.131)	data 0.000 (0.005)	eta 0:16:44	xe_loss 0.2888 (0.5628)	kl_loss 0.2020 (0.7189)	acc 75.0000 (84.5000)	lr 1.770513e-03
+epoch [13/50][120/204]	time 0.108 (0.129)	data 0.000 (0.004)	eta 0:16:20	xe_loss 0.0383 (0.5855)	kl_loss 0.2472 (0.7176)	acc 100.0000 (83.1250)	lr 1.770513e-03
+epoch [13/50][140/204]	time 0.111 (0.127)	data 0.001 (0.004)	eta 0:16:06	xe_loss 2.0801 (0.5785)	kl_loss 1.4789 (0.7225)	acc 25.0000 (83.2143)	lr 1.770513e-03
+epoch [13/50][160/204]	time 0.116 (0.126)	data 0.000 (0.004)	eta 0:15:56	xe_loss 0.2014 (0.5631)	kl_loss 0.3805 (0.7151)	acc 100.0000 (83.5938)	lr 1.770513e-03
+epoch [13/50][180/204]	time 0.124 (0.125)	data 0.000 (0.003)	eta 0:15:48	xe_loss 1.5918 (0.5570)	kl_loss 0.7975 (0.7087)	acc 75.0000 (83.7500)	lr 1.770513e-03
+epoch [13/50][200/204]	time 0.117 (0.125)	data 0.000 (0.003)	eta 0:15:41	xe_loss 0.1404 (0.5841)	kl_loss 0.3717 (0.7286)	acc 100.0000 (83.2500)	lr 1.770513e-03
+epoch [14/50][20/204]	time 0.118 (0.143)	data 0.000 (0.025)	eta 0:17:56	xe_loss 0.4155 (0.4590)	kl_loss 1.0158 (0.6512)	acc 100.0000 (90.0000)	lr 1.728969e-03
+epoch [14/50][40/204]	time 0.125 (0.131)	data 0.000 (0.013)	eta 0:16:23	xe_loss 0.4519 (0.4965)	kl_loss 1.1414 (0.5838)	acc 75.0000 (88.1250)	lr 1.728969e-03
+epoch [14/50][60/204]	time 0.154 (0.139)	data 0.000 (0.008)	eta 0:17:24	xe_loss 0.2490 (0.5301)	kl_loss 0.8452 (0.6672)	acc 100.0000 (86.2500)	lr 1.728969e-03
+epoch [14/50][80/204]	time 0.121 (0.141)	data 0.000 (0.006)	eta 0:17:31	xe_loss 0.0448 (0.5320)	kl_loss 0.2246 (0.6675)	acc 100.0000 (85.0000)	lr 1.728969e-03
+epoch [14/50][100/204]	time 0.151 (0.138)	data 0.000 (0.005)	eta 0:17:10	xe_loss 1.0625 (0.5120)	kl_loss 1.7497 (0.6592)	acc 75.0000 (85.5000)	lr 1.728969e-03
+epoch [14/50][120/204]	time 0.157 (0.141)	data 0.000 (0.004)	eta 0:17:29	xe_loss 2.2168 (0.5472)	kl_loss 0.3564 (0.6778)	acc 75.0000 (85.0000)	lr 1.728969e-03
+epoch [14/50][140/204]	time 0.127 (0.140)	data 0.000 (0.004)	eta 0:17:20	xe_loss 0.2754 (0.5394)	kl_loss 0.5340 (0.6839)	acc 100.0000 (84.8214)	lr 1.728969e-03
+epoch [14/50][160/204]	time 0.151 (0.140)	data 0.000 (0.003)	eta 0:17:10	xe_loss 0.1027 (0.5146)	kl_loss 0.5700 (0.6878)	acc 100.0000 (85.3125)	lr 1.728969e-03
+epoch [14/50][180/204]	time 0.160 (0.141)	data 0.000 (0.003)	eta 0:17:21	xe_loss 0.0693 (0.5299)	kl_loss 0.3081 (0.7001)	acc 100.0000 (84.7222)	lr 1.728969e-03
+epoch [14/50][200/204]	time 0.149 (0.140)	data 0.000 (0.003)	eta 0:17:11	xe_loss 0.3699 (0.5484)	kl_loss 1.1044 (0.7151)	acc 100.0000 (84.6250)	lr 1.728969e-03
+epoch [15/50][20/204]	time 0.148 (0.178)	data 0.000 (0.025)	eta 0:21:44	xe_loss 0.8716 (0.4504)	kl_loss 0.6562 (0.5813)	acc 75.0000 (86.2500)	lr 1.684547e-03
+epoch [15/50][40/204]	time 0.153 (0.153)	data 0.000 (0.013)	eta 0:18:41	xe_loss 0.5811 (0.3832)	kl_loss 1.2681 (0.6406)	acc 100.0000 (90.0000)	lr 1.684547e-03
+epoch [15/50][60/204]	time 0.157 (0.154)	data 0.000 (0.009)	eta 0:18:39	xe_loss 0.1353 (0.4027)	kl_loss 0.3677 (0.6520)	acc 100.0000 (90.8333)	lr 1.684547e-03
+epoch [15/50][80/204]	time 0.109 (0.149)	data 0.000 (0.007)	eta 0:18:03	xe_loss 0.0521 (0.4341)	kl_loss 0.3773 (0.6661)	acc 100.0000 (89.3750)	lr 1.684547e-03
+epoch [15/50][100/204]	time 0.158 (0.148)	data 0.000 (0.005)	eta 0:17:51	xe_loss 0.0906 (0.4235)	kl_loss 0.2677 (0.6705)	acc 100.0000 (90.0000)	lr 1.684547e-03
+epoch [15/50][120/204]	time 0.158 (0.149)	data 0.000 (0.004)	eta 0:17:57	xe_loss 1.0137 (0.4512)	kl_loss 1.4201 (0.7024)	acc 50.0000 (89.1667)	lr 1.684547e-03
+epoch [15/50][140/204]	time 0.104 (0.145)	data 0.000 (0.004)	eta 0:17:25	xe_loss 0.3403 (0.4469)	kl_loss 0.8216 (0.6923)	acc 100.0000 (88.7500)	lr 1.684547e-03
+epoch [15/50][160/204]	time 0.160 (0.145)	data 0.000 (0.003)	eta 0:17:21	xe_loss 0.0576 (0.4807)	kl_loss 0.5259 (0.7027)	acc 100.0000 (86.8750)	lr 1.684547e-03
+epoch [15/50][180/204]	time 0.160 (0.146)	data 0.000 (0.003)	eta 0:17:27	xe_loss 0.5737 (0.4989)	kl_loss 0.8728 (0.7044)	acc 75.0000 (86.5278)	lr 1.684547e-03
+epoch [15/50][200/204]	time 0.110 (0.143)	data 0.000 (0.003)	eta 0:17:04	xe_loss 0.3276 (0.5050)	kl_loss 1.0524 (0.7047)	acc 100.0000 (86.5000)	lr 1.684547e-03
+epoch [16/50][20/204]	time 0.162 (0.184)	data 0.001 (0.026)	eta 0:21:48	xe_loss 1.6924 (0.7922)	kl_loss 0.6770 (0.8223)	acc 50.0000 (81.2500)	lr 1.637424e-03
+epoch [16/50][40/204]	time 0.141 (0.157)	data 0.013 (0.014)	eta 0:18:38	xe_loss 0.7261 (0.6952)	kl_loss 1.1129 (0.8064)	acc 50.0000 (81.2500)	lr 1.637424e-03
+epoch [16/50][60/204]	time 0.153 (0.154)	data 0.000 (0.010)	eta 0:18:13	xe_loss 0.7856 (0.6450)	kl_loss 0.6673 (0.7815)	acc 75.0000 (82.9167)	lr 1.637424e-03
+epoch [16/50][80/204]	time 0.118 (0.154)	data 0.000 (0.007)	eta 0:18:06	xe_loss 0.3228 (0.5583)	kl_loss 0.5287 (0.7239)	acc 75.0000 (85.0000)	lr 1.637424e-03
+epoch [16/50][100/204]	time 0.158 (0.150)	data 0.000 (0.006)	eta 0:17:34	xe_loss 0.2207 (0.5607)	kl_loss 0.3471 (0.7348)	acc 75.0000 (84.5000)	lr 1.637424e-03
+epoch [16/50][120/204]	time 0.156 (0.151)	data 0.000 (0.005)	eta 0:17:38	xe_loss 0.7051 (0.5590)	kl_loss 0.8416 (0.7379)	acc 50.0000 (84.5833)	lr 1.637424e-03
+epoch [16/50][140/204]	time 0.118 (0.148)	data 0.000 (0.004)	eta 0:17:15	xe_loss 0.1755 (0.5659)	kl_loss 0.5292 (0.7406)	acc 100.0000 (84.2857)	lr 1.637424e-03
+epoch [16/50][160/204]	time 0.116 (0.144)	data 0.001 (0.004)	eta 0:16:46	xe_loss 0.0461 (0.5507)	kl_loss 0.2601 (0.7348)	acc 100.0000 (84.8438)	lr 1.637424e-03
+epoch [16/50][180/204]	time 0.197 (0.142)	data 0.020 (0.004)	eta 0:16:31	xe_loss 0.6226 (0.5565)	kl_loss 1.0333 (0.7381)	acc 50.0000 (84.3056)	lr 1.637424e-03
+epoch [16/50][200/204]	time 0.119 (0.141)	data 0.000 (0.004)	eta 0:16:19	xe_loss 0.0477 (0.5356)	kl_loss 0.2337 (0.7151)	acc 100.0000 (84.6250)	lr 1.637424e-03
+epoch [17/50][20/204]	time 0.115 (0.155)	data 0.000 (0.025)	eta 0:17:50	xe_loss 0.1037 (0.4423)	kl_loss 0.6383 (0.6814)	acc 100.0000 (88.7500)	lr 1.587785e-03
+epoch [17/50][40/204]	time 0.117 (0.135)	data 0.000 (0.013)	eta 0:15:30	xe_loss 0.0616 (0.4717)	kl_loss 0.4424 (0.6705)	acc 100.0000 (87.5000)	lr 1.587785e-03
+epoch [17/50][60/204]	time 0.112 (0.129)	data 0.000 (0.008)	eta 0:14:44	xe_loss 0.9541 (0.4684)	kl_loss 1.4655 (0.6840)	acc 75.0000 (87.5000)	lr 1.587785e-03
+epoch [17/50][80/204]	time 0.120 (0.125)	data 0.000 (0.006)	eta 0:14:19	xe_loss 0.0061 (0.5178)	kl_loss 0.0526 (0.7218)	acc 100.0000 (84.6875)	lr 1.587785e-03
+epoch [17/50][100/204]	time 0.118 (0.123)	data 0.000 (0.005)	eta 0:14:02	xe_loss 0.1049 (0.5350)	kl_loss 0.6318 (0.7024)	acc 100.0000 (84.5000)	lr 1.587785e-03
+epoch [17/50][120/204]	time 0.117 (0.122)	data 0.000 (0.005)	eta 0:13:52	xe_loss 0.2510 (0.5212)	kl_loss 0.4687 (0.6984)	acc 100.0000 (85.0000)	lr 1.587785e-03
+epoch [17/50][140/204]	time 0.117 (0.122)	data 0.000 (0.004)	eta 0:13:47	xe_loss 0.3557 (0.5029)	kl_loss 0.3507 (0.7059)	acc 75.0000 (85.7143)	lr 1.587785e-03
+epoch [17/50][160/204]	time 0.125 (0.121)	data 0.000 (0.003)	eta 0:13:40	xe_loss 0.1101 (0.5047)	kl_loss 0.6335 (0.7106)	acc 100.0000 (86.0938)	lr 1.587785e-03
+epoch [17/50][180/204]	time 0.123 (0.120)	data 0.000 (0.003)	eta 0:13:31	xe_loss 1.1914 (0.5267)	kl_loss 1.0047 (0.7257)	acc 75.0000 (85.6944)	lr 1.587785e-03
+epoch [17/50][200/204]	time 0.119 (0.120)	data 0.003 (0.003)	eta 0:13:27	xe_loss 0.6255 (0.5117)	kl_loss 0.7967 (0.7177)	acc 75.0000 (86.0000)	lr 1.587785e-03
+epoch [18/50][20/204]	time 0.114 (0.143)	data 0.000 (0.025)	eta 0:15:56	xe_loss 0.0516 (0.3468)	kl_loss 0.3540 (0.6927)	acc 100.0000 (91.2500)	lr 1.535827e-03
+epoch [18/50][40/204]	time 0.184 (0.150)	data 0.000 (0.013)	eta 0:16:46	xe_loss 0.8555 (0.4355)	kl_loss 1.3095 (0.7236)	acc 75.0000 (89.3750)	lr 1.535827e-03
+epoch [18/50][60/204]	time 0.114 (0.141)	data 0.000 (0.009)	eta 0:15:40	xe_loss 0.2698 (0.5146)	kl_loss 0.6532 (0.7436)	acc 100.0000 (86.2500)	lr 1.535827e-03
+epoch [18/50][80/204]	time 0.121 (0.135)	data 0.000 (0.007)	eta 0:14:58	xe_loss 0.1737 (0.5534)	kl_loss 0.3793 (0.7948)	acc 100.0000 (85.6250)	lr 1.535827e-03
+epoch [18/50][100/204]	time 0.108 (0.131)	data 0.000 (0.005)	eta 0:14:29	xe_loss 0.7563 (0.5377)	kl_loss 0.8673 (0.7707)	acc 75.0000 (85.2500)	lr 1.535827e-03
+epoch [18/50][120/204]	time 0.116 (0.129)	data 0.000 (0.005)	eta 0:14:11	xe_loss 0.0475 (0.5409)	kl_loss 0.4063 (0.7795)	acc 100.0000 (85.4167)	lr 1.535827e-03
+epoch [18/50][140/204]	time 0.118 (0.127)	data 0.000 (0.004)	eta 0:13:57	xe_loss 0.3252 (0.5406)	kl_loss 0.4809 (0.7701)	acc 75.0000 (84.6429)	lr 1.535827e-03
+epoch [18/50][160/204]	time 0.116 (0.126)	data 0.000 (0.004)	eta 0:13:46	xe_loss 1.6455 (0.5428)	kl_loss 0.6499 (0.7524)	acc 75.0000 (84.8438)	lr 1.535827e-03
+epoch [18/50][180/204]	time 0.129 (0.125)	data 0.000 (0.003)	eta 0:13:42	xe_loss 0.8267 (0.5304)	kl_loss 0.7293 (0.7428)	acc 75.0000 (85.2778)	lr 1.535827e-03
+epoch [18/50][200/204]	time 0.121 (0.125)	data 0.000 (0.003)	eta 0:13:34	xe_loss 0.0025 (0.5481)	kl_loss 0.0382 (0.7399)	acc 100.0000 (84.8750)	lr 1.535827e-03
+epoch [19/50][20/204]	time 0.109 (0.143)	data 0.000 (0.024)	eta 0:15:29	xe_loss 0.0032 (0.5767)	kl_loss 0.0298 (0.7714)	acc 100.0000 (86.2500)	lr 1.481754e-03
+epoch [19/50][40/204]	time 0.116 (0.131)	data 0.000 (0.012)	eta 0:14:10	xe_loss 0.1310 (0.4787)	kl_loss 0.7954 (0.7167)	acc 100.0000 (89.3750)	lr 1.481754e-03
+epoch [19/50][60/204]	time 0.167 (0.139)	data 0.000 (0.008)	eta 0:14:56	xe_loss 0.1032 (0.4412)	kl_loss 0.2100 (0.7207)	acc 100.0000 (88.7500)	lr 1.481754e-03
+epoch [19/50][80/204]	time 0.160 (0.145)	data 0.000 (0.006)	eta 0:15:35	xe_loss 0.1974 (0.4692)	kl_loss 0.7953 (0.7275)	acc 100.0000 (87.8125)	lr 1.481754e-03
+epoch [19/50][100/204]	time 0.166 (0.149)	data 0.000 (0.005)	eta 0:15:58	xe_loss 0.2578 (0.4307)	kl_loss 0.3596 (0.6907)	acc 75.0000 (88.5000)	lr 1.481754e-03
+epoch [19/50][120/204]	time 0.169 (0.152)	data 0.000 (0.004)	eta 0:16:13	xe_loss 0.0243 (0.4373)	kl_loss 0.2162 (0.6803)	acc 100.0000 (88.5417)	lr 1.481754e-03
+epoch [19/50][140/204]	time 0.162 (0.154)	data 0.000 (0.004)	eta 0:16:21	xe_loss 0.0671 (0.4361)	kl_loss 0.5374 (0.6852)	acc 100.0000 (87.6786)	lr 1.481754e-03
+epoch [19/50][160/204]	time 0.138 (0.155)	data 0.000 (0.003)	eta 0:16:25	xe_loss 0.8271 (0.4585)	kl_loss 0.8978 (0.6888)	acc 50.0000 (87.0312)	lr 1.481754e-03
+epoch [19/50][180/204]	time 0.122 (0.151)	data 0.000 (0.003)	eta 0:15:58	xe_loss 0.5405 (0.5023)	kl_loss 0.4533 (0.6910)	acc 75.0000 (85.5556)	lr 1.481754e-03
+epoch [19/50][200/204]	time 0.161 (0.152)	data 0.000 (0.003)	eta 0:16:03	xe_loss 0.0144 (0.5005)	kl_loss 0.1790 (0.6791)	acc 100.0000 (86.1250)	lr 1.481754e-03
+epoch [20/50][20/204]	time 0.160 (0.190)	data 0.000 (0.025)	eta 0:19:55	xe_loss 0.2629 (0.4099)	kl_loss 0.7379 (0.6368)	acc 100.0000 (88.7500)	lr 1.425779e-03
+epoch [20/50][40/204]	time 0.162 (0.177)	data 0.000 (0.013)	eta 0:18:29	xe_loss 0.9707 (0.4111)	kl_loss 1.0374 (0.6906)	acc 75.0000 (89.3750)	lr 1.425779e-03
+epoch [20/50][60/204]	time 0.163 (0.172)	data 0.000 (0.009)	eta 0:17:57	xe_loss 0.0914 (0.3702)	kl_loss 0.5846 (0.6800)	acc 100.0000 (90.0000)	lr 1.425779e-03
+epoch [20/50][80/204]	time 0.158 (0.169)	data 0.000 (0.007)	eta 0:17:36	xe_loss 2.0312 (0.4215)	kl_loss 1.4646 (0.7127)	acc 50.0000 (88.1250)	lr 1.425779e-03
+epoch [20/50][100/204]	time 0.109 (0.162)	data 0.000 (0.005)	eta 0:16:50	xe_loss 0.0101 (0.4418)	kl_loss 0.0338 (0.7060)	acc 100.0000 (88.7500)	lr 1.425779e-03
+epoch [20/50][120/204]	time 0.163 (0.157)	data 0.000 (0.004)	eta 0:16:12	xe_loss 0.3992 (0.4957)	kl_loss 0.3571 (0.7225)	acc 75.0000 (87.2917)	lr 1.425779e-03
+epoch [20/50][140/204]	time 0.164 (0.157)	data 0.000 (0.004)	eta 0:16:13	xe_loss 0.7705 (0.4788)	kl_loss 0.8494 (0.7164)	acc 75.0000 (87.3214)	lr 1.425779e-03
+epoch [20/50][160/204]	time 0.157 (0.158)	data 0.000 (0.003)	eta 0:16:13	xe_loss 0.3428 (0.4909)	kl_loss 0.9329 (0.7323)	acc 75.0000 (86.2500)	lr 1.425779e-03
+epoch [20/50][180/204]	time 0.163 (0.159)	data 0.000 (0.003)	eta 0:16:14	xe_loss 0.5405 (0.4777)	kl_loss 0.8822 (0.7290)	acc 75.0000 (86.2500)	lr 1.425779e-03
+epoch [20/50][200/204]	time 0.162 (0.159)	data 0.000 (0.003)	eta 0:16:14	xe_loss 0.4126 (0.4760)	kl_loss 1.3113 (0.7202)	acc 100.0000 (86.1250)	lr 1.425779e-03
+epoch [21/50][20/204]	time 0.129 (0.189)	data 0.000 (0.027)	eta 0:19:14	xe_loss 0.0536 (0.5324)	kl_loss 0.2300 (0.7304)	acc 100.0000 (87.5000)	lr 1.368125e-03
+epoch [21/50][40/204]	time 0.118 (0.155)	data 0.000 (0.013)	eta 0:15:43	xe_loss 0.6621 (0.4871)	kl_loss 0.4764 (0.7715)	acc 75.0000 (85.6250)	lr 1.368125e-03
+epoch [21/50][60/204]	time 0.163 (0.154)	data 0.000 (0.009)	eta 0:15:30	xe_loss 0.3406 (0.4740)	kl_loss 1.4591 (0.7204)	acc 100.0000 (86.2500)	lr 1.368125e-03
+epoch [21/50][80/204]	time 0.175 (0.156)	data 0.000 (0.007)	eta 0:15:42	xe_loss 0.6655 (0.5026)	kl_loss 0.7036 (0.7037)	acc 75.0000 (85.9375)	lr 1.368125e-03
+epoch [21/50][100/204]	time 0.162 (0.157)	data 0.000 (0.006)	eta 0:15:47	xe_loss 0.5752 (0.4803)	kl_loss 0.6644 (0.6795)	acc 75.0000 (86.0000)	lr 1.368125e-03
+epoch [21/50][120/204]	time 0.158 (0.159)	data 0.000 (0.005)	eta 0:15:51	xe_loss 0.2029 (0.4569)	kl_loss 0.6620 (0.6778)	acc 100.0000 (87.0833)	lr 1.368125e-03
+epoch [21/50][140/204]	time 0.167 (0.159)	data 0.000 (0.004)	eta 0:15:51	xe_loss 0.0942 (0.4383)	kl_loss 0.3886 (0.6533)	acc 100.0000 (87.6786)	lr 1.368125e-03
+epoch [21/50][160/204]	time 0.161 (0.160)	data 0.000 (0.004)	eta 0:15:51	xe_loss 0.7627 (0.4613)	kl_loss 0.7381 (0.6736)	acc 75.0000 (86.8750)	lr 1.368125e-03
+epoch [21/50][180/204]	time 0.171 (0.156)	data 0.000 (0.003)	eta 0:15:29	xe_loss 0.1272 (0.4744)	kl_loss 0.5883 (0.6987)	acc 100.0000 (86.5278)	lr 1.368125e-03
+epoch [21/50][200/204]	time 0.162 (0.157)	data 0.000 (0.003)	eta 0:15:30	xe_loss 0.7671 (0.4795)	kl_loss 0.7635 (0.7020)	acc 75.0000 (86.6250)	lr 1.368125e-03
+epoch [22/50][20/204]	time 0.161 (0.188)	data 0.000 (0.025)	eta 0:18:25	xe_loss 0.2930 (0.5211)	kl_loss 1.1506 (0.7781)	acc 100.0000 (83.7500)	lr 1.309017e-03
+epoch [22/50][40/204]	time 0.167 (0.176)	data 0.000 (0.013)	eta 0:17:13	xe_loss 0.3545 (0.5204)	kl_loss 0.2733 (0.7641)	acc 75.0000 (86.2500)	lr 1.309017e-03
+epoch [22/50][60/204]	time 0.170 (0.172)	data 0.000 (0.008)	eta 0:16:48	xe_loss 0.2949 (0.4724)	kl_loss 0.7544 (0.7091)	acc 100.0000 (86.2500)	lr 1.309017e-03
+epoch [22/50][80/204]	time 0.165 (0.170)	data 0.000 (0.006)	eta 0:16:32	xe_loss 0.0652 (0.4618)	kl_loss 0.4848 (0.7066)	acc 100.0000 (86.5625)	lr 1.309017e-03
+epoch [22/50][100/204]	time 0.115 (0.163)	data 0.000 (0.005)	eta 0:15:45	xe_loss 0.0525 (0.4396)	kl_loss 0.3377 (0.6953)	acc 100.0000 (87.2500)	lr 1.309017e-03
+epoch [22/50][120/204]	time 0.162 (0.162)	data 0.000 (0.004)	eta 0:15:40	xe_loss 0.1594 (0.4254)	kl_loss 0.8095 (0.6911)	acc 100.0000 (87.7083)	lr 1.309017e-03
+epoch [22/50][140/204]	time 0.171 (0.162)	data 0.000 (0.004)	eta 0:15:38	xe_loss 0.8037 (0.4486)	kl_loss 0.5335 (0.7092)	acc 75.0000 (87.1429)	lr 1.309017e-03
+epoch [22/50][160/204]	time 0.161 (0.163)	data 0.000 (0.003)	eta 0:15:36	xe_loss 0.6582 (0.4501)	kl_loss 0.4101 (0.7086)	acc 75.0000 (87.3438)	lr 1.309017e-03
+epoch [22/50][180/204]	time 0.158 (0.163)	data 0.000 (0.003)	eta 0:15:33	xe_loss 0.6997 (0.4319)	kl_loss 1.1249 (0.6892)	acc 75.0000 (87.6389)	lr 1.309017e-03
+epoch [22/50][200/204]	time 0.166 (0.163)	data 0.000 (0.003)	eta 0:15:31	xe_loss 0.1427 (0.4228)	kl_loss 0.8862 (0.6972)	acc 100.0000 (88.1250)	lr 1.309017e-03
+epoch [23/50][20/204]	time 0.131 (0.163)	data 0.000 (0.025)	eta 0:15:27	xe_loss 0.2192 (0.3358)	kl_loss 1.0686 (0.6709)	acc 100.0000 (91.2500)	lr 1.248690e-03
+epoch [23/50][40/204]	time 0.157 (0.145)	data 0.000 (0.013)	eta 0:13:40	xe_loss 0.0063 (0.3613)	kl_loss 0.0941 (0.6840)	acc 100.0000 (88.7500)	lr 1.248690e-03
+epoch [23/50][60/204]	time 0.161 (0.150)	data 0.000 (0.009)	eta 0:14:08	xe_loss 0.0510 (0.3935)	kl_loss 0.4284 (0.6575)	acc 100.0000 (87.5000)	lr 1.248690e-03
+epoch [23/50][80/204]	time 0.162 (0.153)	data 0.000 (0.006)	eta 0:14:21	xe_loss 0.6504 (0.4008)	kl_loss 1.0778 (0.6634)	acc 75.0000 (87.8125)	lr 1.248690e-03
+epoch [23/50][100/204]	time 0.168 (0.155)	data 0.000 (0.005)	eta 0:14:29	xe_loss 0.0800 (0.4131)	kl_loss 0.5991 (0.6826)	acc 100.0000 (88.0000)	lr 1.248690e-03
+epoch [23/50][120/204]	time 0.157 (0.156)	data 0.000 (0.004)	eta 0:14:31	xe_loss 0.1370 (0.4105)	kl_loss 0.3549 (0.6730)	acc 100.0000 (87.9167)	lr 1.248690e-03
+epoch [23/50][140/204]	time 0.162 (0.157)	data 0.000 (0.004)	eta 0:14:35	xe_loss 0.6484 (0.4184)	kl_loss 0.1262 (0.6786)	acc 75.0000 (87.8571)	lr 1.248690e-03
+epoch [23/50][160/204]	time 0.120 (0.155)	data 0.000 (0.003)	eta 0:14:21	xe_loss 0.6792 (0.4380)	kl_loss 1.1573 (0.7010)	acc 75.0000 (87.1875)	lr 1.248690e-03
+epoch [23/50][180/204]	time 0.167 (0.155)	data 0.000 (0.003)	eta 0:14:16	xe_loss 0.2264 (0.4303)	kl_loss 0.8430 (0.6899)	acc 100.0000 (87.2222)	lr 1.248690e-03
+epoch [23/50][200/204]	time 0.166 (0.156)	data 0.000 (0.003)	eta 0:14:17	xe_loss 0.1545 (0.4676)	kl_loss 0.6476 (0.7111)	acc 100.0000 (86.2500)	lr 1.248690e-03
+epoch [24/50][20/204]	time 0.158 (0.192)	data 0.000 (0.025)	eta 0:17:31	xe_loss 0.2791 (0.4115)	kl_loss 0.4864 (0.6817)	acc 100.0000 (90.0000)	lr 1.187381e-03
+epoch [24/50][40/204]	time 0.172 (0.178)	data 0.000 (0.013)	eta 0:16:13	xe_loss 0.1580 (0.3176)	kl_loss 0.8622 (0.6503)	acc 100.0000 (93.1250)	lr 1.187381e-03
+epoch [24/50][60/204]	time 0.164 (0.174)	data 0.000 (0.009)	eta 0:15:45	xe_loss 0.6943 (0.3086)	kl_loss 0.8891 (0.6249)	acc 50.0000 (92.5000)	lr 1.187381e-03
+epoch [24/50][80/204]	time 0.106 (0.167)	data 0.000 (0.006)	eta 0:15:08	xe_loss 0.5117 (0.3578)	kl_loss 0.4181 (0.6530)	acc 75.0000 (90.9375)	lr 1.187381e-03
+epoch [24/50][100/204]	time 0.116 (0.158)	data 0.000 (0.005)	eta 0:14:16	xe_loss 0.2800 (0.3889)	kl_loss 1.1259 (0.6781)	acc 100.0000 (89.5000)	lr 1.187381e-03
+epoch [24/50][120/204]	time 0.177 (0.159)	data 0.000 (0.004)	eta 0:14:15	xe_loss 0.0198 (0.3979)	kl_loss 0.2193 (0.6664)	acc 100.0000 (89.1667)	lr 1.187381e-03
+epoch [24/50][140/204]	time 0.157 (0.159)	data 0.000 (0.004)	eta 0:14:15	xe_loss 0.0070 (0.4043)	kl_loss 0.0604 (0.6807)	acc 100.0000 (88.3929)	lr 1.187381e-03
+epoch [24/50][160/204]	time 0.163 (0.160)	data 0.000 (0.003)	eta 0:14:15	xe_loss 0.2405 (0.4117)	kl_loss 0.3391 (0.6856)	acc 75.0000 (88.1250)	lr 1.187381e-03
+epoch [24/50][180/204]	time 0.171 (0.160)	data 0.000 (0.003)	eta 0:14:14	xe_loss 0.2793 (0.4140)	kl_loss 0.8731 (0.6790)	acc 100.0000 (87.9167)	lr 1.187381e-03
+epoch [24/50][200/204]	time 0.164 (0.161)	data 0.000 (0.003)	eta 0:14:13	xe_loss 0.2048 (0.4411)	kl_loss 0.3575 (0.6854)	acc 75.0000 (87.0000)	lr 1.187381e-03
+epoch [25/50][20/204]	time 0.120 (0.166)	data 0.000 (0.025)	eta 0:14:37	xe_loss 0.0396 (0.4797)	kl_loss 0.2110 (0.6690)	acc 100.0000 (86.2500)	lr 1.125333e-03
+epoch [25/50][40/204]	time 0.171 (0.159)	data 0.000 (0.013)	eta 0:13:55	xe_loss 0.2229 (0.4437)	kl_loss 0.7432 (0.6529)	acc 100.0000 (88.1250)	lr 1.125333e-03
+epoch [25/50][60/204]	time 0.086 (0.145)	data 0.000 (0.009)	eta 0:12:41	xe_loss 0.0515 (0.4692)	kl_loss 0.5366 (0.6597)	acc 100.0000 (87.0833)	lr 1.125333e-03
+epoch [25/50][80/204]	time 0.164 (0.149)	data 0.000 (0.007)	eta 0:12:56	xe_loss 0.4495 (0.4884)	kl_loss 1.0538 (0.6655)	acc 100.0000 (86.8750)	lr 1.125333e-03
+epoch [25/50][100/204]	time 0.165 (0.152)	data 0.000 (0.005)	eta 0:13:13	xe_loss 0.0273 (0.4886)	kl_loss 0.3371 (0.6580)	acc 100.0000 (86.2500)	lr 1.125333e-03
+epoch [25/50][120/204]	time 0.166 (0.155)	data 0.000 (0.005)	eta 0:13:24	xe_loss 0.1185 (0.4963)	kl_loss 0.4565 (0.6427)	acc 100.0000 (85.8333)	lr 1.125333e-03
+epoch [25/50][140/204]	time 0.171 (0.157)	data 0.000 (0.004)	eta 0:13:28	xe_loss 0.0268 (0.5012)	kl_loss 0.2749 (0.6564)	acc 100.0000 (85.3571)	lr 1.125333e-03
+epoch [25/50][160/204]	time 0.152 (0.153)	data 0.000 (0.004)	eta 0:13:08	xe_loss 0.6978 (0.5280)	kl_loss 0.6982 (0.6821)	acc 75.0000 (83.9062)	lr 1.125333e-03
+epoch [25/50][180/204]	time 0.170 (0.155)	data 0.000 (0.003)	eta 0:13:11	xe_loss 0.0356 (0.5227)	kl_loss 0.4146 (0.6889)	acc 100.0000 (84.3056)	lr 1.125333e-03
+epoch [25/50][200/204]	time 0.156 (0.156)	data 0.000 (0.003)	eta 0:13:13	xe_loss 0.7939 (0.5280)	kl_loss 0.5991 (0.7000)	acc 75.0000 (84.2500)	lr 1.125333e-03
+epoch [26/50][20/204]	time 0.164 (0.191)	data 0.001 (0.028)	eta 0:16:07	xe_loss 0.1048 (0.5237)	kl_loss 0.3793 (0.6586)	acc 100.0000 (87.5000)	lr 1.062791e-03
+epoch [26/50][40/204]	time 0.174 (0.181)	data 0.000 (0.015)	eta 0:15:16	xe_loss 0.4934 (0.4481)	kl_loss 1.3399 (0.6994)	acc 100.0000 (89.3750)	lr 1.062791e-03
+epoch [26/50][60/204]	time 0.160 (0.176)	data 0.000 (0.011)	eta 0:14:47	xe_loss 2.0020 (0.4952)	kl_loss 1.1483 (0.7309)	acc 75.0000 (88.7500)	lr 1.062791e-03
+epoch [26/50][80/204]	time 0.122 (0.169)	data 0.000 (0.009)	eta 0:14:08	xe_loss 0.2517 (0.4544)	kl_loss 0.6016 (0.7214)	acc 100.0000 (89.6875)	lr 1.062791e-03
+epoch [26/50][100/204]	time 0.160 (0.162)	data 0.000 (0.007)	eta 0:13:30	xe_loss 1.4277 (0.4808)	kl_loss 1.6284 (0.7378)	acc 50.0000 (87.7500)	lr 1.062791e-03
+epoch [26/50][120/204]	time 0.136 (0.159)	data 0.000 (0.007)	eta 0:13:09	xe_loss 0.0540 (0.4689)	kl_loss 0.3729 (0.7392)	acc 100.0000 (87.7083)	lr 1.062791e-03
+epoch [26/50][140/204]	time 0.161 (0.163)	data 0.001 (0.007)	eta 0:13:26	xe_loss 0.5029 (0.4838)	kl_loss 0.3768 (0.7369)	acc 75.0000 (86.2500)	lr 1.062791e-03
+epoch [26/50][160/204]	time 0.206 (0.165)	data 0.000 (0.006)	eta 0:13:32	xe_loss 0.4902 (0.4695)	kl_loss 0.5413 (0.7220)	acc 75.0000 (86.5625)	lr 1.062791e-03
+epoch [26/50][180/204]	time 0.169 (0.167)	data 0.000 (0.006)	eta 0:13:41	xe_loss 0.2466 (0.4691)	kl_loss 0.5282 (0.7258)	acc 100.0000 (86.5278)	lr 1.062791e-03
+epoch [26/50][200/204]	time 0.180 (0.169)	data 0.000 (0.005)	eta 0:13:47	xe_loss 0.7134 (0.4530)	kl_loss 1.0842 (0.7064)	acc 75.0000 (87.0000)	lr 1.062791e-03
+epoch [27/50][20/204]	time 0.063 (0.137)	data 0.000 (0.039)	eta 0:11:09	xe_loss 0.3376 (0.6748)	kl_loss 0.7101 (0.8366)	acc 100.0000 (83.7500)	lr 1.000000e-03
+epoch [27/50][40/204]	time 0.180 (0.158)	data 0.000 (0.020)	eta 0:12:47	xe_loss 0.7979 (0.5538)	kl_loss 1.3890 (0.7514)	acc 50.0000 (83.7500)	lr 1.000000e-03
+epoch [27/50][60/204]	time 0.112 (0.145)	data 0.000 (0.013)	eta 0:11:43	xe_loss 0.0431 (0.5651)	kl_loss 0.2648 (0.7209)	acc 100.0000 (84.1667)	lr 1.000000e-03
+epoch [27/50][80/204]	time 0.116 (0.138)	data 0.000 (0.010)	eta 0:11:05	xe_loss 0.0050 (0.5766)	kl_loss 0.0887 (0.7107)	acc 100.0000 (83.4375)	lr 1.000000e-03
+epoch [27/50][100/204]	time 0.109 (0.134)	data 0.000 (0.008)	eta 0:10:40	xe_loss 0.0117 (0.5475)	kl_loss 0.1207 (0.6985)	acc 100.0000 (84.5000)	lr 1.000000e-03
+epoch [27/50][120/204]	time 0.118 (0.131)	data 0.000 (0.007)	eta 0:10:23	xe_loss 0.1262 (0.5397)	kl_loss 0.3015 (0.7005)	acc 100.0000 (85.0000)	lr 1.000000e-03
+epoch [27/50][140/204]	time 0.112 (0.128)	data 0.000 (0.006)	eta 0:10:10	xe_loss 0.1422 (0.5160)	kl_loss 0.5861 (0.6925)	acc 100.0000 (85.1786)	lr 1.000000e-03
+epoch [27/50][160/204]	time 0.114 (0.127)	data 0.000 (0.005)	eta 0:10:00	xe_loss 0.2708 (0.5111)	kl_loss 0.3194 (0.6935)	acc 75.0000 (85.7812)	lr 1.000000e-03
+epoch [27/50][180/204]	time 0.119 (0.126)	data 0.000 (0.005)	eta 0:09:53	xe_loss 0.1420 (0.5039)	kl_loss 0.4391 (0.6965)	acc 100.0000 (85.5556)	lr 1.000000e-03
+epoch [27/50][200/204]	time 0.129 (0.125)	data 0.000 (0.004)	eta 0:09:48	xe_loss 0.0150 (0.4881)	kl_loss 0.1400 (0.7081)	acc 100.0000 (86.1250)	lr 1.000000e-03
+epoch [28/50][20/204]	time 0.119 (0.147)	data 0.000 (0.032)	eta 0:11:27	xe_loss 0.3669 (0.4389)	kl_loss 0.8087 (0.7724)	acc 75.0000 (85.0000)	lr 9.372095e-04
+epoch [28/50][40/204]	time 0.117 (0.132)	data 0.000 (0.016)	eta 0:10:12	xe_loss 0.6479 (0.4506)	kl_loss 1.0216 (0.8209)	acc 75.0000 (86.2500)	lr 9.372095e-04
+epoch [28/50][60/204]	time 0.118 (0.126)	data 0.000 (0.011)	eta 0:09:45	xe_loss 0.5283 (0.3569)	kl_loss 1.4153 (0.7153)	acc 100.0000 (89.1667)	lr 9.372095e-04
+epoch [28/50][80/204]	time 0.189 (0.131)	data 0.004 (0.008)	eta 0:10:02	xe_loss 1.3379 (0.4037)	kl_loss 1.1592 (0.7127)	acc 75.0000 (88.4375)	lr 9.372095e-04
+epoch [28/50][100/204]	time 0.166 (0.140)	data 0.000 (0.007)	eta 0:10:43	xe_loss 0.1237 (0.3989)	kl_loss 0.7988 (0.7001)	acc 100.0000 (88.7500)	lr 9.372095e-04
+epoch [28/50][120/204]	time 0.182 (0.146)	data 0.000 (0.006)	eta 0:11:08	xe_loss 0.2396 (0.4634)	kl_loss 0.6102 (0.7364)	acc 100.0000 (87.0833)	lr 9.372095e-04
+epoch [28/50][140/204]	time 0.179 (0.151)	data 0.000 (0.005)	eta 0:11:28	xe_loss 0.2905 (0.4771)	kl_loss 0.9682 (0.7209)	acc 100.0000 (87.1429)	lr 9.372095e-04
+epoch [28/50][160/204]	time 0.188 (0.155)	data 0.000 (0.004)	eta 0:11:41	xe_loss 0.0738 (0.4753)	kl_loss 0.2429 (0.7098)	acc 100.0000 (86.7188)	lr 9.372095e-04
+epoch [28/50][180/204]	time 0.176 (0.158)	data 0.000 (0.004)	eta 0:11:51	xe_loss 0.0120 (0.4905)	kl_loss 0.4357 (0.7192)	acc 100.0000 (86.6667)	lr 9.372095e-04
+epoch [28/50][200/204]	time 0.140 (0.160)	data 0.004 (0.004)	eta 0:11:56	xe_loss 1.8330 (0.5165)	kl_loss 1.0173 (0.7113)	acc 50.0000 (85.7500)	lr 9.372095e-04
+epoch [29/50][20/204]	time 0.115 (0.143)	data 0.000 (0.028)	eta 0:10:40	xe_loss 1.0830 (0.5115)	kl_loss 1.3373 (0.7220)	acc 50.0000 (82.5000)	lr 8.746668e-04
+epoch [29/50][40/204]	time 0.123 (0.130)	data 0.000 (0.014)	eta 0:09:36	xe_loss 0.4321 (0.4435)	kl_loss 1.1263 (0.7204)	acc 100.0000 (86.2500)	lr 8.746668e-04
+epoch [29/50][60/204]	time 0.118 (0.125)	data 0.000 (0.009)	eta 0:09:13	xe_loss 0.8662 (0.4733)	kl_loss 1.4819 (0.7414)	acc 50.0000 (85.0000)	lr 8.746668e-04
+epoch [29/50][80/204]	time 0.113 (0.122)	data 0.000 (0.007)	eta 0:08:59	xe_loss 0.0355 (0.4909)	kl_loss 0.3418 (0.7289)	acc 100.0000 (85.3125)	lr 8.746668e-04
+epoch [29/50][100/204]	time 0.108 (0.122)	data 0.000 (0.006)	eta 0:08:54	xe_loss 0.2954 (0.5085)	kl_loss 0.3597 (0.7501)	acc 75.0000 (85.2500)	lr 8.746668e-04
+epoch [29/50][120/204]	time 0.123 (0.122)	data 0.000 (0.005)	eta 0:08:51	xe_loss 0.0344 (0.4583)	kl_loss 0.3216 (0.7131)	acc 100.0000 (87.0833)	lr 8.746668e-04
+epoch [29/50][140/204]	time 0.135 (0.121)	data 0.013 (0.005)	eta 0:08:47	xe_loss 0.3704 (0.4566)	kl_loss 1.2594 (0.7119)	acc 100.0000 (87.3214)	lr 8.746668e-04
+epoch [29/50][160/204]	time 0.115 (0.121)	data 0.004 (0.004)	eta 0:08:43	xe_loss 0.2367 (0.4700)	kl_loss 0.3759 (0.7000)	acc 75.0000 (87.1875)	lr 8.746668e-04
+epoch [29/50][180/204]	time 0.130 (0.121)	data 0.007 (0.004)	eta 0:08:39	xe_loss 0.0574 (0.4509)	kl_loss 0.3655 (0.6861)	acc 100.0000 (87.3611)	lr 8.746668e-04
+epoch [29/50][200/204]	time 0.145 (0.121)	data 0.000 (0.004)	eta 0:08:37	xe_loss 0.2267 (0.4645)	kl_loss 1.1158 (0.6980)	acc 100.0000 (87.1250)	lr 8.746668e-04
+epoch [30/50][20/204]	time 0.173 (0.198)	data 0.000 (0.034)	eta 0:14:04	xe_loss 0.3145 (0.5184)	kl_loss 0.6531 (0.6493)	acc 100.0000 (85.0000)	lr 8.126187e-04
+epoch [30/50][40/204]	time 0.164 (0.181)	data 0.000 (0.017)	eta 0:12:49	xe_loss 0.5942 (0.4344)	kl_loss 0.8747 (0.6212)	acc 75.0000 (89.3750)	lr 8.126187e-04
+epoch [30/50][60/204]	time 0.162 (0.176)	data 0.000 (0.012)	eta 0:12:22	xe_loss 1.7939 (0.4705)	kl_loss 1.0261 (0.6845)	acc 50.0000 (87.0833)	lr 8.126187e-04
+epoch [30/50][80/204]	time 0.171 (0.173)	data 0.000 (0.009)	eta 0:12:06	xe_loss 0.7930 (0.4517)	kl_loss 0.4724 (0.6859)	acc 75.0000 (87.5000)	lr 8.126187e-04
+epoch [30/50][100/204]	time 0.161 (0.171)	data 0.000 (0.007)	eta 0:11:55	xe_loss 0.0528 (0.4502)	kl_loss 0.2409 (0.6835)	acc 100.0000 (87.5000)	lr 8.126187e-04
+epoch [30/50][120/204]	time 0.119 (0.164)	data 0.000 (0.006)	eta 0:11:24	xe_loss 0.1226 (0.4491)	kl_loss 0.6314 (0.6957)	acc 100.0000 (87.5000)	lr 8.126187e-04
+epoch [30/50][140/204]	time 0.166 (0.162)	data 0.000 (0.005)	eta 0:11:09	xe_loss 0.0349 (0.4432)	kl_loss 0.1820 (0.7022)	acc 100.0000 (87.5000)	lr 8.126187e-04
+epoch [30/50][160/204]	time 0.162 (0.162)	data 0.000 (0.005)	eta 0:11:06	xe_loss 0.0903 (0.4497)	kl_loss 0.2919 (0.7026)	acc 100.0000 (87.1875)	lr 8.126187e-04
+epoch [30/50][180/204]	time 0.150 (0.162)	data 0.000 (0.004)	eta 0:11:03	xe_loss 0.1588 (0.4355)	kl_loss 0.9820 (0.6889)	acc 100.0000 (87.6389)	lr 8.126187e-04
+epoch [30/50][200/204]	time 0.164 (0.162)	data 0.000 (0.004)	eta 0:11:00	xe_loss 1.2939 (0.4507)	kl_loss 0.7129 (0.7007)	acc 75.0000 (86.7500)	lr 8.126187e-04
+epoch [31/50][20/204]	time 0.164 (0.191)	data 0.000 (0.028)	eta 0:12:55	xe_loss 0.0739 (0.5023)	kl_loss 0.5556 (0.8363)	acc 100.0000 (85.0000)	lr 7.513101e-04
+epoch [31/50][40/204]	time 0.121 (0.167)	data 0.000 (0.014)	eta 0:11:14	xe_loss 0.0158 (0.4319)	kl_loss 0.1447 (0.7801)	acc 100.0000 (87.5000)	lr 7.513101e-04
+epoch [31/50][60/204]	time 0.134 (0.152)	data 0.000 (0.009)	eta 0:10:11	xe_loss 0.1754 (0.4342)	kl_loss 0.6216 (0.7576)	acc 100.0000 (87.0833)	lr 7.513101e-04
+epoch [31/50][80/204]	time 0.158 (0.155)	data 0.000 (0.007)	eta 0:10:21	xe_loss 1.4346 (0.4422)	kl_loss 0.8596 (0.7777)	acc 50.0000 (87.5000)	lr 7.513101e-04
+epoch [31/50][100/204]	time 0.171 (0.157)	data 0.000 (0.006)	eta 0:10:25	xe_loss 0.8311 (0.4207)	kl_loss 0.9047 (0.7442)	acc 75.0000 (88.5000)	lr 7.513101e-04
+epoch [31/50][120/204]	time 0.161 (0.158)	data 0.000 (0.005)	eta 0:10:26	xe_loss 0.6445 (0.4359)	kl_loss 0.2583 (0.7381)	acc 75.0000 (88.7500)	lr 7.513101e-04
+epoch [31/50][140/204]	time 0.168 (0.159)	data 0.000 (0.004)	eta 0:10:27	xe_loss 0.1348 (0.4325)	kl_loss 0.4760 (0.7302)	acc 100.0000 (88.0357)	lr 7.513101e-04
+epoch [31/50][160/204]	time 0.162 (0.160)	data 0.000 (0.004)	eta 0:10:26	xe_loss 0.0783 (0.4377)	kl_loss 0.3463 (0.7373)	acc 100.0000 (87.6562)	lr 7.513101e-04
+epoch [31/50][180/204]	time 0.117 (0.159)	data 0.000 (0.003)	eta 0:10:18	xe_loss 0.1005 (0.4673)	kl_loss 0.5093 (0.7482)	acc 100.0000 (86.5278)	lr 7.513101e-04
+epoch [31/50][200/204]	time 0.119 (0.155)	data 0.000 (0.003)	eta 0:10:01	xe_loss 0.2749 (0.4567)	kl_loss 0.8437 (0.7505)	acc 100.0000 (86.7500)	lr 7.513101e-04
+epoch [32/50][20/204]	time 0.166 (0.190)	data 0.000 (0.027)	eta 0:12:12	xe_loss 1.0156 (0.5141)	kl_loss 0.7778 (0.7669)	acc 75.0000 (83.7500)	lr 6.909830e-04
+epoch [32/50][40/204]	time 0.161 (0.177)	data 0.000 (0.013)	eta 0:11:20	xe_loss 0.5947 (0.4969)	kl_loss 0.7618 (0.6795)	acc 75.0000 (85.6250)	lr 6.909830e-04
+epoch [32/50][60/204]	time 0.162 (0.173)	data 0.000 (0.009)	eta 0:10:59	xe_loss 1.5664 (0.5120)	kl_loss 1.1971 (0.7216)	acc 50.0000 (85.0000)	lr 6.909830e-04
+epoch [32/50][80/204]	time 0.168 (0.171)	data 0.000 (0.007)	eta 0:10:48	xe_loss 0.0437 (0.4771)	kl_loss 0.2518 (0.7202)	acc 100.0000 (85.9375)	lr 6.909830e-04
+epoch [32/50][100/204]	time 0.159 (0.170)	data 0.000 (0.006)	eta 0:10:40	xe_loss 0.1978 (0.4602)	kl_loss 0.8427 (0.7029)	acc 100.0000 (86.2500)	lr 6.909830e-04
+epoch [32/50][120/204]	time 0.181 (0.165)	data 0.000 (0.005)	eta 0:10:18	xe_loss 0.0114 (0.4719)	kl_loss 0.2318 (0.6918)	acc 100.0000 (86.6667)	lr 6.909830e-04
+epoch [32/50][140/204]	time 0.163 (0.159)	data 0.000 (0.004)	eta 0:09:55	xe_loss 0.4890 (0.4830)	kl_loss 0.6059 (0.7196)	acc 75.0000 (85.7143)	lr 6.909830e-04
+epoch [32/50][160/204]	time 0.167 (0.160)	data 0.000 (0.004)	eta 0:09:55	xe_loss 0.1008 (0.4905)	kl_loss 0.3771 (0.7326)	acc 100.0000 (85.3125)	lr 6.909830e-04
+epoch [32/50][180/204]	time 0.165 (0.161)	data 0.000 (0.003)	eta 0:09:53	xe_loss 0.3528 (0.4949)	kl_loss 0.9565 (0.7364)	acc 100.0000 (85.2778)	lr 6.909830e-04
+epoch [32/50][200/204]	time 0.157 (0.161)	data 0.000 (0.003)	eta 0:09:51	xe_loss 0.3062 (0.4983)	kl_loss 0.5744 (0.7510)	acc 75.0000 (85.1250)	lr 6.909830e-04
+epoch [33/50][20/204]	time 0.160 (0.192)	data 0.000 (0.028)	eta 0:11:42	xe_loss 0.8130 (0.4462)	kl_loss 0.9168 (0.7725)	acc 75.0000 (87.5000)	lr 6.318754e-04
+epoch [33/50][40/204]	time 0.170 (0.178)	data 0.000 (0.014)	eta 0:10:48	xe_loss 1.9844 (0.4298)	kl_loss 1.4150 (0.6919)	acc 50.0000 (88.1250)	lr 6.318754e-04
+epoch [33/50][60/204]	time 0.107 (0.160)	data 0.000 (0.010)	eta 0:09:37	xe_loss 0.0445 (0.4633)	kl_loss 0.3063 (0.6966)	acc 100.0000 (87.5000)	lr 6.318754e-04
+epoch [33/50][80/204]	time 0.153 (0.156)	data 0.000 (0.007)	eta 0:09:20	xe_loss 0.2284 (0.4945)	kl_loss 0.4566 (0.7108)	acc 75.0000 (86.8750)	lr 6.318754e-04
+epoch [33/50][100/204]	time 0.163 (0.157)	data 0.000 (0.006)	eta 0:09:20	xe_loss 0.8228 (0.5296)	kl_loss 0.9605 (0.7525)	acc 75.0000 (85.7500)	lr 6.318754e-04
+epoch [33/50][120/204]	time 0.161 (0.158)	data 0.000 (0.005)	eta 0:09:20	xe_loss 0.9478 (0.5441)	kl_loss 0.9794 (0.7544)	acc 75.0000 (85.0000)	lr 6.318754e-04
+epoch [33/50][140/204]	time 0.159 (0.158)	data 0.000 (0.004)	eta 0:09:18	xe_loss 1.0723 (0.5399)	kl_loss 0.5888 (0.7546)	acc 75.0000 (85.1786)	lr 6.318754e-04
+epoch [33/50][160/204]	time 0.169 (0.159)	data 0.000 (0.004)	eta 0:09:17	xe_loss 0.8442 (0.5429)	kl_loss 1.1366 (0.7440)	acc 75.0000 (85.3125)	lr 6.318754e-04
+epoch [33/50][180/204]	time 0.172 (0.159)	data 0.000 (0.003)	eta 0:09:15	xe_loss 1.6133 (0.5571)	kl_loss 0.9855 (0.7502)	acc 50.0000 (85.2778)	lr 6.318754e-04
+epoch [33/50][200/204]	time 0.114 (0.156)	data 0.000 (0.003)	eta 0:09:01	xe_loss 0.5576 (0.5433)	kl_loss 0.6807 (0.7450)	acc 75.0000 (85.5000)	lr 6.318754e-04
+epoch [34/50][20/204]	time 0.154 (0.192)	data 0.000 (0.029)	eta 0:11:01	xe_loss 0.4329 (0.5427)	kl_loss 1.0892 (0.9267)	acc 100.0000 (83.7500)	lr 5.742207e-04
+epoch [34/50][40/204]	time 0.167 (0.178)	data 0.000 (0.015)	eta 0:10:10	xe_loss 0.6802 (0.5096)	kl_loss 0.8762 (0.9091)	acc 75.0000 (83.7500)	lr 5.742207e-04
+epoch [34/50][60/204]	time 0.165 (0.173)	data 0.000 (0.010)	eta 0:09:49	xe_loss 0.9751 (0.4368)	kl_loss 0.7436 (0.8300)	acc 75.0000 (87.0833)	lr 5.742207e-04
+epoch [34/50][80/204]	time 0.167 (0.171)	data 0.000 (0.007)	eta 0:09:38	xe_loss 0.4932 (0.4591)	kl_loss 1.1147 (0.8198)	acc 75.0000 (86.2500)	lr 5.742207e-04
+epoch [34/50][100/204]	time 0.155 (0.170)	data 0.000 (0.006)	eta 0:09:31	xe_loss 1.5166 (0.4664)	kl_loss 1.1972 (0.7766)	acc 50.0000 (87.0000)	lr 5.742207e-04
+epoch [34/50][120/204]	time 0.119 (0.166)	data 0.000 (0.005)	eta 0:09:16	xe_loss 0.0414 (0.4471)	kl_loss 0.3701 (0.7617)	acc 100.0000 (87.7083)	lr 5.742207e-04
+epoch [34/50][140/204]	time 0.116 (0.160)	data 0.000 (0.004)	eta 0:08:52	xe_loss 1.9023 (0.4616)	kl_loss 1.1461 (0.7533)	acc 75.0000 (87.5000)	lr 5.742207e-04
+epoch [34/50][160/204]	time 0.162 (0.160)	data 0.000 (0.004)	eta 0:08:48	xe_loss 0.8032 (0.4510)	kl_loss 0.7488 (0.7436)	acc 75.0000 (87.8125)	lr 5.742207e-04
+epoch [34/50][180/204]	time 0.160 (0.160)	data 0.000 (0.003)	eta 0:08:46	xe_loss 0.5347 (0.4525)	kl_loss 0.5941 (0.7474)	acc 75.0000 (87.7778)	lr 5.742207e-04
+epoch [34/50][200/204]	time 0.168 (0.161)	data 0.000 (0.003)	eta 0:08:45	xe_loss 1.4014 (0.4505)	kl_loss 0.8130 (0.7325)	acc 50.0000 (87.7500)	lr 5.742207e-04
+epoch [35/50][20/204]	time 0.162 (0.193)	data 0.000 (0.029)	eta 0:10:24	xe_loss 0.6880 (0.3907)	kl_loss 1.0370 (0.6670)	acc 75.0000 (90.0000)	lr 5.182463e-04
+epoch [35/50][40/204]	time 0.162 (0.178)	data 0.000 (0.015)	eta 0:09:33	xe_loss 0.3479 (0.4272)	kl_loss 1.3299 (0.7650)	acc 100.0000 (90.0000)	lr 5.182463e-04
+epoch [35/50][60/204]	time 0.171 (0.165)	data 0.000 (0.010)	eta 0:08:49	xe_loss 2.4453 (0.4567)	kl_loss 0.6845 (0.7344)	acc 75.0000 (88.3333)	lr 5.182463e-04
+epoch [35/50][80/204]	time 0.161 (0.156)	data 0.000 (0.007)	eta 0:08:16	xe_loss 0.8501 (0.4629)	kl_loss 0.2288 (0.7330)	acc 75.0000 (86.8750)	lr 5.182463e-04
+epoch [35/50][100/204]	time 0.165 (0.158)	data 0.000 (0.006)	eta 0:08:18	xe_loss 0.3115 (0.4675)	kl_loss 1.3051 (0.7459)	acc 100.0000 (86.7500)	lr 5.182463e-04
+epoch [35/50][120/204]	time 0.159 (0.159)	data 0.000 (0.005)	eta 0:08:19	xe_loss 0.0700 (0.4478)	kl_loss 0.6168 (0.7420)	acc 100.0000 (86.8750)	lr 5.182463e-04
+epoch [35/50][140/204]	time 0.174 (0.160)	data 0.005 (0.004)	eta 0:08:18	xe_loss 0.8027 (0.4482)	kl_loss 0.7730 (0.7215)	acc 75.0000 (86.7857)	lr 5.182463e-04
+epoch [35/50][160/204]	time 0.172 (0.160)	data 0.000 (0.004)	eta 0:08:16	xe_loss 1.0967 (0.4579)	kl_loss 0.4029 (0.7107)	acc 75.0000 (86.2500)	lr 5.182463e-04
+epoch [35/50][180/204]	time 0.163 (0.160)	data 0.000 (0.004)	eta 0:08:14	xe_loss 1.5703 (0.4875)	kl_loss 0.7465 (0.7115)	acc 50.0000 (85.6944)	lr 5.182463e-04
+epoch [35/50][200/204]	time 0.117 (0.159)	data 0.000 (0.003)	eta 0:08:06	xe_loss 0.3120 (0.4871)	kl_loss 0.7562 (0.7159)	acc 100.0000 (86.0000)	lr 5.182463e-04
+epoch [36/50][20/204]	time 0.166 (0.160)	data 0.000 (0.036)	eta 0:08:06	xe_loss 0.0572 (0.3986)	kl_loss 0.3774 (0.6714)	acc 100.0000 (87.5000)	lr 4.641732e-04
+epoch [36/50][40/204]	time 0.157 (0.161)	data 0.000 (0.019)	eta 0:08:05	xe_loss 0.1316 (0.4417)	kl_loss 0.8139 (0.7616)	acc 100.0000 (86.8750)	lr 4.641732e-04
+epoch [36/50][60/204]	time 0.163 (0.162)	data 0.000 (0.013)	eta 0:08:05	xe_loss 0.0477 (0.4538)	kl_loss 0.3269 (0.7406)	acc 100.0000 (85.8333)	lr 4.641732e-04
+epoch [36/50][80/204]	time 0.160 (0.161)	data 0.000 (0.010)	eta 0:08:01	xe_loss 0.9814 (0.4463)	kl_loss 1.1606 (0.7274)	acc 50.0000 (85.9375)	lr 4.641732e-04
+epoch [36/50][100/204]	time 0.149 (0.162)	data 0.000 (0.008)	eta 0:07:58	xe_loss 0.9121 (0.4751)	kl_loss 0.4436 (0.7226)	acc 50.0000 (85.5000)	lr 4.641732e-04
+epoch [36/50][120/204]	time 0.156 (0.162)	data 0.000 (0.007)	eta 0:07:56	xe_loss 0.0321 (0.4748)	kl_loss 0.2412 (0.7363)	acc 100.0000 (86.2500)	lr 4.641732e-04
+epoch [36/50][140/204]	time 0.104 (0.161)	data 0.000 (0.006)	eta 0:07:50	xe_loss 0.0080 (0.4936)	kl_loss 0.0879 (0.7265)	acc 100.0000 (85.7143)	lr 4.641732e-04
+epoch [36/50][160/204]	time 0.119 (0.156)	data 0.000 (0.005)	eta 0:07:33	xe_loss 0.1890 (0.4790)	kl_loss 0.7637 (0.7365)	acc 100.0000 (86.0938)	lr 4.641732e-04
+epoch [36/50][180/204]	time 0.154 (0.156)	data 0.000 (0.005)	eta 0:07:28	xe_loss 0.2220 (0.4936)	kl_loss 0.5722 (0.7432)	acc 100.0000 (85.8333)	lr 4.641732e-04
+epoch [36/50][200/204]	time 0.170 (0.156)	data 0.000 (0.004)	eta 0:07:27	xe_loss 0.5571 (0.4822)	kl_loss 1.3046 (0.7331)	acc 100.0000 (86.1250)	lr 4.641732e-04
+epoch [37/50][20/204]	time 0.159 (0.199)	data 0.000 (0.034)	eta 0:09:23	xe_loss 0.0392 (0.3895)	kl_loss 0.3326 (0.6887)	acc 100.0000 (88.7500)	lr 4.122147e-04
+epoch [37/50][40/204]	time 0.161 (0.181)	data 0.000 (0.017)	eta 0:08:30	xe_loss 0.0614 (0.5416)	kl_loss 0.8787 (0.7687)	acc 100.0000 (85.6250)	lr 4.122147e-04
+epoch [37/50][60/204]	time 0.171 (0.176)	data 0.000 (0.012)	eta 0:08:10	xe_loss 0.4072 (0.5064)	kl_loss 0.6626 (0.7255)	acc 75.0000 (85.4167)	lr 4.122147e-04
+epoch [37/50][80/204]	time 0.116 (0.167)	data 0.000 (0.009)	eta 0:07:42	xe_loss 0.0245 (0.4705)	kl_loss 0.1581 (0.6987)	acc 100.0000 (86.2500)	lr 4.122147e-04
+epoch [37/50][100/204]	time 0.160 (0.164)	data 0.000 (0.007)	eta 0:07:31	xe_loss 0.0147 (0.4410)	kl_loss 0.1618 (0.6976)	acc 100.0000 (87.2500)	lr 4.122147e-04
+epoch [37/50][120/204]	time 0.168 (0.164)	data 0.000 (0.006)	eta 0:07:27	xe_loss 1.0410 (0.4899)	kl_loss 1.5836 (0.7383)	acc 75.0000 (86.2500)	lr 4.122147e-04
+epoch [37/50][140/204]	time 0.164 (0.164)	data 0.000 (0.005)	eta 0:07:24	xe_loss 0.0300 (0.4739)	kl_loss 0.2564 (0.7327)	acc 100.0000 (86.6071)	lr 4.122147e-04
+epoch [37/50][160/204]	time 0.169 (0.164)	data 0.000 (0.005)	eta 0:07:21	xe_loss 0.5068 (0.4709)	kl_loss 0.4295 (0.7320)	acc 75.0000 (87.0312)	lr 4.122147e-04
+epoch [37/50][180/204]	time 0.159 (0.164)	data 0.000 (0.004)	eta 0:07:18	xe_loss 0.4873 (0.4636)	kl_loss 0.6685 (0.7166)	acc 75.0000 (86.9444)	lr 4.122147e-04
+epoch [37/50][200/204]	time 0.161 (0.164)	data 0.000 (0.004)	eta 0:07:14	xe_loss 0.1476 (0.4736)	kl_loss 0.4273 (0.7221)	acc 100.0000 (86.7500)	lr 4.122147e-04
+epoch [38/50][20/204]	time 0.124 (0.156)	data 0.002 (0.034)	eta 0:06:51	xe_loss 0.1932 (0.4477)	kl_loss 0.4319 (0.8755)	acc 100.0000 (88.7500)	lr 3.625760e-04
+epoch [38/50][40/204]	time 0.161 (0.160)	data 0.000 (0.017)	eta 0:06:57	xe_loss 0.0420 (0.4199)	kl_loss 0.3351 (0.7783)	acc 100.0000 (86.8750)	lr 3.625760e-04
+epoch [38/50][60/204]	time 0.163 (0.162)	data 0.000 (0.011)	eta 0:06:58	xe_loss 0.2610 (0.4271)	kl_loss 0.6262 (0.7403)	acc 100.0000 (86.6667)	lr 3.625760e-04
+epoch [38/50][80/204]	time 0.171 (0.162)	data 0.000 (0.009)	eta 0:06:57	xe_loss 0.4314 (0.4623)	kl_loss 0.7484 (0.7324)	acc 75.0000 (85.6250)	lr 3.625760e-04
+epoch [38/50][100/204]	time 0.160 (0.163)	data 0.000 (0.007)	eta 0:06:55	xe_loss 0.0703 (0.4618)	kl_loss 0.3993 (0.7185)	acc 100.0000 (86.7500)	lr 3.625760e-04
+epoch [38/50][120/204]	time 0.162 (0.163)	data 0.000 (0.006)	eta 0:06:51	xe_loss 0.1033 (0.4544)	kl_loss 0.3819 (0.7201)	acc 100.0000 (86.8750)	lr 3.625760e-04
+epoch [38/50][140/204]	time 0.118 (0.161)	data 0.000 (0.005)	eta 0:06:44	xe_loss 0.0042 (0.4460)	kl_loss 0.0501 (0.7220)	acc 100.0000 (87.5000)	lr 3.625760e-04
+epoch [38/50][160/204]	time 0.118 (0.156)	data 0.000 (0.005)	eta 0:06:29	xe_loss 0.8755 (0.4306)	kl_loss 1.0635 (0.7176)	acc 75.0000 (88.2812)	lr 3.625760e-04
+epoch [38/50][180/204]	time 0.161 (0.156)	data 0.000 (0.004)	eta 0:06:26	xe_loss 0.0296 (0.4356)	kl_loss 0.2449 (0.7212)	acc 100.0000 (87.7778)	lr 3.625760e-04
+epoch [38/50][200/204]	time 0.165 (0.157)	data 0.000 (0.004)	eta 0:06:24	xe_loss 0.1724 (0.4243)	kl_loss 0.7381 (0.7123)	acc 100.0000 (88.3750)	lr 3.625760e-04
+epoch [39/50][20/204]	time 0.169 (0.188)	data 0.000 (0.028)	eta 0:07:37	xe_loss 0.0668 (0.4269)	kl_loss 0.3254 (0.7199)	acc 100.0000 (87.5000)	lr 3.154529e-04
+epoch [39/50][40/204]	time 0.166 (0.175)	data 0.000 (0.014)	eta 0:07:02	xe_loss 0.9937 (0.4921)	kl_loss 0.4077 (0.7342)	acc 75.0000 (85.6250)	lr 3.154529e-04
+epoch [39/50][60/204]	time 0.156 (0.172)	data 0.000 (0.009)	eta 0:06:49	xe_loss 0.9531 (0.5207)	kl_loss 1.5141 (0.7838)	acc 75.0000 (85.0000)	lr 3.154529e-04
+epoch [39/50][80/204]	time 0.171 (0.164)	data 0.000 (0.007)	eta 0:06:28	xe_loss 1.2686 (0.5330)	kl_loss 0.8250 (0.7666)	acc 75.0000 (85.0000)	lr 3.154529e-04
+epoch [39/50][100/204]	time 0.162 (0.161)	data 0.000 (0.006)	eta 0:06:17	xe_loss 0.3838 (0.4872)	kl_loss 1.3493 (0.7547)	acc 100.0000 (86.0000)	lr 3.154529e-04
+epoch [39/50][120/204]	time 0.165 (0.162)	data 0.000 (0.005)	eta 0:06:15	xe_loss 0.7456 (0.4587)	kl_loss 1.0481 (0.7308)	acc 75.0000 (86.4583)	lr 3.154529e-04
+epoch [39/50][140/204]	time 0.171 (0.162)	data 0.000 (0.004)	eta 0:06:13	xe_loss 0.0661 (0.4358)	kl_loss 0.3981 (0.7210)	acc 100.0000 (87.8571)	lr 3.154529e-04
+epoch [39/50][160/204]	time 0.163 (0.162)	data 0.000 (0.004)	eta 0:06:10	xe_loss 0.8135 (0.4370)	kl_loss 1.1045 (0.7146)	acc 50.0000 (87.8125)	lr 3.154529e-04
+epoch [39/50][180/204]	time 0.164 (0.162)	data 0.000 (0.003)	eta 0:06:07	xe_loss 0.1904 (0.4475)	kl_loss 1.0735 (0.7301)	acc 100.0000 (87.5000)	lr 3.154529e-04
+epoch [39/50][200/204]	time 0.156 (0.162)	data 0.000 (0.003)	eta 0:06:04	xe_loss 1.2646 (0.4573)	kl_loss 1.4652 (0.7339)	acc 75.0000 (87.1250)	lr 3.154529e-04
+epoch [40/50][20/204]	time 0.159 (0.173)	data 0.000 (0.028)	eta 0:06:24	xe_loss 0.6626 (0.5680)	kl_loss 1.7127 (0.8851)	acc 75.0000 (85.0000)	lr 2.710314e-04
+epoch [40/50][40/204]	time 0.174 (0.169)	data 0.000 (0.014)	eta 0:06:11	xe_loss 0.8281 (0.5762)	kl_loss 1.7072 (0.8204)	acc 75.0000 (85.6250)	lr 2.710314e-04
+epoch [40/50][60/204]	time 0.160 (0.167)	data 0.000 (0.009)	eta 0:06:04	xe_loss 0.3335 (0.5621)	kl_loss 1.3041 (0.8276)	acc 100.0000 (85.0000)	lr 2.710314e-04
+epoch [40/50][80/204]	time 0.161 (0.166)	data 0.000 (0.007)	eta 0:05:59	xe_loss 0.0457 (0.4977)	kl_loss 0.3181 (0.7722)	acc 100.0000 (86.2500)	lr 2.710314e-04
+epoch [40/50][100/204]	time 0.163 (0.166)	data 0.000 (0.006)	eta 0:05:55	xe_loss 0.0357 (0.4844)	kl_loss 0.2095 (0.7615)	acc 100.0000 (86.5000)	lr 2.710314e-04
+epoch [40/50][120/204]	time 0.163 (0.165)	data 0.000 (0.005)	eta 0:05:51	xe_loss 0.1660 (0.5015)	kl_loss 0.5347 (0.7546)	acc 100.0000 (85.8333)	lr 2.710314e-04
+epoch [40/50][140/204]	time 0.119 (0.160)	data 0.000 (0.004)	eta 0:05:37	xe_loss 0.0246 (0.5224)	kl_loss 0.2590 (0.7657)	acc 100.0000 (85.5357)	lr 2.710314e-04
+epoch [40/50][160/204]	time 0.127 (0.155)	data 0.000 (0.004)	eta 0:05:23	xe_loss 0.2046 (0.5222)	kl_loss 0.4717 (0.7487)	acc 100.0000 (85.6250)	lr 2.710314e-04
+epoch [40/50][180/204]	time 0.137 (0.154)	data 0.000 (0.003)	eta 0:05:17	xe_loss 0.0161 (0.5096)	kl_loss 0.1789 (0.7377)	acc 100.0000 (85.5556)	lr 2.710314e-04
+epoch [40/50][200/204]	time 0.112 (0.150)	data 0.000 (0.003)	eta 0:05:06	xe_loss 0.3909 (0.5007)	kl_loss 0.9406 (0.7270)	acc 75.0000 (85.7500)	lr 2.710314e-04
+epoch [41/50][20/204]	time 0.119 (0.143)	data 0.000 (0.028)	eta 0:04:49	xe_loss 0.0857 (0.4658)	kl_loss 0.8101 (0.7178)	acc 100.0000 (91.2500)	lr 2.294868e-04
+epoch [41/50][40/204]	time 0.111 (0.129)	data 0.000 (0.014)	eta 0:04:17	xe_loss 0.3931 (0.6172)	kl_loss 0.7959 (0.7307)	acc 75.0000 (86.8750)	lr 2.294868e-04
+epoch [41/50][60/204]	time 0.114 (0.124)	data 0.000 (0.009)	eta 0:04:05	xe_loss 0.4575 (0.5074)	kl_loss 0.4168 (0.6886)	acc 75.0000 (88.7500)	lr 2.294868e-04
+epoch [41/50][80/204]	time 0.119 (0.122)	data 0.000 (0.008)	eta 0:03:59	xe_loss 0.0728 (0.4609)	kl_loss 0.7264 (0.6650)	acc 100.0000 (89.3750)	lr 2.294868e-04
+epoch [41/50][100/204]	time 0.127 (0.121)	data 0.000 (0.006)	eta 0:03:54	xe_loss 0.1565 (0.4647)	kl_loss 0.9024 (0.7153)	acc 100.0000 (89.2500)	lr 2.294868e-04
+epoch [41/50][120/204]	time 0.118 (0.121)	data 0.000 (0.005)	eta 0:03:51	xe_loss 0.0740 (0.4917)	kl_loss 1.0315 (0.7433)	acc 100.0000 (87.0833)	lr 2.294868e-04
+epoch [41/50][140/204]	time 0.118 (0.120)	data 0.000 (0.005)	eta 0:03:48	xe_loss 0.4338 (0.4766)	kl_loss 0.6506 (0.7427)	acc 75.0000 (87.5000)	lr 2.294868e-04
+epoch [41/50][160/204]	time 0.126 (0.120)	data 0.000 (0.004)	eta 0:03:44	xe_loss 0.0060 (0.4842)	kl_loss 0.0792 (0.7322)	acc 100.0000 (87.3438)	lr 2.294868e-04
+epoch [41/50][180/204]	time 0.112 (0.119)	data 0.000 (0.004)	eta 0:03:42	xe_loss 0.4229 (0.4820)	kl_loss 0.7994 (0.7254)	acc 75.0000 (86.9444)	lr 2.294868e-04
+epoch [41/50][200/204]	time 0.117 (0.119)	data 0.000 (0.004)	eta 0:03:39	xe_loss 0.3530 (0.4675)	kl_loss 0.2943 (0.7252)	acc 75.0000 (87.2500)	lr 2.294868e-04
+epoch [42/50][20/204]	time 0.109 (0.180)	data 0.000 (0.027)	eta 0:05:26	xe_loss 0.3491 (0.7540)	kl_loss 1.1991 (0.7995)	acc 75.0000 (76.2500)	lr 1.909830e-04
+epoch [42/50][40/204]	time 0.112 (0.147)	data 0.000 (0.014)	eta 0:04:24	xe_loss 0.0081 (0.5787)	kl_loss 0.1371 (0.7628)	acc 100.0000 (81.2500)	lr 1.909830e-04
+epoch [42/50][60/204]	time 0.122 (0.137)	data 0.001 (0.009)	eta 0:04:02	xe_loss 0.0038 (0.5265)	kl_loss 0.0548 (0.7358)	acc 100.0000 (84.5833)	lr 1.909830e-04
+epoch [42/50][80/204]	time 0.119 (0.131)	data 0.000 (0.007)	eta 0:03:50	xe_loss 0.7041 (0.5193)	kl_loss 0.7505 (0.7507)	acc 75.0000 (85.0000)	lr 1.909830e-04
+epoch [42/50][100/204]	time 0.113 (0.128)	data 0.004 (0.006)	eta 0:03:41	xe_loss 0.1680 (0.4859)	kl_loss 0.9552 (0.7487)	acc 100.0000 (86.7500)	lr 1.909830e-04
+epoch [42/50][120/204]	time 0.116 (0.126)	data 0.000 (0.005)	eta 0:03:36	xe_loss 1.0850 (0.4655)	kl_loss 0.4304 (0.7185)	acc 75.0000 (87.2917)	lr 1.909830e-04
+epoch [42/50][140/204]	time 0.108 (0.125)	data 0.000 (0.004)	eta 0:03:31	xe_loss 1.6973 (0.4787)	kl_loss 0.7723 (0.7165)	acc 75.0000 (86.9643)	lr 1.909830e-04
+epoch [42/50][160/204]	time 0.121 (0.124)	data 0.000 (0.004)	eta 0:03:28	xe_loss 0.7515 (0.4797)	kl_loss 0.8100 (0.7268)	acc 75.0000 (86.7188)	lr 1.909830e-04
+epoch [42/50][180/204]	time 0.123 (0.123)	data 0.000 (0.004)	eta 0:03:23	xe_loss 0.3965 (0.4737)	kl_loss 0.4661 (0.7270)	acc 75.0000 (87.0833)	lr 1.909830e-04
+epoch [42/50][200/204]	time 0.121 (0.123)	data 0.000 (0.003)	eta 0:03:20	xe_loss 0.5005 (0.4671)	kl_loss 1.1972 (0.7192)	acc 75.0000 (87.0000)	lr 1.909830e-04
+epoch [43/50][20/204]	time 0.186 (0.151)	data 0.000 (0.026)	eta 0:04:03	xe_loss 0.0908 (0.4317)	kl_loss 0.5159 (0.8328)	acc 100.0000 (91.2500)	lr 1.556721e-04
+epoch [43/50][40/204]	time 0.172 (0.162)	data 0.000 (0.013)	eta 0:04:18	xe_loss 0.2815 (0.4164)	kl_loss 0.9933 (0.7847)	acc 100.0000 (90.0000)	lr 1.556721e-04
+epoch [43/50][60/204]	time 0.174 (0.166)	data 0.000 (0.009)	eta 0:04:21	xe_loss 0.0905 (0.4231)	kl_loss 0.4862 (0.7620)	acc 100.0000 (89.1667)	lr 1.556721e-04
+epoch [43/50][80/204]	time 0.179 (0.169)	data 0.000 (0.007)	eta 0:04:21	xe_loss 0.3130 (0.4568)	kl_loss 0.6366 (0.7453)	acc 75.0000 (87.1875)	lr 1.556721e-04
+epoch [43/50][100/204]	time 0.172 (0.170)	data 0.000 (0.006)	eta 0:04:19	xe_loss 0.2445 (0.4661)	kl_loss 0.5812 (0.7496)	acc 100.0000 (86.7500)	lr 1.556721e-04
+epoch [43/50][120/204]	time 0.176 (0.170)	data 0.000 (0.005)	eta 0:04:17	xe_loss 0.0942 (0.4362)	kl_loss 0.5872 (0.7403)	acc 100.0000 (87.0833)	lr 1.556721e-04
+epoch [43/50][140/204]	time 0.169 (0.171)	data 0.000 (0.004)	eta 0:04:14	xe_loss 0.3210 (0.4659)	kl_loss 1.0657 (0.7318)	acc 100.0000 (86.6071)	lr 1.556721e-04
+epoch [43/50][160/204]	time 0.176 (0.171)	data 0.000 (0.004)	eta 0:04:11	xe_loss 0.4207 (0.4652)	kl_loss 0.7225 (0.7319)	acc 75.0000 (86.8750)	lr 1.556721e-04
+epoch [43/50][180/204]	time 0.182 (0.171)	data 0.000 (0.003)	eta 0:04:08	xe_loss 1.7109 (0.4598)	kl_loss 1.4854 (0.7254)	acc 50.0000 (86.9444)	lr 1.556721e-04
+epoch [43/50][200/204]	time 0.165 (0.171)	data 0.000 (0.003)	eta 0:04:05	xe_loss 1.2100 (0.4561)	kl_loss 1.3240 (0.7430)	acc 50.0000 (86.7500)	lr 1.556721e-04
+epoch [44/50][20/204]	time 0.171 (0.199)	data 0.000 (0.027)	eta 0:04:39	xe_loss 0.2793 (0.4159)	kl_loss 0.9329 (0.7245)	acc 100.0000 (91.2500)	lr 1.236933e-04
+epoch [44/50][40/204]	time 0.180 (0.186)	data 0.000 (0.013)	eta 0:04:17	xe_loss 0.0485 (0.4571)	kl_loss 0.4217 (0.6737)	acc 100.0000 (88.1250)	lr 1.236933e-04
+epoch [44/50][60/204]	time 0.165 (0.181)	data 0.000 (0.009)	eta 0:04:07	xe_loss 0.0244 (0.4565)	kl_loss 0.1753 (0.7177)	acc 100.0000 (87.5000)	lr 1.236933e-04
+epoch [44/50][80/204]	time 0.167 (0.179)	data 0.000 (0.007)	eta 0:04:01	xe_loss 0.0303 (0.4323)	kl_loss 0.5035 (0.7018)	acc 100.0000 (88.4375)	lr 1.236933e-04
+epoch [44/50][100/204]	time 0.165 (0.177)	data 0.000 (0.005)	eta 0:03:55	xe_loss 1.6650 (0.4394)	kl_loss 1.4149 (0.7327)	acc 75.0000 (88.5000)	lr 1.236933e-04
+epoch [44/50][120/204]	time 0.170 (0.177)	data 0.000 (0.005)	eta 0:03:50	xe_loss 0.1644 (0.4502)	kl_loss 0.4313 (0.7466)	acc 100.0000 (88.3333)	lr 1.236933e-04
+epoch [44/50][140/204]	time 0.177 (0.176)	data 0.000 (0.004)	eta 0:03:46	xe_loss 1.3545 (0.4536)	kl_loss 0.7631 (0.7357)	acc 75.0000 (88.0357)	lr 1.236933e-04
+epoch [44/50][160/204]	time 0.173 (0.175)	data 0.000 (0.004)	eta 0:03:42	xe_loss 0.2812 (0.4532)	kl_loss 1.3254 (0.7342)	acc 100.0000 (87.6562)	lr 1.236933e-04
+epoch [44/50][180/204]	time 0.163 (0.175)	data 0.000 (0.003)	eta 0:03:38	xe_loss 0.0287 (0.4521)	kl_loss 0.1832 (0.7237)	acc 100.0000 (87.6389)	lr 1.236933e-04
+epoch [44/50][200/204]	time 0.175 (0.175)	data 0.000 (0.003)	eta 0:03:35	xe_loss 0.6069 (0.4558)	kl_loss 0.8303 (0.7320)	acc 75.0000 (87.5000)	lr 1.236933e-04
+epoch [45/50][20/204]	time 0.187 (0.202)	data 0.000 (0.028)	eta 0:04:03	xe_loss 0.4514 (0.2968)	kl_loss 1.2129 (0.8039)	acc 100.0000 (92.5000)	lr 9.517295e-05
+epoch [45/50][40/204]	time 0.166 (0.188)	data 0.000 (0.014)	eta 0:03:42	xe_loss 0.1555 (0.4507)	kl_loss 0.3853 (0.7933)	acc 100.0000 (88.1250)	lr 9.517295e-05
+epoch [45/50][60/204]	time 0.176 (0.184)	data 0.000 (0.010)	eta 0:03:34	xe_loss 0.0757 (0.4490)	kl_loss 0.4711 (0.7531)	acc 100.0000 (87.9167)	lr 9.517295e-05
+epoch [45/50][80/204]	time 0.169 (0.182)	data 0.000 (0.007)	eta 0:03:28	xe_loss 1.0117 (0.4726)	kl_loss 1.2030 (0.7450)	acc 50.0000 (86.2500)	lr 9.517295e-05
+epoch [45/50][100/204]	time 0.181 (0.181)	data 0.000 (0.006)	eta 0:03:23	xe_loss 0.3015 (0.4723)	kl_loss 0.4841 (0.7378)	acc 75.0000 (85.7500)	lr 9.517295e-05
+epoch [45/50][120/204]	time 0.171 (0.180)	data 0.000 (0.005)	eta 0:03:18	xe_loss 0.2861 (0.4721)	kl_loss 0.8716 (0.7418)	acc 100.0000 (85.6250)	lr 9.517295e-05
+epoch [45/50][140/204]	time 0.180 (0.180)	data 0.000 (0.004)	eta 0:03:14	xe_loss 1.5352 (0.5054)	kl_loss 1.6023 (0.7577)	acc 75.0000 (84.4643)	lr 9.517295e-05
+epoch [45/50][160/204]	time 0.169 (0.180)	data 0.000 (0.004)	eta 0:03:11	xe_loss 0.2654 (0.4957)	kl_loss 1.1780 (0.7387)	acc 100.0000 (85.1562)	lr 9.517295e-05
+epoch [45/50][180/204]	time 0.175 (0.179)	data 0.002 (0.004)	eta 0:03:07	xe_loss 0.2374 (0.5173)	kl_loss 0.4430 (0.7365)	acc 75.0000 (83.8889)	lr 9.517295e-05
+epoch [45/50][200/204]	time 0.180 (0.179)	data 0.000 (0.003)	eta 0:03:03	xe_loss 0.0636 (0.5079)	kl_loss 0.5389 (0.7334)	acc 100.0000 (84.3750)	lr 9.517295e-05
+epoch [46/50][20/204]	time 0.175 (0.208)	data 0.000 (0.033)	eta 0:03:27	xe_loss 0.0371 (0.5188)	kl_loss 0.1639 (0.7264)	acc 100.0000 (85.0000)	lr 7.022351e-05
+epoch [46/50][40/204]	time 0.170 (0.191)	data 0.000 (0.017)	eta 0:03:07	xe_loss 0.6094 (0.4040)	kl_loss 0.7229 (0.6812)	acc 75.0000 (90.0000)	lr 7.022351e-05
+epoch [46/50][60/204]	time 0.175 (0.185)	data 0.000 (0.011)	eta 0:02:58	xe_loss 0.6040 (0.4206)	kl_loss 0.9885 (0.7124)	acc 75.0000 (88.7500)	lr 7.022351e-05
+epoch [46/50][80/204]	time 0.185 (0.183)	data 0.000 (0.009)	eta 0:02:51	xe_loss 0.5532 (0.4437)	kl_loss 1.0583 (0.6959)	acc 75.0000 (87.8125)	lr 7.022351e-05
+epoch [46/50][100/204]	time 0.174 (0.181)	data 0.000 (0.007)	eta 0:02:46	xe_loss 0.1672 (0.4766)	kl_loss 0.6979 (0.7359)	acc 100.0000 (86.5000)	lr 7.022351e-05
+epoch [46/50][120/204]	time 0.174 (0.180)	data 0.000 (0.006)	eta 0:02:42	xe_loss 0.0978 (0.4920)	kl_loss 1.0000 (0.7698)	acc 100.0000 (86.2500)	lr 7.022351e-05
+epoch [46/50][140/204]	time 0.179 (0.180)	data 0.000 (0.005)	eta 0:02:38	xe_loss 0.6230 (0.4838)	kl_loss 0.8774 (0.7594)	acc 75.0000 (86.6071)	lr 7.022351e-05
+epoch [46/50][160/204]	time 0.176 (0.179)	data 0.000 (0.004)	eta 0:02:34	xe_loss 0.0442 (0.4719)	kl_loss 0.3673 (0.7399)	acc 100.0000 (86.5625)	lr 7.022351e-05
+epoch [46/50][180/204]	time 0.175 (0.179)	data 0.000 (0.004)	eta 0:02:30	xe_loss 0.4534 (0.4696)	kl_loss 0.7598 (0.7335)	acc 100.0000 (86.6667)	lr 7.022351e-05
+epoch [46/50][200/204]	time 0.169 (0.179)	data 0.000 (0.004)	eta 0:02:26	xe_loss 0.0095 (0.4768)	kl_loss 0.1928 (0.7310)	acc 100.0000 (86.0000)	lr 7.022351e-05
+epoch [47/50][20/204]	time 0.181 (0.200)	data 0.000 (0.028)	eta 0:02:39	xe_loss 0.0500 (0.5266)	kl_loss 0.1697 (0.7912)	acc 100.0000 (82.5000)	lr 4.894348e-05
+epoch [47/50][40/204]	time 0.171 (0.186)	data 0.000 (0.014)	eta 0:02:24	xe_loss 0.5806 (0.5322)	kl_loss 1.0091 (0.8538)	acc 75.0000 (82.5000)	lr 4.894348e-05
+epoch [47/50][60/204]	time 0.176 (0.182)	data 0.000 (0.009)	eta 0:02:17	xe_loss 0.0115 (0.4571)	kl_loss 0.1057 (0.7651)	acc 100.0000 (85.0000)	lr 4.894348e-05
+epoch [47/50][80/204]	time 0.170 (0.180)	data 0.000 (0.007)	eta 0:02:12	xe_loss 0.3044 (0.4567)	kl_loss 0.6767 (0.7085)	acc 75.0000 (85.9375)	lr 4.894348e-05
+epoch [47/50][100/204]	time 0.111 (0.177)	data 0.000 (0.006)	eta 0:02:06	xe_loss 0.2350 (0.4847)	kl_loss 0.7860 (0.7284)	acc 100.0000 (85.5000)	lr 4.894348e-05
+epoch [47/50][120/204]	time 0.137 (0.167)	data 0.000 (0.005)	eta 0:01:56	xe_loss 1.0029 (0.5019)	kl_loss 1.6827 (0.7450)	acc 75.0000 (85.4167)	lr 4.894348e-05
+epoch [47/50][140/204]	time 0.119 (0.163)	data 0.000 (0.004)	eta 0:01:50	xe_loss 0.0090 (0.4667)	kl_loss 0.0650 (0.7356)	acc 100.0000 (86.7857)	lr 4.894348e-05
+epoch [47/50][160/204]	time 0.173 (0.163)	data 0.000 (0.004)	eta 0:01:46	xe_loss 0.5854 (0.4662)	kl_loss 0.3193 (0.7223)	acc 75.0000 (86.4062)	lr 4.894348e-05
+epoch [47/50][180/204]	time 0.167 (0.164)	data 0.000 (0.003)	eta 0:01:44	xe_loss 1.7051 (0.4665)	kl_loss 1.9699 (0.7222)	acc 50.0000 (86.5278)	lr 4.894348e-05
+epoch [47/50][200/204]	time 0.175 (0.165)	data 0.003 (0.003)	eta 0:01:41	xe_loss 0.2847 (0.4841)	kl_loss 0.5503 (0.7190)	acc 75.0000 (86.1250)	lr 4.894348e-05
+epoch [48/50][20/204]	time 0.180 (0.204)	data 0.001 (0.029)	eta 0:02:00	xe_loss 1.7510 (0.4975)	kl_loss 1.1679 (0.6316)	acc 50.0000 (87.5000)	lr 3.141684e-05
+epoch [48/50][40/204]	time 0.178 (0.189)	data 0.000 (0.014)	eta 0:01:48	xe_loss 0.0329 (0.4910)	kl_loss 0.1794 (0.7296)	acc 100.0000 (88.1250)	lr 3.141684e-05
+epoch [48/50][60/204]	time 0.178 (0.185)	data 0.000 (0.010)	eta 0:01:41	xe_loss 0.2778 (0.5103)	kl_loss 1.0114 (0.7612)	acc 100.0000 (86.6667)	lr 3.141684e-05
+epoch [48/50][80/204]	time 0.175 (0.182)	data 0.004 (0.007)	eta 0:01:36	xe_loss 0.5435 (0.5117)	kl_loss 0.8170 (0.7905)	acc 50.0000 (85.6250)	lr 3.141684e-05
+epoch [48/50][100/204]	time 0.185 (0.181)	data 0.000 (0.006)	eta 0:01:32	xe_loss 0.9370 (0.4740)	kl_loss 0.9141 (0.7548)	acc 75.0000 (86.2500)	lr 3.141684e-05
+epoch [48/50][120/204]	time 0.178 (0.180)	data 0.000 (0.005)	eta 0:01:28	xe_loss 0.1545 (0.4612)	kl_loss 0.2674 (0.7651)	acc 100.0000 (86.8750)	lr 3.141684e-05
+epoch [48/50][140/204]	time 0.173 (0.179)	data 0.000 (0.004)	eta 0:01:24	xe_loss 0.4956 (0.4553)	kl_loss 0.2078 (0.7648)	acc 75.0000 (86.0714)	lr 3.141684e-05
+epoch [48/50][160/204]	time 0.111 (0.174)	data 0.000 (0.004)	eta 0:01:18	xe_loss 0.8784 (0.4506)	kl_loss 0.8638 (0.7651)	acc 75.0000 (86.5625)	lr 3.141684e-05
+epoch [48/50][180/204]	time 0.177 (0.173)	data 0.000 (0.003)	eta 0:01:14	xe_loss 0.4697 (0.4526)	kl_loss 0.4596 (0.7500)	acc 75.0000 (86.9444)	lr 3.141684e-05
+epoch [48/50][200/204]	time 0.177 (0.173)	data 0.000 (0.003)	eta 0:01:11	xe_loss 0.1698 (0.4615)	kl_loss 0.9534 (0.7387)	acc 100.0000 (87.0000)	lr 3.141684e-05
+epoch [49/50][20/204]	time 0.178 (0.207)	data 0.000 (0.028)	eta 0:01:20	xe_loss 0.7993 (0.5608)	kl_loss 1.0087 (0.8357)	acc 75.0000 (83.7500)	lr 1.771275e-05
+epoch [49/50][40/204]	time 0.185 (0.192)	data 0.000 (0.014)	eta 0:01:10	xe_loss 0.1580 (0.5134)	kl_loss 0.5798 (0.7790)	acc 100.0000 (85.6250)	lr 1.771275e-05
+epoch [49/50][60/204]	time 0.182 (0.188)	data 0.000 (0.010)	eta 0:01:05	xe_loss 0.2072 (0.4910)	kl_loss 0.6786 (0.8013)	acc 100.0000 (86.2500)	lr 1.771275e-05
+epoch [49/50][80/204]	time 0.174 (0.186)	data 0.000 (0.007)	eta 0:01:00	xe_loss 0.6514 (0.4612)	kl_loss 1.1610 (0.7740)	acc 75.0000 (86.8750)	lr 1.771275e-05
+epoch [49/50][100/204]	time 0.171 (0.184)	data 0.000 (0.006)	eta 0:00:56	xe_loss 0.0755 (0.4687)	kl_loss 0.2646 (0.7823)	acc 100.0000 (87.0000)	lr 1.771275e-05
+epoch [49/50][120/204]	time 0.170 (0.183)	data 0.000 (0.005)	eta 0:00:52	xe_loss 0.3574 (0.4759)	kl_loss 0.4469 (0.7856)	acc 75.0000 (86.2500)	lr 1.771275e-05
+epoch [49/50][140/204]	time 0.173 (0.182)	data 0.000 (0.004)	eta 0:00:48	xe_loss 0.4690 (0.5067)	kl_loss 0.1982 (0.7858)	acc 75.0000 (85.1786)	lr 1.771275e-05
+epoch [49/50][160/204]	time 0.172 (0.182)	data 0.000 (0.004)	eta 0:00:45	xe_loss 1.7900 (0.5163)	kl_loss 0.4772 (0.7670)	acc 75.0000 (84.8438)	lr 1.771275e-05
+epoch [49/50][180/204]	time 0.176 (0.181)	data 0.000 (0.004)	eta 0:00:41	xe_loss 0.0597 (0.5014)	kl_loss 0.4042 (0.7610)	acc 100.0000 (85.1389)	lr 1.771275e-05
+epoch [49/50][200/204]	time 0.174 (0.180)	data 0.000 (0.003)	eta 0:00:37	xe_loss 0.1346 (0.5046)	kl_loss 0.5946 (0.7683)	acc 100.0000 (85.0000)	lr 1.771275e-05
+epoch [50/50][20/204]	time 0.177 (0.212)	data 0.000 (0.036)	eta 0:00:38	xe_loss 0.0232 (0.5694)	kl_loss 0.3079 (0.7605)	acc 100.0000 (85.0000)	lr 7.885299e-06
+epoch [50/50][40/204]	time 0.163 (0.195)	data 0.000 (0.018)	eta 0:00:31	xe_loss 0.2365 (0.4351)	kl_loss 0.5205 (0.6333)	acc 100.0000 (88.1250)	lr 7.885299e-06
+epoch [50/50][60/204]	time 0.186 (0.190)	data 0.001 (0.012)	eta 0:00:27	xe_loss 1.2021 (0.3929)	kl_loss 1.1312 (0.6431)	acc 75.0000 (89.5833)	lr 7.885299e-06
+epoch [50/50][80/204]	time 0.171 (0.187)	data 0.000 (0.009)	eta 0:00:23	xe_loss 0.1543 (0.3857)	kl_loss 0.5392 (0.6780)	acc 100.0000 (89.6875)	lr 7.885299e-06
+epoch [50/50][100/204]	time 0.179 (0.185)	data 0.000 (0.008)	eta 0:00:19	xe_loss 0.0997 (0.3943)	kl_loss 0.3441 (0.6638)	acc 100.0000 (89.0000)	lr 7.885299e-06
+epoch [50/50][120/204]	time 0.105 (0.176)	data 0.000 (0.006)	eta 0:00:14	xe_loss 0.0758 (0.4569)	kl_loss 0.3259 (0.7047)	acc 100.0000 (87.5000)	lr 7.885299e-06
+epoch [50/50][140/204]	time 0.178 (0.173)	data 0.000 (0.005)	eta 0:00:11	xe_loss 0.0823 (0.4550)	kl_loss 0.8062 (0.7095)	acc 100.0000 (87.1429)	lr 7.885299e-06
+epoch [50/50][160/204]	time 0.172 (0.173)	data 0.000 (0.005)	eta 0:00:07	xe_loss 0.7227 (0.4567)	kl_loss 0.9190 (0.7033)	acc 75.0000 (86.8750)	lr 7.885299e-06
+epoch [50/50][180/204]	time 0.168 (0.174)	data 0.003 (0.004)	eta 0:00:04	xe_loss 0.7300 (0.4617)	kl_loss 1.2370 (0.7178)	acc 75.0000 (86.1111)	lr 7.885299e-06
+epoch [50/50][200/204]	time 0.178 (0.174)	data 0.000 (0.004)	eta 0:00:00	xe_loss 0.1963 (0.4590)	kl_loss 0.7595 (0.7183)	acc 100.0000 (86.5000)	lr 7.885299e-06
+Checkpoint saved to "output/base2new/train_base/food101/shots_16/ProGrad/vit_b16_ep50_batch4_c4/seed1/prompt_learner/model.pth.tar-50"
+Finished training
+Do evaluation on test set
+=> result
+* total: 15,300
+* correct: 13,713
+* accuracy: 89.63%
+* error: 10.37%
+* macro_f1: 89.59%
+Elapsed: 0:26:35

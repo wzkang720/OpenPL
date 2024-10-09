@@ -1,0 +1,362 @@
+***************
+** Arguments **
+***************
+backbone: 
+config_file: configs/trainers/ProGrad/vit_b16_ep50_batch4_c4.yaml
+dataset_config_file: configs/datasets/eurosat.yaml
+eval_only: False
+head: 
+load_epoch: None
+model_dir: 
+no_train: False
+opts: ['LOSS.LAMBDA', '0.8', 'TRAINER.COOP.N_CTX', '4', 'TRAINER.COOP.CSC', 'False', 'TRAINER.COOP.CLASS_TOKEN_POSITION', 'end', 'DATASET.NUM_SHOTS', '16', 'DATASET.SUBSAMPLE_CLASSES', 'base']
+output_dir: output/base2new/train_base/eurosat/shots_16/ProGrad/vit_b16_ep50_batch4_c4/seed3
+resume: 
+root: /mnt/hdd/DATA
+seed: 3
+source_domains: None
+target_domains: None
+trainer: ProGrad
+transforms: None
+************
+** Config **
+************
+DATALOADER:
+  K_TRANSFORMS: 1
+  NUM_WORKERS: 8
+  RETURN_IMG0: False
+  TEST:
+    BATCH_SIZE: 100
+    SAMPLER: SequentialSampler
+  TRAIN_U:
+    BATCH_SIZE: 32
+    N_DOMAIN: 0
+    N_INS: 16
+    SAME_AS_X: True
+    SAMPLER: RandomSampler
+  TRAIN_X:
+    BATCH_SIZE: 4
+    N_DOMAIN: 0
+    N_INS: 16
+    SAMPLER: RandomSampler
+DATASET:
+  ALL_AS_UNLABELED: False
+  CIFAR_C_LEVEL: 1
+  CIFAR_C_TYPE: 
+  NAME: EuroSAT
+  NUM_LABELED: -1
+  NUM_SHOTS: 16
+  ROOT: /mnt/hdd/DATA
+  SOURCE_DOMAINS: ()
+  STL10_FOLD: -1
+  SUBSAMPLE_CLASSES: base
+  TARGET_DOMAINS: ()
+  VAL_PERCENT: 0.1
+INPUT:
+  COLORJITTER_B: 0.4
+  COLORJITTER_C: 0.4
+  COLORJITTER_H: 0.1
+  COLORJITTER_S: 0.4
+  CROP_PADDING: 4
+  CUTOUT_LEN: 16
+  CUTOUT_N: 1
+  GB_K: 21
+  GB_P: 0.5
+  GN_MEAN: 0.0
+  GN_STD: 0.15
+  INTERPOLATION: bicubic
+  NO_TRANSFORM: False
+  PIXEL_MEAN: [0.48145466, 0.4578275, 0.40821073]
+  PIXEL_STD: [0.26862954, 0.26130258, 0.27577711]
+  RANDAUGMENT_M: 10
+  RANDAUGMENT_N: 2
+  RGS_P: 0.2
+  SIZE: (224, 224)
+  TRANSFORMS: ('random_resized_crop', 'random_flip', 'normalize')
+LOSS:
+  ALPHA: 0.0
+  GM: False
+  LAMBDA: 0.8
+  NAME: prograd
+  T: 1.0
+MODEL:
+  BACKBONE:
+    NAME: ViT-B/16
+    PRETRAINED: True
+  HEAD:
+    ACTIVATION: relu
+    BN: True
+    DROPOUT: 0.0
+    HIDDEN_LAYERS: ()
+    NAME: 
+  INIT_WEIGHTS: 
+OPTIM:
+  ADAM_BETA1: 0.9
+  ADAM_BETA2: 0.999
+  BASE_LR_MULT: 0.1
+  GAMMA: 0.1
+  LR: 0.002
+  LR_SCHEDULER: cosine
+  MAX_EPOCH: 50
+  MOMENTUM: 0.9
+  NAME: sgd
+  NEW_LAYERS: ()
+  RMSPROP_ALPHA: 0.99
+  SGD_DAMPNING: 0
+  SGD_NESTEROV: False
+  STAGED_LR: False
+  STEPSIZE: (-1,)
+  WARMUP_CONS_LR: 1e-05
+  WARMUP_EPOCH: 1
+  WARMUP_MIN_LR: 1e-05
+  WARMUP_RECOUNT: True
+  WARMUP_TYPE: constant
+  WEIGHT_DECAY: 0.0005
+OUTPUT_DIR: output/base2new/train_base/eurosat/shots_16/ProGrad/vit_b16_ep50_batch4_c4/seed3
+RESUME: 
+SEED: 3
+TEST:
+  COMPUTE_CMAT: False
+  EVALUATOR: Classification
+  FINAL_MODEL: last_step
+  NO_TEST: False
+  PER_CLASS_RESULT: False
+  SPLIT: test
+TRAIN:
+  CHECKPOINT_FREQ: 0
+  COUNT_ITER: train_x
+  PRINT_FREQ: 20
+TRAINER:
+  CG:
+    ALPHA_D: 0.5
+    ALPHA_F: 0.5
+    EPS_D: 1.0
+    EPS_F: 1.0
+  COCOOP:
+    CTX_INIT: False
+    N_CTX: 16
+    PREC: fp16
+  COOP:
+    ALPHA: 1.0
+    CLASS_TOKEN_POSITION: end
+    CSC: False
+    CTX_INIT: False
+    N_CTX: 4
+    PREC: fp16
+  DAEL:
+    CONF_THRE: 0.95
+    STRONG_TRANSFORMS: ()
+    WEIGHT_U: 0.5
+  DDAIG:
+    ALPHA: 0.5
+    CLAMP: False
+    CLAMP_MAX: 1.0
+    CLAMP_MIN: -1.0
+    G_ARCH: 
+    LMDA: 0.3
+    WARMUP: 0
+  ENTMIN:
+    LMDA: 0.001
+  FIXMATCH:
+    CONF_THRE: 0.95
+    STRONG_TRANSFORMS: ()
+    WEIGHT_U: 1.0
+  M3SDA:
+    LMDA: 0.5
+    N_STEP_F: 4
+  MCD:
+    N_STEP_F: 4
+  MEANTEA:
+    EMA_ALPHA: 0.999
+    RAMPUP: 5
+    WEIGHT_U: 1.0
+  MIXMATCH:
+    MIXUP_BETA: 0.75
+    RAMPUP: 20000
+    TEMP: 2.0
+    WEIGHT_U: 100.0
+  MME:
+    LMDA: 0.1
+  NAME: ProGrad
+  SE:
+    CONF_THRE: 0.95
+    EMA_ALPHA: 0.999
+    RAMPUP: 300
+USE_CUDA: True
+VERBOSE: True
+VERSION: 1
+Collecting env info ...
+** System info **
+PyTorch version: 2.2.2+cu121
+Is debug build: False
+CUDA used to build PyTorch: 12.1
+ROCM used to build PyTorch: N/A
+
+OS: Debian GNU/Linux 12 (bookworm) (x86_64)
+GCC version: (Debian 12.2.0-14) 12.2.0
+Clang version: Could not collect
+CMake version: Could not collect
+Libc version: glibc-2.36
+
+Python version: 3.11.2 (main, Mar 13 2023, 12:18:29) [GCC 12.2.0] (64-bit runtime)
+Python platform: Linux-6.5.13-3-pve-x86_64-with-glibc2.36
+Is CUDA available: True
+CUDA runtime version: 11.8.89
+CUDA_MODULE_LOADING set to: LAZY
+GPU models and configuration: 
+GPU 0: NVIDIA A800 80GB PCIe
+GPU 1: NVIDIA A800 80GB PCIe
+
+Nvidia driver version: 525.147.05
+cuDNN version: Could not collect
+HIP runtime version: N/A
+MIOpen runtime version: N/A
+Is XNNPACK available: True
+
+CPU:
+Architecture:                       x86_64
+CPU op-mode(s):                     32-bit, 64-bit
+Address sizes:                      46 bits physical, 57 bits virtual
+Byte Order:                         Little Endian
+CPU(s):                             64
+On-line CPU(s) list:                18,20,22,23,25-27,29,31,32,34,37,46-49
+Off-line CPU(s) list:               0-17,19,21,24,28,30,33,35,36,38-45,50-63
+Vendor ID:                          GenuineIntel
+Model name:                         Intel(R) Xeon(R) Gold 6326 CPU @ 2.90GHz
+CPU family:                         6
+Model:                              106
+Thread(s) per core:                 2
+Core(s) per socket:                 16
+Socket(s):                          2
+Stepping:                           6
+CPU(s) scaling MHz:                 97%
+CPU max MHz:                        3500.0000
+CPU min MHz:                        800.0000
+BogoMIPS:                           5800.00
+Flags:                              fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid dca sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb cat_l3 invpcid_single intel_ppin ssbd mba ibrs ibpb stibp ibrs_enhanced tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid cqm rdt_a avx512f avx512dq rdseed adx smap avx512ifma clflushopt clwb intel_pt avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local split_lock_detect wbnoinvd dtherm ida arat pln pts vnmi avx512vbmi umip pku ospke avx512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg tme avx512_vpopcntdq la57 rdpid fsrm md_clear pconfig flush_l1d arch_capabilities
+Virtualization:                     VT-x
+L1d cache:                          1.5 MiB (32 instances)
+L1i cache:                          1 MiB (32 instances)
+L2 cache:                           40 MiB (32 instances)
+L3 cache:                           48 MiB (2 instances)
+NUMA node(s):                       2
+NUMA node0 CPU(s):                  0-15,32-47
+NUMA node1 CPU(s):                  16-31,48-63
+Vulnerability Gather data sampling: Vulnerable: No microcode
+Vulnerability Itlb multihit:        Not affected
+Vulnerability L1tf:                 Not affected
+Vulnerability Mds:                  Not affected
+Vulnerability Meltdown:             Not affected
+Vulnerability Mmio stale data:      Mitigation; Clear CPU buffers; SMT vulnerable
+Vulnerability Retbleed:             Not affected
+Vulnerability Spec rstack overflow: Not affected
+Vulnerability Spec store bypass:    Mitigation; Speculative Store Bypass disabled via prctl
+Vulnerability Spectre v1:           Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:           Mitigation; Enhanced / Automatic IBRS, IBPB conditional, RSB filling, PBRSB-eIBRS SW sequence
+Vulnerability Srbds:                Not affected
+Vulnerability Tsx async abort:      Not affected
+
+Versions of relevant libraries:
+[pip3] flake8==3.7.9
+[pip3] numpy==1.26.4
+[pip3] torch==2.2.2
+[pip3] torchaudio==2.2.2
+[pip3] torchvision==0.17.2
+[pip3] triton==2.2.0
+[conda] Could not collect
+        Pillow (10.3.0)
+
+Loading trainer: ProGrad
+Loading dataset: EuroSAT
+Reading split from /mnt/hdd/DATA/eurosat/split_zhou_EuroSAT.json
+Loading preprocessed few-shot data from /mnt/hdd/DATA/eurosat/split_fewshot/shot_16_shuffled-seed_3.pkl
+SUBSAMPLE BASE CLASSES!
+Building transform_train
++ random resized crop (size=(224, 224))
++ random flip
++ to torch tensor of range [0, 1]
++ normalization (mean=[0.48145466, 0.4578275, 0.40821073], std=[0.26862954, 0.26130258, 0.27577711])
+Building transform_test
++ resize the smaller edge to 224
++ 224x224 center crop
++ to torch tensor of range [0, 1]
++ normalization (mean=[0.48145466, 0.4578275, 0.40821073], std=[0.26862954, 0.26130258, 0.27577711])
+***** Dataset statistics *****
+  Dataset: EuroSAT
+  # classes: 5
+  # train_x: 80
+  # val: 20
+  # test: 4,050
+Loading CLIP (backbone: ViT-B/16)
+Building zeroshot CLIP
+Loading CLIP (backbone: ViT-B/16)
+Prompts: ['a centered satellite photo of Highway or Road.', 'a centered satellite photo of Forest.', 'a centered satellite photo of River.', 'a centered satellite photo of Industrial Buildings.', 'a centered satellite photo of Annual Crop Land.']
+Building custom CLIP
+Initializing a generic context
+Initial context: "X X X X"
+Number of context words (tokens): 4
+Turning off gradients in ZS Clip model
+Turning off gradients in CoOp model
+Loading evaluator: Classification
+No checkpoint found, train from scratch
+Initializing summary writer for tensorboard with log_dir=output/base2new/train_base/eurosat/shots_16/ProGrad/vit_b16_ep50_batch4_c4/seed3/tensorboard
+epoch [1/50][20/20]	time 0.127 (0.575)	data 0.000 (0.037)	eta 0:09:23	xe_loss 0.9404 (1.0800)	kl_loss 1.8245 (1.4128)	acc 75.0000 (61.2500)	lr 2.000000e-03
+epoch [2/50][20/20]	time 0.121 (0.156)	data 0.000 (0.030)	eta 0:02:30	xe_loss 1.1523 (1.1211)	kl_loss 1.1584 (1.1736)	acc 50.0000 (55.0000)	lr 1.998027e-03
+epoch [3/50][20/20]	time 0.134 (0.160)	data 0.000 (0.029)	eta 0:02:30	xe_loss 1.5996 (0.9998)	kl_loss 1.3196 (1.1120)	acc 50.0000 (60.0000)	lr 1.992115e-03
+epoch [4/50][20/20]	time 0.126 (0.162)	data 0.000 (0.035)	eta 0:02:28	xe_loss 0.6519 (0.9097)	kl_loss 1.0635 (1.1531)	acc 100.0000 (68.7500)	lr 1.982287e-03
+epoch [5/50][20/20]	time 0.122 (0.177)	data 0.000 (0.050)	eta 0:02:38	xe_loss 1.5020 (0.8988)	kl_loss 0.9799 (1.1304)	acc 50.0000 (70.0000)	lr 1.968583e-03
+epoch [6/50][20/20]	time 0.135 (0.155)	data 0.000 (0.029)	eta 0:02:16	xe_loss 0.5547 (0.7371)	kl_loss 1.2290 (1.0786)	acc 100.0000 (73.7500)	lr 1.951057e-03
+epoch [7/50][20/20]	time 0.126 (0.155)	data 0.000 (0.029)	eta 0:02:13	xe_loss 0.4551 (0.6592)	kl_loss 1.1462 (1.1091)	acc 100.0000 (81.2500)	lr 1.929776e-03
+epoch [8/50][20/20]	time 0.138 (0.155)	data 0.000 (0.029)	eta 0:02:10	xe_loss 0.5449 (0.7831)	kl_loss 1.0648 (1.1429)	acc 75.0000 (75.0000)	lr 1.904827e-03
+epoch [9/50][20/20]	time 0.120 (0.162)	data 0.000 (0.037)	eta 0:02:12	xe_loss 0.5210 (0.7205)	kl_loss 0.9335 (1.2811)	acc 75.0000 (83.7500)	lr 1.876307e-03
+epoch [10/50][20/20]	time 0.124 (0.166)	data 0.000 (0.036)	eta 0:02:13	xe_loss 0.3433 (0.5860)	kl_loss 1.3807 (1.1935)	acc 100.0000 (81.2500)	lr 1.844328e-03
+epoch [11/50][20/20]	time 0.124 (0.154)	data 0.000 (0.029)	eta 0:02:00	xe_loss 0.3914 (0.6405)	kl_loss 1.0656 (1.2460)	acc 100.0000 (80.0000)	lr 1.809017e-03
+epoch [12/50][20/20]	time 0.125 (0.157)	data 0.000 (0.032)	eta 0:01:58	xe_loss 0.3540 (0.6088)	kl_loss 1.0743 (1.3120)	acc 75.0000 (78.7500)	lr 1.770513e-03
+epoch [13/50][20/20]	time 0.130 (0.159)	data 0.000 (0.032)	eta 0:01:57	xe_loss 0.7070 (0.6346)	kl_loss 1.4946 (1.3197)	acc 75.0000 (78.7500)	lr 1.728969e-03
+epoch [14/50][20/20]	time 0.142 (0.159)	data 0.000 (0.031)	eta 0:01:54	xe_loss 0.8579 (0.5793)	kl_loss 1.6867 (1.2707)	acc 75.0000 (77.5000)	lr 1.684547e-03
+epoch [15/50][20/20]	time 0.116 (0.156)	data 0.000 (0.030)	eta 0:01:49	xe_loss 0.2571 (0.5977)	kl_loss 1.1680 (1.2796)	acc 100.0000 (78.7500)	lr 1.637424e-03
+epoch [16/50][20/20]	time 0.131 (0.157)	data 0.000 (0.030)	eta 0:01:46	xe_loss 0.8716 (0.6374)	kl_loss 1.6484 (1.3427)	acc 75.0000 (76.2500)	lr 1.587785e-03
+epoch [17/50][20/20]	time 0.131 (0.156)	data 0.000 (0.030)	eta 0:01:43	xe_loss 0.8545 (0.6133)	kl_loss 1.8145 (1.2711)	acc 75.0000 (80.0000)	lr 1.535827e-03
+epoch [18/50][20/20]	time 0.119 (0.156)	data 0.000 (0.030)	eta 0:01:39	xe_loss 0.3335 (0.5083)	kl_loss 1.1338 (1.3320)	acc 100.0000 (81.2500)	lr 1.481754e-03
+epoch [19/50][20/20]	time 0.119 (0.156)	data 0.000 (0.030)	eta 0:01:37	xe_loss 0.6772 (0.5346)	kl_loss 1.4214 (1.3985)	acc 75.0000 (83.7500)	lr 1.425779e-03
+epoch [20/50][20/20]	time 0.121 (0.160)	data 0.000 (0.032)	eta 0:01:35	xe_loss 0.2773 (0.5409)	kl_loss 1.3582 (1.3240)	acc 100.0000 (83.7500)	lr 1.368125e-03
+epoch [21/50][20/20]	time 0.118 (0.157)	data 0.000 (0.031)	eta 0:01:31	xe_loss 0.6445 (0.6036)	kl_loss 1.2588 (1.3099)	acc 75.0000 (76.2500)	lr 1.309017e-03
+epoch [22/50][20/20]	time 0.131 (0.160)	data 0.000 (0.032)	eta 0:01:29	xe_loss 0.5967 (0.5728)	kl_loss 1.9317 (1.2370)	acc 75.0000 (81.2500)	lr 1.248690e-03
+epoch [23/50][20/20]	time 0.127 (0.161)	data 0.000 (0.032)	eta 0:01:26	xe_loss 0.3752 (0.5330)	kl_loss 2.1633 (1.3648)	acc 100.0000 (81.2500)	lr 1.187381e-03
+epoch [24/50][20/20]	time 0.124 (0.160)	data 0.000 (0.031)	eta 0:01:23	xe_loss 0.4609 (0.5572)	kl_loss 1.0439 (1.3310)	acc 75.0000 (83.7500)	lr 1.125333e-03
+epoch [25/50][20/20]	time 0.131 (0.159)	data 0.000 (0.031)	eta 0:01:19	xe_loss 0.5859 (0.3551)	kl_loss 1.4481 (1.3203)	acc 75.0000 (91.2500)	lr 1.062791e-03
+epoch [26/50][20/20]	time 0.125 (0.160)	data 0.000 (0.031)	eta 0:01:16	xe_loss 0.2546 (0.6061)	kl_loss 1.2298 (1.3790)	acc 100.0000 (77.5000)	lr 1.000000e-03
+epoch [27/50][20/20]	time 0.097 (0.119)	data 0.000 (0.032)	eta 0:00:54	xe_loss 0.0269 (0.3742)	kl_loss 1.0747 (1.3880)	acc 100.0000 (92.5000)	lr 9.372095e-04
+epoch [28/50][20/20]	time 0.129 (0.165)	data 0.000 (0.036)	eta 0:01:12	xe_loss 0.2220 (0.5300)	kl_loss 1.6574 (1.4850)	acc 100.0000 (81.2500)	lr 8.746668e-04
+epoch [29/50][20/20]	time 0.137 (0.163)	data 0.000 (0.033)	eta 0:01:08	xe_loss 0.3425 (0.4090)	kl_loss 2.0106 (1.4102)	acc 100.0000 (87.5000)	lr 8.126187e-04
+epoch [30/50][20/20]	time 0.125 (0.161)	data 0.000 (0.033)	eta 0:01:04	xe_loss 0.6475 (0.4376)	kl_loss 1.4470 (1.3760)	acc 75.0000 (85.0000)	lr 7.513101e-04
+epoch [31/50][20/20]	time 0.128 (0.161)	data 0.000 (0.033)	eta 0:01:01	xe_loss 0.0255 (0.4306)	kl_loss 0.2398 (1.3804)	acc 100.0000 (86.2500)	lr 6.909830e-04
+epoch [32/50][20/20]	time 0.126 (0.161)	data 0.000 (0.033)	eta 0:00:57	xe_loss 0.4954 (0.4898)	kl_loss 1.5685 (1.4698)	acc 75.0000 (82.5000)	lr 6.318754e-04
+epoch [33/50][20/20]	time 0.144 (0.162)	data 0.000 (0.033)	eta 0:00:55	xe_loss 0.1407 (0.3938)	kl_loss 1.0322 (1.4919)	acc 100.0000 (88.7500)	lr 5.742207e-04
+epoch [34/50][20/20]	time 0.132 (0.161)	data 0.000 (0.033)	eta 0:00:51	xe_loss 0.5474 (0.6171)	kl_loss 1.6781 (1.4148)	acc 75.0000 (77.5000)	lr 5.182463e-04
+epoch [35/50][20/20]	time 0.132 (0.160)	data 0.000 (0.032)	eta 0:00:48	xe_loss 0.2372 (0.5164)	kl_loss 1.4468 (1.4752)	acc 100.0000 (80.0000)	lr 4.641732e-04
+epoch [36/50][20/20]	time 0.123 (0.161)	data 0.000 (0.034)	eta 0:00:45	xe_loss 0.8179 (0.4381)	kl_loss 1.7706 (1.4150)	acc 75.0000 (87.5000)	lr 4.122147e-04
+epoch [37/50][20/20]	time 0.128 (0.163)	data 0.000 (0.035)	eta 0:00:42	xe_loss 0.6099 (0.4204)	kl_loss 1.1999 (1.4491)	acc 75.0000 (88.7500)	lr 3.625760e-04
+epoch [38/50][20/20]	time 0.127 (0.160)	data 0.000 (0.031)	eta 0:00:38	xe_loss 0.6987 (0.4103)	kl_loss 1.5903 (1.4331)	acc 75.0000 (91.2500)	lr 3.154529e-04
+epoch [39/50][20/20]	time 0.134 (0.168)	data 0.000 (0.033)	eta 0:00:36	xe_loss 0.8730 (0.5140)	kl_loss 1.0037 (1.3681)	acc 50.0000 (81.2500)	lr 2.710314e-04
+epoch [40/50][20/20]	time 0.126 (0.169)	data 0.000 (0.039)	eta 0:00:33	xe_loss 0.1580 (0.3973)	kl_loss 2.1284 (1.4061)	acc 100.0000 (88.7500)	lr 2.294868e-04
+epoch [41/50][20/20]	time 0.125 (0.177)	data 0.000 (0.042)	eta 0:00:31	xe_loss 0.5205 (0.3852)	kl_loss 1.4370 (1.5216)	acc 100.0000 (90.0000)	lr 1.909830e-04
+epoch [42/50][20/20]	time 0.141 (0.168)	data 0.000 (0.037)	eta 0:00:26	xe_loss 0.4961 (0.3508)	kl_loss 1.7098 (1.4772)	acc 100.0000 (92.5000)	lr 1.556721e-04
+epoch [43/50][20/20]	time 0.129 (0.164)	data 0.000 (0.036)	eta 0:00:23	xe_loss 0.1360 (0.3750)	kl_loss 1.0637 (1.5125)	acc 100.0000 (90.0000)	lr 1.236933e-04
+epoch [44/50][20/20]	time 0.074 (0.153)	data 0.000 (0.033)	eta 0:00:18	xe_loss 0.1478 (0.4134)	kl_loss 1.9957 (1.4487)	acc 100.0000 (90.0000)	lr 9.517295e-05
+epoch [45/50][20/20]	time 0.128 (0.184)	data 0.000 (0.062)	eta 0:00:18	xe_loss 0.1899 (0.4088)	kl_loss 1.4973 (1.3892)	acc 100.0000 (90.0000)	lr 7.022351e-05
+epoch [46/50][20/20]	time 0.138 (0.163)	data 0.000 (0.032)	eta 0:00:13	xe_loss 0.1726 (0.3583)	kl_loss 2.1867 (1.4060)	acc 100.0000 (90.0000)	lr 4.894348e-05
+epoch [47/50][20/20]	time 0.129 (0.162)	data 0.000 (0.033)	eta 0:00:09	xe_loss 0.3721 (0.4308)	kl_loss 1.9990 (1.5054)	acc 100.0000 (87.5000)	lr 3.141684e-05
+epoch [48/50][20/20]	time 0.126 (0.161)	data 0.000 (0.033)	eta 0:00:06	xe_loss 0.1215 (0.2805)	kl_loss 0.9414 (1.4476)	acc 100.0000 (95.0000)	lr 1.771275e-05
+epoch [49/50][20/20]	time 0.130 (0.159)	data 0.000 (0.031)	eta 0:00:03	xe_loss 0.5854 (0.3749)	kl_loss 1.7078 (1.4633)	acc 100.0000 (92.5000)	lr 7.885299e-06
+epoch [50/50][20/20]	time 0.131 (0.161)	data 0.000 (0.031)	eta 0:00:00	xe_loss 0.6602 (0.4612)	kl_loss 1.2706 (1.4203)	acc 75.0000 (87.5000)	lr 1.973272e-06
+Checkpoint saved to "output/base2new/train_base/eurosat/shots_16/ProGrad/vit_b16_ep50_batch4_c4/seed3/prompt_learner/model.pth.tar-50"
+Finished training
+Do evaluation on test set
+=> result
+* total: 4,050
+* correct: 3,663
+* accuracy: 90.44%
+* error: 9.56%
+* macro_f1: 90.32%
+Elapsed: 0:03:06

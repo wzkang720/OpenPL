@@ -1,0 +1,374 @@
+***************
+** Arguments **
+***************
+backbone: 
+config_file: configs/trainers/RPO/main_K24_ep50_batch4.yaml
+dataset_config_file: configs/datasets/eurosat.yaml
+eval_only: False
+head: 
+load_epoch: None
+model_dir: 
+no_train: False
+opts: ['DATASET.NUM_SHOTS', '16', 'DATASET.SUBSAMPLE_CLASSES', 'base']
+output_dir: output/rpo/base2new/train_base/eurosat/shots_16/RPO/main_K24_ep50_batch4/seed2
+resume: 
+root: /mnt/hdd/DATA
+seed: 2
+source_domains: None
+target_domains: None
+trainer: RPO
+transforms: None
+************
+** Config **
+************
+DATALOADER:
+  K_TRANSFORMS: 1
+  NUM_WORKERS: 8
+  RETURN_IMG0: False
+  TEST:
+    BATCH_SIZE: 100
+    SAMPLER: SequentialSampler
+  TRAIN_U:
+    BATCH_SIZE: 32
+    N_DOMAIN: 0
+    N_INS: 16
+    SAME_AS_X: True
+    SAMPLER: RandomSampler
+  TRAIN_X:
+    BATCH_SIZE: 4
+    N_DOMAIN: 0
+    N_INS: 16
+    SAMPLER: RandomSampler
+DATASET:
+  ALL_AS_UNLABELED: False
+  CIFAR_C_LEVEL: 1
+  CIFAR_C_TYPE: 
+  NAME: EuroSAT
+  NUM_LABELED: -1
+  NUM_SHOTS: 16
+  PROMPT: a photo of a _.
+  ROOT: /mnt/hdd/DATA
+  SOURCE_DOMAINS: ()
+  STL10_FOLD: -1
+  SUBSAMPLE_CLASSES: base
+  TARGET_DOMAINS: ()
+  VAL_PERCENT: 0.1
+INPUT:
+  COLORJITTER_B: 0.4
+  COLORJITTER_C: 0.4
+  COLORJITTER_H: 0.1
+  COLORJITTER_S: 0.4
+  CROP_PADDING: 4
+  CUTOUT_LEN: 16
+  CUTOUT_N: 1
+  GB_K: 21
+  GB_P: 0.5
+  GN_MEAN: 0.0
+  GN_STD: 0.15
+  INTERPOLATION: bicubic
+  NO_TRANSFORM: False
+  PIXEL_MEAN: [0.48145466, 0.4578275, 0.40821073]
+  PIXEL_STD: [0.26862954, 0.26130258, 0.27577711]
+  RANDAUGMENT_M: 10
+  RANDAUGMENT_N: 2
+  RGS_P: 0.2
+  RRCROP_SCALE: (0.08, 1.0)
+  SIZE: (224, 224)
+  TRANSFORMS: ('random_resized_crop', 'random_flip', 'normalize')
+MODEL:
+  BACKBONE:
+    NAME: ViT-B/16
+    PRETRAINED: True
+  HEAD:
+    ACTIVATION: relu
+    BN: True
+    DROPOUT: 0.0
+    HIDDEN_LAYERS: ()
+    NAME: 
+  INIT_WEIGHTS: 
+OPTIM:
+  ADAM_BETA1: 0.9
+  ADAM_BETA2: 0.999
+  BASE_LR_MULT: 0.1
+  GAMMA: 0.1
+  LR: 0.02
+  LR_SCHEDULER: cosine
+  MAX_EPOCH: 50
+  MOMENTUM: 0.9
+  NAME: sgd
+  NEW_LAYERS: ()
+  RMSPROP_ALPHA: 0.99
+  SGD_DAMPNING: 0
+  SGD_NESTEROV: False
+  STAGED_LR: False
+  STEPSIZE: (-1,)
+  WARMUP_CONS_LR: 1e-05
+  WARMUP_EPOCH: 1
+  WARMUP_MIN_LR: 1e-05
+  WARMUP_RECOUNT: True
+  WARMUP_TYPE: constant
+  WEIGHT_DECAY: 0.0005
+OUTPUT_DIR: output/rpo/base2new/train_base/eurosat/shots_16/RPO/main_K24_ep50_batch4/seed2
+RESUME: 
+SEED: 2
+TEST:
+  COMPUTE_CMAT: False
+  EVALUATOR: Classification
+  FINAL_MODEL: last_step
+  NO_TEST: False
+  PER_CLASS_RESULT: False
+  SPLIT: test
+TRAIN:
+  CHECKPOINT_FREQ: 0
+  COUNT_ITER: train_x
+  PRINT_FREQ: 20
+TRAINER:
+  CDAC:
+    CLASS_LR_MULTI: 10
+    P_THRESH: 0.95
+    RAMPUP_COEF: 30
+    RAMPUP_ITRS: 1000
+    STRONG_TRANSFORMS: ()
+    TOPK_MATCH: 5
+  COCOOP:
+    CTX_INIT: a photo of a
+    N_CTX: 4
+    PREC: fp16
+  COOP:
+    CLASS_TOKEN_POSITION: 
+    CSC: False
+    CTX_INIT: 
+    N_CTX: 4
+    PREC: fp16
+  CROSSGRAD:
+    ALPHA_D: 0.5
+    ALPHA_F: 0.5
+    EPS_D: 1.0
+    EPS_F: 1.0
+  DAEL:
+    CONF_THRE: 0.95
+    STRONG_TRANSFORMS: ()
+    WEIGHT_U: 0.5
+  DAELDG:
+    CONF_THRE: 0.95
+    STRONG_TRANSFORMS: ()
+    WEIGHT_U: 0.5
+  DDAIG:
+    ALPHA: 0.5
+    CLAMP: False
+    CLAMP_MAX: 1.0
+    CLAMP_MIN: -1.0
+    G_ARCH: 
+    LMDA: 0.3
+    WARMUP: 0
+  DOMAINMIX:
+    ALPHA: 1.0
+    BETA: 1.0
+    TYPE: crossdomain
+  ENTMIN:
+    LMDA: 0.001
+  FIXMATCH:
+    CONF_THRE: 0.95
+    STRONG_TRANSFORMS: ()
+    WEIGHT_U: 1.0
+  LP:
+    PREC: fp16
+    PROMPT: A photo of a {cls_name}
+  M3SDA:
+    LMDA: 0.5
+    N_STEP_F: 4
+  MCD:
+    N_STEP_F: 4
+  MEANTEACHER:
+    EMA_ALPHA: 0.999
+    RAMPUP: 5
+    WEIGHT_U: 1.0
+  MIXMATCH:
+    MIXUP_BETA: 0.75
+    RAMPUP: 20000
+    TEMP: 2.0
+    WEIGHT_U: 100.0
+  MME:
+    LMDA: 0.1
+  NAME: RPO
+  RPO:
+    CTX_INIT: X X X X
+    K: 24
+    PREC: fp16
+  SE:
+    CONF_THRE: 0.95
+    EMA_ALPHA: 0.999
+    RAMPUP: 300
+USE_CUDA: True
+VERBOSE: True
+VERSION: 1
+Collecting env info ...
+** System info **
+PyTorch version: 2.2.2+cu121
+Is debug build: False
+CUDA used to build PyTorch: 12.1
+ROCM used to build PyTorch: N/A
+
+OS: Debian GNU/Linux 12 (bookworm) (x86_64)
+GCC version: (Debian 12.2.0-14) 12.2.0
+Clang version: Could not collect
+CMake version: Could not collect
+Libc version: glibc-2.36
+
+Python version: 3.11.2 (main, Mar 13 2023, 12:18:29) [GCC 12.2.0] (64-bit runtime)
+Python platform: Linux-6.5.13-3-pve-x86_64-with-glibc2.36
+Is CUDA available: True
+CUDA runtime version: 11.8.89
+CUDA_MODULE_LOADING set to: LAZY
+GPU models and configuration: 
+GPU 0: NVIDIA A800 80GB PCIe
+GPU 1: NVIDIA A800 80GB PCIe
+
+Nvidia driver version: 525.147.05
+cuDNN version: Could not collect
+HIP runtime version: N/A
+MIOpen runtime version: N/A
+Is XNNPACK available: True
+
+CPU:
+Architecture:                       x86_64
+CPU op-mode(s):                     32-bit, 64-bit
+Address sizes:                      46 bits physical, 57 bits virtual
+Byte Order:                         Little Endian
+CPU(s):                             64
+On-line CPU(s) list:                0-24,26-32
+Off-line CPU(s) list:               25,33-63
+Vendor ID:                          GenuineIntel
+Model name:                         Intel(R) Xeon(R) Gold 6326 CPU @ 2.90GHz
+CPU family:                         6
+Model:                              106
+Thread(s) per core:                 2
+Core(s) per socket:                 16
+Socket(s):                          2
+Stepping:                           6
+CPU(s) scaling MHz:                 98%
+CPU max MHz:                        3500.0000
+CPU min MHz:                        800.0000
+BogoMIPS:                           5800.00
+Flags:                              fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid dca sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb cat_l3 invpcid_single intel_ppin ssbd mba ibrs ibpb stibp ibrs_enhanced tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid cqm rdt_a avx512f avx512dq rdseed adx smap avx512ifma clflushopt clwb intel_pt avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local split_lock_detect wbnoinvd dtherm ida arat pln pts vnmi avx512vbmi umip pku ospke avx512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg tme avx512_vpopcntdq la57 rdpid fsrm md_clear pconfig flush_l1d arch_capabilities
+Virtualization:                     VT-x
+L1d cache:                          1.5 MiB (32 instances)
+L1i cache:                          1 MiB (32 instances)
+L2 cache:                           40 MiB (32 instances)
+L3 cache:                           48 MiB (2 instances)
+NUMA node(s):                       2
+NUMA node0 CPU(s):                  0-15,32-47
+NUMA node1 CPU(s):                  16-31,48-63
+Vulnerability Gather data sampling: Vulnerable: No microcode
+Vulnerability Itlb multihit:        Not affected
+Vulnerability L1tf:                 Not affected
+Vulnerability Mds:                  Not affected
+Vulnerability Meltdown:             Not affected
+Vulnerability Mmio stale data:      Mitigation; Clear CPU buffers; SMT vulnerable
+Vulnerability Retbleed:             Not affected
+Vulnerability Spec rstack overflow: Not affected
+Vulnerability Spec store bypass:    Mitigation; Speculative Store Bypass disabled via prctl
+Vulnerability Spectre v1:           Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:           Mitigation; Enhanced / Automatic IBRS, IBPB conditional, RSB filling, PBRSB-eIBRS SW sequence
+Vulnerability Srbds:                Not affected
+Vulnerability Tsx async abort:      Not affected
+
+Versions of relevant libraries:
+[pip3] flake8==3.7.9
+[pip3] numpy==1.26.4
+[pip3] torch==2.2.2
+[pip3] torchaudio==2.2.2
+[pip3] torchvision==0.17.2
+[pip3] triton==2.2.0
+[conda] Could not collect
+        Pillow (10.3.0)
+
+Loading trainer: RPO
+Loading dataset: EuroSAT
+Reading split from /mnt/hdd/DATA/eurosat/split_zhou_EuroSAT.json
+Loading preprocessed few-shot data from /mnt/hdd/DATA/eurosat/split_fewshot/shot_16_shuffled-seed_2.pkl
+SUBSAMPLE BASE CLASSES!
+Building transform_train
++ random resized crop (size=(224, 224), scale=(0.08, 1.0))
++ random flip
++ to torch tensor of range [0, 1]
++ normalization (mean=[0.48145466, 0.4578275, 0.40821073], std=[0.26862954, 0.26130258, 0.27577711])
+Building transform_test
++ resize the smaller edge to 224
++ 224x224 center crop
++ to torch tensor of range [0, 1]
++ normalization (mean=[0.48145466, 0.4578275, 0.40821073], std=[0.26862954, 0.26130258, 0.27577711])
+---------  -------
+Dataset    EuroSAT
+# classes  5
+# train_x  80
+# val      20
+# test     4,200
+---------  -------
+Loading CLIP (backbone: ViT-B/16)
+Building custom CLIP
+Parameters to be updated: {'prompt_learner.img_prompt', 'prompt_learner.text_prompt'}
+Loading evaluator: Classification
+No checkpoint found, train from scratch
+Initialize tensorboard (log_dir=output/rpo/base2new/train_base/eurosat/shots_16/RPO/main_K24_ep50_batch4/seed2/tensorboard)
+epoch [1/50] batch [20/20] time 0.239 (0.370) data 0.000 (0.023) loss 2.2229 (1.5098) lr 2.0000e-02 eta 0:06:02
+epoch [2/50] batch [20/20] time 0.242 (0.265) data 0.000 (0.025) loss 0.7884 (1.1822) lr 1.9980e-02 eta 0:04:14
+epoch [3/50] batch [20/20] time 0.237 (0.272) data 0.000 (0.025) loss 1.7659 (1.0368) lr 1.9921e-02 eta 0:04:15
+epoch [4/50] batch [20/20] time 0.236 (0.262) data 0.000 (0.024) loss 1.5524 (0.9675) lr 1.9823e-02 eta 0:04:01
+epoch [5/50] batch [20/20] time 0.235 (0.269) data 0.000 (0.026) loss 0.5585 (0.8399) lr 1.9686e-02 eta 0:04:02
+epoch [6/50] batch [20/20] time 0.234 (0.261) data 0.000 (0.024) loss 0.6796 (0.7544) lr 1.9511e-02 eta 0:03:49
+epoch [7/50] batch [20/20] time 0.237 (0.269) data 0.000 (0.024) loss 0.7133 (0.8259) lr 1.9298e-02 eta 0:03:50
+epoch [8/50] batch [20/20] time 0.235 (0.261) data 0.000 (0.024) loss 0.6708 (0.6307) lr 1.9048e-02 eta 0:03:39
+epoch [9/50] batch [20/20] time 0.235 (0.263) data 0.000 (0.025) loss 0.5688 (0.5472) lr 1.8763e-02 eta 0:03:35
+epoch [10/50] batch [20/20] time 0.238 (0.261) data 0.000 (0.024) loss 0.7964 (0.5119) lr 1.8443e-02 eta 0:03:29
+epoch [11/50] batch [20/20] time 0.235 (0.267) data 0.000 (0.024) loss 1.0334 (0.5524) lr 1.8090e-02 eta 0:03:28
+epoch [12/50] batch [20/20] time 0.238 (0.263) data 0.000 (0.026) loss 0.8119 (0.5159) lr 1.7705e-02 eta 0:03:19
+epoch [13/50] batch [20/20] time 0.234 (0.268) data 0.000 (0.027) loss 0.3277 (0.4640) lr 1.7290e-02 eta 0:03:18
+epoch [14/50] batch [20/20] time 0.235 (0.262) data 0.000 (0.024) loss 0.1411 (0.4163) lr 1.6845e-02 eta 0:03:08
+epoch [15/50] batch [20/20] time 0.239 (0.270) data 0.000 (0.026) loss 0.2655 (0.3846) lr 1.6374e-02 eta 0:03:08
+epoch [16/50] batch [20/20] time 0.234 (0.262) data 0.000 (0.024) loss 0.3958 (0.3587) lr 1.5878e-02 eta 0:02:57
+epoch [17/50] batch [20/20] time 0.236 (0.261) data 0.000 (0.023) loss 0.3050 (0.3158) lr 1.5358e-02 eta 0:02:52
+epoch [18/50] batch [20/20] time 0.236 (0.261) data 0.000 (0.024) loss 0.0866 (0.2400) lr 1.4818e-02 eta 0:02:47
+epoch [19/50] batch [20/20] time 0.235 (0.268) data 0.000 (0.025) loss 0.1607 (0.2886) lr 1.4258e-02 eta 0:02:46
+epoch [20/50] batch [20/20] time 0.235 (0.261) data 0.000 (0.023) loss 0.2426 (0.2515) lr 1.3681e-02 eta 0:02:36
+epoch [21/50] batch [20/20] time 0.235 (0.271) data 0.000 (0.024) loss 0.4424 (0.2840) lr 1.3090e-02 eta 0:02:37
+epoch [22/50] batch [20/20] time 0.250 (0.276) data 0.000 (0.023) loss 0.3051 (0.2290) lr 1.2487e-02 eta 0:02:34
+epoch [23/50] batch [20/20] time 0.235 (0.271) data 0.000 (0.026) loss 0.0982 (0.2633) lr 1.1874e-02 eta 0:02:26
+epoch [24/50] batch [20/20] time 0.236 (0.262) data 0.000 (0.024) loss 0.2398 (0.2271) lr 1.1253e-02 eta 0:02:16
+epoch [25/50] batch [20/20] time 0.236 (0.262) data 0.000 (0.025) loss 0.3091 (0.1842) lr 1.0628e-02 eta 0:02:10
+epoch [26/50] batch [20/20] time 0.349 (0.267) data 0.000 (0.024) loss 0.1148 (0.1743) lr 1.0000e-02 eta 0:02:07
+epoch [27/50] batch [20/20] time 0.234 (0.261) data 0.000 (0.023) loss 0.2412 (0.1875) lr 9.3721e-03 eta 0:02:00
+epoch [28/50] batch [20/20] time 0.247 (0.264) data 0.000 (0.024) loss 0.3003 (0.1932) lr 8.7467e-03 eta 0:01:56
+epoch [29/50] batch [20/20] time 0.235 (0.262) data 0.000 (0.025) loss 0.1226 (0.1462) lr 8.1262e-03 eta 0:01:50
+epoch [30/50] batch [20/20] time 0.235 (0.267) data 0.000 (0.024) loss 0.0880 (0.1322) lr 7.5131e-03 eta 0:01:46
+epoch [31/50] batch [20/20] time 0.235 (0.262) data 0.000 (0.023) loss 0.2744 (0.1199) lr 6.9098e-03 eta 0:01:39
+epoch [32/50] batch [20/20] time 0.234 (0.261) data 0.000 (0.024) loss 0.3599 (0.1634) lr 6.3188e-03 eta 0:01:34
+epoch [33/50] batch [20/20] time 0.236 (0.262) data 0.000 (0.024) loss 0.1442 (0.1896) lr 5.7422e-03 eta 0:01:28
+epoch [34/50] batch [20/20] time 0.255 (0.284) data 0.000 (0.025) loss 0.0448 (0.1272) lr 5.1825e-03 eta 0:01:30
+epoch [35/50] batch [20/20] time 0.236 (0.261) data 0.000 (0.023) loss 0.1155 (0.1638) lr 4.6417e-03 eta 0:01:18
+epoch [36/50] batch [20/20] time 0.237 (0.263) data 0.000 (0.023) loss 0.0790 (0.1083) lr 4.1221e-03 eta 0:01:13
+epoch [37/50] batch [20/20] time 0.249 (0.265) data 0.000 (0.025) loss 0.2527 (0.1498) lr 3.6258e-03 eta 0:01:08
+epoch [38/50] batch [20/20] time 0.347 (0.274) data 0.000 (0.025) loss 0.0765 (0.0991) lr 3.1545e-03 eta 0:01:05
+epoch [39/50] batch [20/20] time 0.235 (0.262) data 0.000 (0.025) loss 0.1980 (0.1133) lr 2.7103e-03 eta 0:00:57
+epoch [40/50] batch [20/20] time 0.235 (0.262) data 0.000 (0.024) loss 0.0435 (0.1363) lr 2.2949e-03 eta 0:00:52
+epoch [41/50] batch [20/20] time 0.235 (0.270) data 0.000 (0.025) loss 0.1355 (0.1717) lr 1.9098e-03 eta 0:00:48
+epoch [42/50] batch [20/20] time 0.303 (0.277) data 0.000 (0.025) loss 0.0181 (0.1341) lr 1.5567e-03 eta 0:00:44
+epoch [43/50] batch [20/20] time 0.236 (0.268) data 0.000 (0.025) loss 0.1148 (0.1250) lr 1.2369e-03 eta 0:00:37
+epoch [44/50] batch [20/20] time 0.236 (0.263) data 0.000 (0.024) loss 0.0868 (0.1082) lr 9.5173e-04 eta 0:00:31
+epoch [45/50] batch [20/20] time 0.238 (0.262) data 0.000 (0.025) loss 0.0453 (0.1255) lr 7.0224e-04 eta 0:00:26
+epoch [46/50] batch [20/20] time 0.236 (0.278) data 0.000 (0.024) loss 0.0277 (0.0988) lr 4.8943e-04 eta 0:00:22
+epoch [47/50] batch [20/20] time 0.234 (0.273) data 0.000 (0.025) loss 0.0267 (0.1245) lr 3.1417e-04 eta 0:00:16
+epoch [48/50] batch [20/20] time 0.235 (0.261) data 0.000 (0.023) loss 0.0665 (0.0976) lr 1.7713e-04 eta 0:00:10
+epoch [49/50] batch [20/20] time 0.235 (0.263) data 0.000 (0.025) loss 0.3104 (0.1339) lr 7.8853e-05 eta 0:00:05
+epoch [50/50] batch [20/20] time 0.235 (0.267) data 0.000 (0.024) loss 0.0822 (0.1315) lr 1.9733e-05 eta 0:00:00
+Checkpoint saved to output/rpo/base2new/train_base/eurosat/shots_16/RPO/main_K24_ep50_batch4/seed2/prompt_learner/model.pth.tar-50
+Finish training
+Deploy the last-epoch model
+Evaluate on the *test* set
+=> result
+* total: 4,200
+* correct: 3,846
+* accuracy: 91.57%
+* error: 8.43%
+* macro_f1: 91.66%
+Elapsed: 0:04:40
