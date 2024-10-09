@@ -1,0 +1,321 @@
+***************
+** Arguments **
+***************
+backbone: 
+config_file: configs/trainers/ProGrad/vit_b16_ep50_batch4_c4_cross_dataset.yaml
+dataset_config_file: configs/datasets/imagenet.yaml
+dataset_var: ImageNetA
+eval_only: True
+head: 
+load_epoch: 10
+model_dir: output/imagenet/ProGrad/vit_b16_ep50_batch4_c4_cross_dataset/seed1
+no_train: False
+opts: ['DATASET.NUM_SHOTS', '16', 'LOSS.LAMBDA', '0.8', 'TRAINER.COOP.N_CTX', '4', 'TRAINER.COOP.CSC', 'False', 'TRAINER.COOP.CLASS_TOKEN_POSITION', 'end', 'DATASET.NUM_SHOTS', '16', 'DATASET.SUBSAMPLE_CLASSES', 'new_ratio2']
+output_dir: output/evaluation/ProGrad/vit_b16_ep50_batch4_c4_cross_dataset_16shots/ImageNetA/new_ratio2/seed1
+resume: 
+root: /home/wzk/DATA
+seed: 1
+source_domains: None
+target_domains: None
+trainer: ProGrad
+transforms: None
+************
+** Config **
+************
+DATALOADER:
+  K_TRANSFORMS: 1
+  NUM_WORKERS: 8
+  RETURN_IMG0: False
+  TEST:
+    BATCH_SIZE: 100
+    SAMPLER: SequentialSampler
+  TRAIN_U:
+    BATCH_SIZE: 32
+    N_DOMAIN: 0
+    N_INS: 16
+    SAME_AS_X: True
+    SAMPLER: RandomSampler
+  TRAIN_X:
+    BATCH_SIZE: 4
+    N_DOMAIN: 0
+    N_INS: 16
+    SAMPLER: RandomSampler
+DATASET:
+  ALL_AS_UNLABELED: False
+  CIFAR_C_LEVEL: 1
+  CIFAR_C_TYPE: 
+  NAME: ImageNet
+  NAME_VAR: ImageNetA
+  NUM_LABELED: -1
+  NUM_SHOTS: 16
+  ROOT: /home/wzk/DATA
+  SOURCE_DOMAINS: ()
+  STL10_FOLD: -1
+  SUBSAMPLE_CLASSES: new_ratio2
+  TARGET_DOMAINS: ()
+  VAL_PERCENT: 0.1
+INPUT:
+  COLORJITTER_B: 0.4
+  COLORJITTER_C: 0.4
+  COLORJITTER_H: 0.1
+  COLORJITTER_S: 0.4
+  CROP_PADDING: 4
+  CUTOUT_LEN: 16
+  CUTOUT_N: 1
+  GB_K: 21
+  GB_P: 0.5
+  GN_MEAN: 0.0
+  GN_STD: 0.15
+  INTERPOLATION: bicubic
+  NO_TRANSFORM: False
+  PIXEL_MEAN: [0.48145466, 0.4578275, 0.40821073]
+  PIXEL_STD: [0.26862954, 0.26130258, 0.27577711]
+  RANDAUGMENT_M: 10
+  RANDAUGMENT_N: 2
+  RGS_P: 0.2
+  SIZE: (224, 224)
+  TRANSFORMS: ('random_resized_crop', 'random_flip', 'normalize')
+LOSS:
+  ALPHA: 0.0
+  GM: False
+  LAMBDA: 0.8
+  NAME: prograd
+  T: 1.0
+MIX_DISTRIBUTION: True
+MODEL:
+  BACKBONE:
+    NAME: ViT-B/16
+    PRETRAINED: True
+  HEAD:
+    ACTIVATION: relu
+    BN: True
+    DROPOUT: 0.0
+    HIDDEN_LAYERS: ()
+    NAME: 
+  INIT_WEIGHTS: 
+OPTIM:
+  ADAM_BETA1: 0.9
+  ADAM_BETA2: 0.999
+  BASE_LR_MULT: 0.1
+  GAMMA: 0.1
+  LR: 0.002
+  LR_SCHEDULER: cosine
+  MAX_EPOCH: 10
+  MOMENTUM: 0.9
+  NAME: sgd
+  NEW_LAYERS: ()
+  RMSPROP_ALPHA: 0.99
+  SGD_DAMPNING: 0
+  SGD_NESTEROV: False
+  STAGED_LR: False
+  STEPSIZE: (-1,)
+  WARMUP_CONS_LR: 1e-05
+  WARMUP_EPOCH: 1
+  WARMUP_MIN_LR: 1e-05
+  WARMUP_RECOUNT: True
+  WARMUP_TYPE: constant
+  WEIGHT_DECAY: 0.0005
+OUTPUT_DIR: output/evaluation/ProGrad/vit_b16_ep50_batch4_c4_cross_dataset_16shots/ImageNetA/new_ratio2/seed1
+RESUME: 
+SEED: 1
+TEST:
+  COMPUTE_CMAT: False
+  EVALUATOR: Classification
+  FINAL_MODEL: last_step
+  NO_TEST: False
+  PER_CLASS_RESULT: False
+  SPLIT: test
+TRAIN:
+  CHECKPOINT_FREQ: 0
+  COUNT_ITER: train_x
+  PRINT_FREQ: 20
+TRAINER:
+  CG:
+    ALPHA_D: 0.5
+    ALPHA_F: 0.5
+    EPS_D: 1.0
+    EPS_F: 1.0
+  COCOOP:
+    CTX_INIT: False
+    N_CTX: 16
+    PREC: fp16
+  COOP:
+    ALPHA: 1.0
+    CLASS_TOKEN_POSITION: end
+    CSC: False
+    CTX_INIT: False
+    N_CTX: 4
+    PREC: fp16
+  DAEL:
+    CONF_THRE: 0.95
+    STRONG_TRANSFORMS: ()
+    WEIGHT_U: 0.5
+  DDAIG:
+    ALPHA: 0.5
+    CLAMP: False
+    CLAMP_MAX: 1.0
+    CLAMP_MIN: -1.0
+    G_ARCH: 
+    LMDA: 0.3
+    WARMUP: 0
+  ENTMIN:
+    LMDA: 0.001
+  FIXMATCH:
+    CONF_THRE: 0.95
+    STRONG_TRANSFORMS: ()
+    WEIGHT_U: 1.0
+  M3SDA:
+    LMDA: 0.5
+    N_STEP_F: 4
+  MCD:
+    N_STEP_F: 4
+  MEANTEA:
+    EMA_ALPHA: 0.999
+    RAMPUP: 5
+    WEIGHT_U: 1.0
+  MIXMATCH:
+    MIXUP_BETA: 0.75
+    RAMPUP: 20000
+    TEMP: 2.0
+    WEIGHT_U: 100.0
+  MME:
+    LMDA: 0.1
+  NAME: ProGrad
+  SE:
+    CONF_THRE: 0.95
+    EMA_ALPHA: 0.999
+    RAMPUP: 300
+USE_CUDA: True
+VERBOSE: True
+VERSION: 1
+Collecting env info ...
+** System info **
+PyTorch version: 2.4.1+cu121
+Is debug build: False
+CUDA used to build PyTorch: 12.1
+ROCM used to build PyTorch: N/A
+
+OS: Ubuntu 22.04.4 LTS (x86_64)
+GCC version: (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0
+Clang version: Could not collect
+CMake version: Could not collect
+Libc version: glibc-2.35
+
+Python version: 3.8.19 (default, Mar 20 2024, 19:58:24)  [GCC 11.2.0] (64-bit runtime)
+Python platform: Linux-6.8.0-40-generic-x86_64-with-glibc2.17
+Is CUDA available: True
+CUDA runtime version: Could not collect
+CUDA_MODULE_LOADING set to: LAZY
+GPU models and configuration: 
+GPU 0: NVIDIA RTX 6000 Ada Generation
+GPU 1: NVIDIA RTX 6000 Ada Generation
+GPU 2: NVIDIA RTX 6000 Ada Generation
+GPU 3: NVIDIA RTX 6000 Ada Generation
+GPU 4: NVIDIA RTX 6000 Ada Generation
+GPU 5: NVIDIA RTX 6000 Ada Generation
+GPU 6: NVIDIA RTX 6000 Ada Generation
+GPU 7: NVIDIA RTX 6000 Ada Generation
+
+Nvidia driver version: 535.183.01
+cuDNN version: Could not collect
+HIP runtime version: N/A
+MIOpen runtime version: N/A
+Is XNNPACK available: True
+
+CPU:
+Architecture:                         x86_64
+CPU op-mode(s):                       32-bit, 64-bit
+Address sizes:                        52 bits physical, 57 bits virtual
+Byte Order:                           Little Endian
+CPU(s):                               96
+On-line CPU(s) list:                  0-95
+Vendor ID:                            AuthenticAMD
+Model name:                           AMD EPYC 9754 128-Core Processor
+CPU family:                           25
+Model:                                160
+Thread(s) per core:                   1
+Core(s) per socket:                   48
+Socket(s):                            2
+Stepping:                             2
+Frequency boost:                      enabled
+CPU max MHz:                          3100.3411
+CPU min MHz:                          1500.0000
+BogoMIPS:                             4492.93
+Flags:                                fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good amd_lbr_v2 nopl nonstop_tsc cpuid extd_apicid aperfmperf rapl pni pclmulqdq monitor ssse3 fma cx16 pcid sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs skinit wdt tce topoext perfctr_core perfctr_nb bpext perfctr_llc mwaitx cpb cat_l3 cdp_l3 hw_pstate ssbd mba perfmon_v2 ibrs ibpb stibp ibrs_enhanced vmmcall fsgsbase bmi1 avx2 smep bmi2 erms invpcid cqm rdt_a avx512f avx512dq rdseed adx smap avx512ifma clflushopt clwb avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local user_shstk avx512_bf16 clzero irperf xsaveerptr rdpru wbnoinvd amd_ppin cppc arat npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold avic v_vmsave_vmload vgif x2avic v_spec_ctrl vnmi avx512vbmi umip pku ospke avx512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg avx512_vpopcntdq la57 rdpid overflow_recov succor smca fsrm flush_l1d debug_swap
+Virtualization:                       AMD-V
+L1d cache:                            3 MiB (96 instances)
+L1i cache:                            3 MiB (96 instances)
+L2 cache:                             96 MiB (96 instances)
+L3 cache:                             512 MiB (32 instances)
+NUMA node(s):                         2
+NUMA node0 CPU(s):                    0-47
+NUMA node1 CPU(s):                    48-95
+Vulnerability Gather data sampling:   Not affected
+Vulnerability Itlb multihit:          Not affected
+Vulnerability L1tf:                   Not affected
+Vulnerability Mds:                    Not affected
+Vulnerability Meltdown:               Not affected
+Vulnerability Mmio stale data:        Not affected
+Vulnerability Reg file data sampling: Not affected
+Vulnerability Retbleed:               Not affected
+Vulnerability Spec rstack overflow:   Mitigation; Safe RET
+Vulnerability Spec store bypass:      Mitigation; Speculative Store Bypass disabled via prctl
+Vulnerability Spectre v1:             Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:             Mitigation; Enhanced / Automatic IBRS; IBPB conditional; STIBP disabled; RSB filling; PBRSB-eIBRS Not affected; BHI Not affected
+Vulnerability Srbds:                  Not affected
+Vulnerability Tsx async abort:        Not affected
+
+Versions of relevant libraries:
+[pip3] flake8==3.7.9
+[pip3] numpy==1.24.1
+[pip3] torch==2.4.1+cu121
+[pip3] torchaudio==2.4.1+cu121
+[pip3] torchvision==0.19.1+cu121
+[pip3] triton==3.0.0
+[conda] numpy                     1.24.1                   pypi_0    pypi
+[conda] torch                     2.4.1+cu121              pypi_0    pypi
+[conda] torchaudio                2.4.1+cu121              pypi_0    pypi
+[conda] torchvision               0.19.1+cu121             pypi_0    pypi
+[conda] triton                    3.0.0                    pypi_0    pypi
+        Pillow (10.2.0)
+
+Loading trainer: ProGrad
+Loading dataset: ImageNet
+Loading preprocessed few-shot data from /home/wzk/DATA/imagenet/split_fewshot/shot_16_shuffled-seed_1.pkl
+Loading dataset: ImageNetA
+SUBSAMPLE NEW_RATIO2 CLASSES!
+Building transform_train
++ random resized crop (size=(224, 224))
++ random flip
++ to torch tensor of range [0, 1]
++ normalization (mean=[0.48145466, 0.4578275, 0.40821073], std=[0.26862954, 0.26130258, 0.27577711])
+Building transform_test
++ resize the smaller edge to 224
++ 224x224 center crop
++ to torch tensor of range [0, 1]
++ normalization (mean=[0.48145466, 0.4578275, 0.40821073], std=[0.26862954, 0.26130258, 0.27577711])
+***** Dataset statistics *****
+  Dataset: ImageNet
+  # classes: 200
+  # train_x: 5,078
+  # val: 9,078
+  # test: 9,078
+Loading CLIP (backbone: ViT-B/16)
+Building zeroshot CLIP
+Loading CLIP (backbone: ViT-B/16)
+Prompts: ['a photo of a parachute.', 'a photo of a grand piano.', 'a photo of a white-headed capuchin.', 'a photo of a rotary dial telephone.', 'a photo of a hermit crab.', 'a photo of a forklift.', 'a photo of a flagpole.', 'a photo of a rocking chair.', 'a photo of a weevil.', 'a photo of a goose.', 'a photo of a limousine.', 'a photo of a harvestman.', 'a photo of a American black bear.', 'a photo of a pretzel.', 'a photo of a feather boa.', 'a photo of a hot dog.', 'a photo of a goblet.', 'a photo of a golf cart.', 'a photo of a toucan.', 'a photo of a bubble.', 'a photo of a Rottweiler.', 'a photo of a envelope.', 'a photo of a praying mantis.', 'a photo of a fishing casting reel.', 'a photo of a red fox.', 'a photo of a breastplate.', 'a photo of a bell pepper.', 'a photo of a stick insect.', 'a photo of a baseball player.', 'a photo of a Persian cat.', 'a photo of a Chihuahua.', 'a photo of a castle.', 'a photo of a koala.', 'a photo of a toaster.', 'a photo of a sundial.', 'a photo of a syringe.', 'a photo of a acorn.', 'a photo of a tank.', 'a photo of a grasshopper.', 'a photo of a great egret.', 'a photo of a shipwreck.', 'a photo of a parking meter.', 'a photo of a ant.', 'a photo of a African bush elephant.', 'a photo of a shovel.', 'a photo of a pelican.', 'a photo of a newt.', 'a photo of a carved pumpkin.', 'a photo of a sulphur-crested cockatoo.', 'a photo of a hair dryer.', 'a photo of a box turtle.', 'a photo of a canoe.', 'a photo of a hockey puck.', 'a photo of a digital clock.', 'a photo of a submarine.', 'a photo of a jay.', 'a photo of a cowboy boot.', 'a photo of a centipede.', 'a photo of a soap dispenser.', 'a photo of a racket.', 'a photo of a skunk.', 'a photo of a starfish.', 'a photo of a mushroom.', 'a photo of a sea lion.', 'a photo of a snowmobile.', 'a photo of a Christmas stocking.', 'a photo of a school bus.', 'a photo of a drumstick.', 'a photo of a couch.', 'a photo of a barn.', 'a photo of a snowplow.', 'a photo of a garbage truck.', 'a photo of a bee.', 'a photo of a lighter.', 'a photo of a American bullfrog.', 'a photo of a beaker.', 'a photo of a volleyball.', 'a photo of a unicycle.', 'a photo of a American alligator.', 'a photo of a revolver.', 'a photo of a chameleon.', 'a photo of a suspension bridge.', 'a photo of a baboon.', 'a photo of a washing machine.', 'a photo of a accordion.', 'a photo of a sea anemone.', 'a photo of a agama.', 'a photo of a go-kart.', 'a photo of a pufferfish.', 'a photo of a hunting bow.', 'a photo of a teddy bear.', 'a photo of a German Shepherd Dog.', 'a photo of a American robin.', 'a photo of a rugby ball.', "a photo of a yellow lady's slipper.", 'a photo of a monarch butterfly.', 'a photo of a dumbbell.', 'a photo of a mosque.', 'a photo of a bow tie.', 'a photo of a broom.', 'a photo of a rapeseed.', 'a photo of a junco.', 'a photo of a torch.', 'a photo of a cliff.', 'a photo of a salt shaker.', 'a photo of a candle.', 'a photo of a snail.', 'a photo of a scorpion.', 'a photo of a goldfinch.', 'a photo of a bald eagle.', 'a photo of a crayfish.', 'a photo of a stingray.', 'a photo of a acoustic guitar.', 'a photo of a wine bottle.', 'a photo of a garter snake.', 'a photo of a sleeping bag.', 'a photo of a marimba.', 'a photo of a tarantula.', 'a photo of a ocarina.', 'a photo of a Golden Retriever.', 'a photo of a maraca.', 'a photo of a green iguana.', 'a photo of a pomegranate.', 'a photo of a small white butterfly.', 'a photo of a cockroach.', 'a photo of a saxophone.', 'a photo of a schooner.', 'a photo of a chain.', 'a photo of a steam locomotive.', 'a photo of a cello.', 'a photo of a cucumber.', 'a photo of a banana.', 'a photo of a marmot.', 'a photo of a volcano.', 'a photo of a fox squirrel.', 'a photo of a academic gown.', 'a photo of a piggy bank.', 'a photo of a lion.', 'a photo of a manhole cover.', 'a photo of a bikini.', 'a photo of a pool table.', 'a photo of a banjo.', 'a photo of a spider web.', 'a photo of a jellyfish.', 'a photo of a leafhopper.', 'a photo of a obelisk.', 'a photo of a corn.', 'a photo of a kimono.', 'a photo of a flatworm.', 'a photo of a sewing machine.', 'a photo of a pug.', 'a photo of a broccoli.', 'a photo of a wheelbarrow.', 'a photo of a hummingbird.', 'a photo of a fountain.', 'a photo of a guacamole.', 'a photo of a rhinoceros beetle.', 'a photo of a flamingo.', 'a photo of a water tower.', 'a photo of a lemon.', 'a photo of a cradle.', 'a photo of a mask.', 'a photo of a dragonfly.', 'a photo of a airliner.', 'a photo of a cottontail rabbit.', 'a photo of a pipe organ.', 'a photo of a bison.', 'a photo of a vulture.', 'a photo of a oystercatcher.', 'a photo of a umbrella.', 'a photo of a duck.', 'a photo of a lighthouse.', 'a photo of a clothes iron.', 'a photo of a apron.', 'a photo of a cheeseburger.', 'a photo of a lynx.', 'a photo of a storage chest.', 'a photo of a ambulance.', 'a photo of a sandal.', 'a photo of a carbonara.', 'a photo of a basketball.', 'a photo of a balloon.', 'a photo of a lorikeet.', 'a photo of a metal nail.', 'a photo of a quill.', 'a photo of a gossamer-winged butterfly.', 'a photo of a viaduct.', 'a photo of a stethoscope.', 'a photo of a spatula.', 'a photo of a doormat.', 'a photo of a armadillo.', 'a photo of a jeep.', 'a photo of a porcupine.', 'a photo of a mitten.', 'a photo of a balance beam.', 'a photo of a cherimoya (custard apple).', 'a photo of a mongoose.', 'a photo of a fly.', 'a photo of a ladybug.', 'a photo of a tricycle.']
+Building custom CLIP
+Initializing a generic context
+Initial context: "X X X X"
+Number of context words (tokens): 4
+Turning off gradients in ZS Clip model
+Turning off gradients in CoOp model
+Loading evaluator: Classification
+Loading weights to prompt_learner from "output/imagenet/ProGrad/vit_b16_ep50_batch4_c4_cross_dataset/seed1/prompt_learner/model.pth.tar-10" (epoch = 10)
+Do evaluation on test set
+=> result
+* total: 9,078
+* correct: 7,109
+* accuracy: 78.31%
+* error: 21.69%
+* macro_f1: 79.14%

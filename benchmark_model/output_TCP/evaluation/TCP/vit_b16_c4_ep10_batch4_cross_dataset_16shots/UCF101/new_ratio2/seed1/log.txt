@@ -1,0 +1,371 @@
+***************
+** Arguments **
+***************
+backbone: 
+config_file: configs/trainers/TCP/vit_b16_c4_ep10_batch4_cross_dataset.yaml
+cross_dataset: False
+dataset_config_file: configs/datasets/imagenet.yaml
+dataset_var: UCF101
+eval_only: True
+head: 
+load_epoch: 10
+mix_distribution: False
+model_dir: output/imagenet/TCP/vit_b16_c4_ep10_batch4_cross_dataset_16shots/seed1
+no_train: False
+opts: ['TRAINER.COOP.N_CTX', '4', 'TRAINER.COOP.CSC', 'False', 'TRAINER.COOP.W', '8.0', 'TRAINER.COOP.CLASS_TOKEN_POSITION', 'end', 'DATASET.NUM_SHOTS', '16', 'DATASET.SUBSAMPLE_CLASSES', 'new_ratio2']
+output_dir: output/evaluation/TCP/vit_b16_c4_ep10_batch4_cross_dataset_16shots/UCF101/new_ratio2/seed1
+resume: 
+root: /home/wzk/DATA
+seed: 1
+source_domains: None
+target_domains: None
+trainer: TCP
+transforms: None
+************
+** Config **
+************
+CROSS_DATASET: True
+DATALOADER:
+  K_TRANSFORMS: 1
+  NUM_WORKERS: 8
+  RETURN_IMG0: False
+  TEST:
+    BATCH_SIZE: 100
+    SAMPLER: SequentialSampler
+  TRAIN_U:
+    BATCH_SIZE: 32
+    N_DOMAIN: 0
+    N_INS: 16
+    SAME_AS_X: True
+    SAMPLER: RandomSampler
+  TRAIN_X:
+    BATCH_SIZE: 4
+    N_DOMAIN: 0
+    N_INS: 16
+    SAMPLER: RandomSampler
+DATASET:
+  ALL_AS_UNLABELED: False
+  CIFAR_C_LEVEL: 1
+  CIFAR_C_TYPE: 
+  NAME: ImageNet
+  NAME_VAR: UCF101
+  NUM_LABELED: -1
+  NUM_SHOTS: 16
+  PROMPT: a photo of a _.
+  ROOT: /home/wzk/DATA
+  SOURCE_DOMAINS: ()
+  STL10_FOLD: -1
+  SUBSAMPLE_CLASSES: new_ratio2
+  TARGET_DOMAINS: ()
+  VAL_PERCENT: 0.1
+INPUT:
+  COLORJITTER_B: 0.4
+  COLORJITTER_C: 0.4
+  COLORJITTER_H: 0.1
+  COLORJITTER_S: 0.4
+  CROP_PADDING: 4
+  CUTOUT_LEN: 16
+  CUTOUT_N: 1
+  GB_K: 21
+  GB_P: 0.5
+  GN_MEAN: 0.0
+  GN_STD: 0.15
+  INTERPOLATION: bicubic
+  NO_TRANSFORM: False
+  PIXEL_MEAN: [0.48145466, 0.4578275, 0.40821073]
+  PIXEL_STD: [0.26862954, 0.26130258, 0.27577711]
+  RANDAUGMENT_M: 10
+  RANDAUGMENT_N: 2
+  RGS_P: 0.2
+  RRCROP_SCALE: (0.08, 1.0)
+  SIZE: (224, 224)
+  TRANSFORMS: ('random_resized_crop', 'random_flip', 'normalize')
+LOSS:
+  ALPHA: 0.0
+  GM: False
+  LAMBDA: 1.0
+  NAME: 
+  T: 1.0
+MIX_DISTRIBUTION: False
+MODEL:
+  BACKBONE:
+    NAME: ViT-B/16
+    PRETRAINED: True
+  HEAD:
+    ACTIVATION: relu
+    BN: True
+    DROPOUT: 0.0
+    HIDDEN_LAYERS: ()
+    NAME: 
+  INIT_WEIGHTS: 
+OPTIM:
+  ADAM_BETA1: 0.9
+  ADAM_BETA2: 0.999
+  BASE_LR_MULT: 0.1
+  GAMMA: 0.1
+  LR: 0.002
+  LR_SCHEDULER: cosine
+  MAX_EPOCH: 10
+  MOMENTUM: 0.9
+  NAME: sgd
+  NEW_LAYERS: ()
+  RMSPROP_ALPHA: 0.99
+  SGD_DAMPNING: 0
+  SGD_NESTEROV: False
+  STAGED_LR: False
+  STEPSIZE: (-1,)
+  WARMUP_CONS_LR: 1e-05
+  WARMUP_EPOCH: 1
+  WARMUP_MIN_LR: 1e-05
+  WARMUP_RECOUNT: True
+  WARMUP_TYPE: constant
+  WEIGHT_DECAY: 0.0005
+OUTPUT_DIR: output/evaluation/TCP/vit_b16_c4_ep10_batch4_cross_dataset_16shots/UCF101/new_ratio2/seed1
+RESUME: 
+SEED: 1
+TEST:
+  COMPUTE_CMAT: False
+  EVALUATOR: Classification
+  FINAL_MODEL: last_step
+  NO_TEST: False
+  PER_CLASS_RESULT: False
+  SPLIT: test
+TRAIN:
+  CHECKPOINT_FREQ: 0
+  COUNT_ITER: train_x
+  PRINT_FREQ: 20
+TRAINER:
+  CDAC:
+    CLASS_LR_MULTI: 10
+    P_THRESH: 0.95
+    RAMPUP_COEF: 30
+    RAMPUP_ITRS: 1000
+    STRONG_TRANSFORMS: ()
+    TOPK_MATCH: 5
+  COCOOP:
+    CTX_INIT: False
+    N_CTX: 16
+    PREC: fp16
+  COOP:
+    ALPHA: 1.0
+    CLASS_TOKEN_POSITION: end
+    CSC: False
+    CTX_INIT: False
+    N_CTX: 4
+    PREC: fp16
+    W: 8.0
+  CROSSGRAD:
+    ALPHA_D: 0.5
+    ALPHA_F: 0.5
+    EPS_D: 1.0
+    EPS_F: 1.0
+  DAEL:
+    CONF_THRE: 0.95
+    STRONG_TRANSFORMS: ()
+    WEIGHT_U: 0.5
+  DAELDG:
+    CONF_THRE: 0.95
+    STRONG_TRANSFORMS: ()
+    WEIGHT_U: 0.5
+  DDAIG:
+    ALPHA: 0.5
+    CLAMP: False
+    CLAMP_MAX: 1.0
+    CLAMP_MIN: -1.0
+    G_ARCH: 
+    LMDA: 0.3
+    WARMUP: 0
+  DOMAINMIX:
+    ALPHA: 1.0
+    BETA: 1.0
+    TYPE: crossdomain
+  ENTMIN:
+    LMDA: 0.001
+  FIXMATCH:
+    CONF_THRE: 0.95
+    STRONG_TRANSFORMS: ()
+    WEIGHT_U: 1.0
+  LP:
+    PREC: fp16
+    PROMPT: A photo of a {cls_name}
+  M3SDA:
+    LMDA: 0.5
+    N_STEP_F: 4
+  MCD:
+    N_STEP_F: 4
+  MEANTEACHER:
+    EMA_ALPHA: 0.999
+    RAMPUP: 5
+    WEIGHT_U: 1.0
+  MIXMATCH:
+    MIXUP_BETA: 0.75
+    RAMPUP: 20000
+    TEMP: 2.0
+    WEIGHT_U: 100.0
+  MME:
+    LMDA: 0.1
+  NAME: TCP
+  RPO:
+    CTX_INIT: 
+    K: 1
+    PREC: fp16
+  SE:
+    CONF_THRE: 0.95
+    EMA_ALPHA: 0.999
+    RAMPUP: 300
+USE_CUDA: True
+VERBOSE: True
+VERSION: 1
+Collecting env info ...
+** System info **
+PyTorch version: 2.4.1
+Is debug build: False
+CUDA used to build PyTorch: 12.1
+ROCM used to build PyTorch: N/A
+
+OS: Ubuntu 22.04.4 LTS (x86_64)
+GCC version: (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0
+Clang version: Could not collect
+CMake version: Could not collect
+Libc version: glibc-2.35
+
+Python version: 3.8.19 (default, Mar 20 2024, 19:58:24)  [GCC 11.2.0] (64-bit runtime)
+Python platform: Linux-6.8.0-40-generic-x86_64-with-glibc2.17
+Is CUDA available: True
+CUDA runtime version: Could not collect
+CUDA_MODULE_LOADING set to: LAZY
+GPU models and configuration: 
+GPU 0: NVIDIA RTX 6000 Ada Generation
+GPU 1: NVIDIA RTX 6000 Ada Generation
+GPU 2: NVIDIA RTX 6000 Ada Generation
+GPU 3: NVIDIA RTX 6000 Ada Generation
+GPU 4: NVIDIA RTX 6000 Ada Generation
+GPU 5: NVIDIA RTX 6000 Ada Generation
+GPU 6: NVIDIA RTX 6000 Ada Generation
+GPU 7: NVIDIA RTX 6000 Ada Generation
+
+Nvidia driver version: 535.183.01
+cuDNN version: Could not collect
+HIP runtime version: N/A
+MIOpen runtime version: N/A
+Is XNNPACK available: True
+
+CPU:
+Architecture:                         x86_64
+CPU op-mode(s):                       32-bit, 64-bit
+Address sizes:                        52 bits physical, 57 bits virtual
+Byte Order:                           Little Endian
+CPU(s):                               96
+On-line CPU(s) list:                  0-95
+Vendor ID:                            AuthenticAMD
+Model name:                           AMD EPYC 9754 128-Core Processor
+CPU family:                           25
+Model:                                160
+Thread(s) per core:                   1
+Core(s) per socket:                   48
+Socket(s):                            2
+Stepping:                             2
+Frequency boost:                      enabled
+CPU max MHz:                          3100.3411
+CPU min MHz:                          1500.0000
+BogoMIPS:                             4492.93
+Flags:                                fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good amd_lbr_v2 nopl nonstop_tsc cpuid extd_apicid aperfmperf rapl pni pclmulqdq monitor ssse3 fma cx16 pcid sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs skinit wdt tce topoext perfctr_core perfctr_nb bpext perfctr_llc mwaitx cpb cat_l3 cdp_l3 hw_pstate ssbd mba perfmon_v2 ibrs ibpb stibp ibrs_enhanced vmmcall fsgsbase bmi1 avx2 smep bmi2 erms invpcid cqm rdt_a avx512f avx512dq rdseed adx smap avx512ifma clflushopt clwb avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local user_shstk avx512_bf16 clzero irperf xsaveerptr rdpru wbnoinvd amd_ppin cppc arat npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold avic v_vmsave_vmload vgif x2avic v_spec_ctrl vnmi avx512vbmi umip pku ospke avx512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg avx512_vpopcntdq la57 rdpid overflow_recov succor smca fsrm flush_l1d debug_swap
+Virtualization:                       AMD-V
+L1d cache:                            3 MiB (96 instances)
+L1i cache:                            3 MiB (96 instances)
+L2 cache:                             96 MiB (96 instances)
+L3 cache:                             512 MiB (32 instances)
+NUMA node(s):                         2
+NUMA node0 CPU(s):                    0-47
+NUMA node1 CPU(s):                    48-95
+Vulnerability Gather data sampling:   Not affected
+Vulnerability Itlb multihit:          Not affected
+Vulnerability L1tf:                   Not affected
+Vulnerability Mds:                    Not affected
+Vulnerability Meltdown:               Not affected
+Vulnerability Mmio stale data:        Not affected
+Vulnerability Reg file data sampling: Not affected
+Vulnerability Retbleed:               Not affected
+Vulnerability Spec rstack overflow:   Mitigation; Safe RET
+Vulnerability Spec store bypass:      Mitigation; Speculative Store Bypass disabled via prctl
+Vulnerability Spectre v1:             Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:             Mitigation; Enhanced / Automatic IBRS; IBPB conditional; STIBP disabled; RSB filling; PBRSB-eIBRS Not affected; BHI Not affected
+Vulnerability Srbds:                  Not affected
+Vulnerability Tsx async abort:        Not affected
+
+Versions of relevant libraries:
+[pip3] flake8==3.7.9
+[pip3] numpy==1.24.3
+[pip3] torch==2.4.1
+[pip3] torchaudio==2.4.1
+[pip3] torchvision==0.19.1
+[pip3] triton==3.0.0
+[conda] blas                      1.0                         mkl  
+[conda] ffmpeg                    4.3                  hf484d3e_0    pytorch
+[conda] libjpeg-turbo             2.0.0                h9bf148f_0    pytorch
+[conda] mkl                       2023.1.0         h213fc3f_46344  
+[conda] mkl-service               2.4.0            py38h5eee18b_1  
+[conda] mkl_fft                   1.3.8            py38h5eee18b_0  
+[conda] mkl_random                1.2.4            py38hdb19cb5_0  
+[conda] numpy                     1.24.3           py38hf6e8229_1  
+[conda] numpy-base                1.24.3           py38h060ed82_1  
+[conda] pytorch                   2.4.1           py3.8_cuda12.1_cudnn9.1.0_0    pytorch
+[conda] pytorch-cuda              12.1                 ha16c6d3_5    pytorch
+[conda] pytorch-mutex             1.0                        cuda    pytorch
+[conda] torchaudio                2.4.1                py38_cu121    pytorch
+[conda] torchtriton               3.0.0                      py38    pytorch
+[conda] torchvision               0.19.1               py38_cu121    pytorch
+        Pillow (10.4.0)
+
+Loading trainer: TCP
+Loading dataset: ImageNet
+Loading preprocessed few-shot data from /home/wzk/DATA/imagenet/split_fewshot/shot_16_shuffled-seed_1.pkl
+Cross dataset
+Loading dataset: UCF101
+Reading split from /home/wzk/DATA/ucf101/split_zhou_UCF101.json
+Loading preprocessed few-shot data from /home/wzk/DATA/ucf101/split_fewshot/shot_16_shuffled-seed_1.pkl
+CROSS DATASET SUBSAMPLE NEW_RATIO2 CLASSES!
+16
+1632
+28
+2856
+Building transform_train
++ random resized crop (size=(224, 224), scale=(0.08, 1.0))
++ random flip
++ to torch tensor of range [0, 1]
++ normalization (mean=[0.48145466, 0.4578275, 0.40821073], std=[0.26862954, 0.26130258, 0.27577711])
+Building transform_test
++ resize the smaller edge to 224
++ 224x224 center crop
++ to torch tensor of range [0, 1]
++ normalization (mean=[0.48145466, 0.4578275, 0.40821073], std=[0.26862954, 0.26130258, 0.27577711])
+---------  --------
+Dataset    ImageNet
+# classes  102
+# train_x  1,632
+# val      2,856
+# test     2,856
+---------  --------
+['parachute', 'grand piano', 'ruler measuring stick', 'white-headed capuchin', 'minibus', 'rose hip', 'poke bonnet', 'rotary dial telephone', 'aircraft carrier', 'bookstore', 'hermit crab', 'eastern diamondback rattlesnake', 'vespa', 'cowboy hat', 'crash helmet', 'forklift', 'red wolf or maned wolf', 'matchstick', 'pencil sharpener', 'pedestal', 'Curly-coated Retriever', 'pan flute', 'quilt', 'langur', 'letter opener', 'front curtain', 'fire salamander', 'flagpole', 'trolleybus', 'construction crane', 'Band-Aid', 'cougar', 'eel', 'rocking chair', 'beaver', 'gyromitra', 'Brittany dog', 'magnetic compass', 'limpkin', 'weevil', 'Otterhound', 'half-track', 'goose', 'combination lock', 'lipstick', 'sea cucumber', 'paintbrush', 'dhole', 'leatherback sea turtle', 'plate rack', 'television', 'limousine', 'great grey owl', 'prayer rug', 'trash can', 'traffic or street sign', 'harvestman', 'scoreboard', 'American black bear', 'desktop computer', 'pretzel', 'Rowing', 'Handstand_Walking', 'Walking_With_Dog', 'Hula_Hoop', 'Boxing_Speed_Bag', 'Table_Tennis_Shot', 'Blow_Dry_Hair', 'Swing', 'Band_Marching', 'Basketball_Dunk', 'Hammer_Throw', 'Billiards', 'Bowling', 'Playing_Violin', 'Mopping_Floor', 'Front_Crawl', 'Military_Parade', 'Playing_Daf', 'Balance_Beam', 'Cricket_Shot', 'Handstand_Pushups', 'Biking', 'Shotput', 'Jump_Rope', 'Baseball_Pitch', 'Trampoline_Jumping', 'Drumming', 'Diving', 'Soccer_Juggling', 'Breast_Stroke', 'Writing_On_Board', 'Knitting', 'Clean_And_Jerk', 'Salsa_Spin', 'Juggling_Balls', 'Brushing_Teeth', 'Sumo_Wrestling', 'Tai_Chi', 'Boxing_Punching_Bag', 'Apply_Eye_Makeup', 'Parallel_Bars']
+Loading CLIP (backbone: ViT-B/16)
+Building custom CLIP
+Initializing a generic context
+Initial context: "X X X X"
+Number of context words (tokens): 4
+['a photo of a parachute.', 'a photo of a grand piano.', 'a photo of a ruler measuring stick.', 'a photo of a white-headed capuchin.', 'a photo of a minibus.', 'a photo of a rose hip.', 'a photo of a poke bonnet.', 'a photo of a rotary dial telephone.', 'a photo of a aircraft carrier.', 'a photo of a bookstore.', 'a photo of a hermit crab.', 'a photo of a eastern diamondback rattlesnake.', 'a photo of a vespa.', 'a photo of a cowboy hat.', 'a photo of a crash helmet.', 'a photo of a forklift.', 'a photo of a red wolf or maned wolf.', 'a photo of a matchstick.', 'a photo of a pencil sharpener.', 'a photo of a pedestal.', 'a photo of a Curly-coated Retriever.', 'a photo of a pan flute.', 'a photo of a quilt.', 'a photo of a langur.', 'a photo of a letter opener.', 'a photo of a front curtain.', 'a photo of a fire salamander.', 'a photo of a flagpole.', 'a photo of a trolleybus.', 'a photo of a construction crane.', 'a photo of a Band-Aid.', 'a photo of a cougar.', 'a photo of a eel.', 'a photo of a rocking chair.', 'a photo of a beaver.', 'a photo of a gyromitra.', 'a photo of a Brittany dog.', 'a photo of a magnetic compass.', 'a photo of a limpkin.', 'a photo of a weevil.', 'a photo of a Otterhound.', 'a photo of a half-track.', 'a photo of a goose.', 'a photo of a combination lock.', 'a photo of a lipstick.', 'a photo of a sea cucumber.', 'a photo of a paintbrush.', 'a photo of a dhole.', 'a photo of a leatherback sea turtle.', 'a photo of a plate rack.', 'a photo of a television.', 'a photo of a limousine.', 'a photo of a great grey owl.', 'a photo of a prayer rug.', 'a photo of a trash can.', 'a photo of a traffic or street sign.', 'a photo of a harvestman.', 'a photo of a scoreboard.', 'a photo of a American black bear.', 'a photo of a desktop computer.', 'a photo of a pretzel.', 'a photo of a Rowing.', 'a photo of a Handstand Walking.', 'a photo of a Walking With Dog.', 'a photo of a Hula Hoop.', 'a photo of a Boxing Speed Bag.', 'a photo of a Table Tennis Shot.', 'a photo of a Blow Dry Hair.', 'a photo of a Swing.', 'a photo of a Band Marching.', 'a photo of a Basketball Dunk.', 'a photo of a Hammer Throw.', 'a photo of a Billiards.', 'a photo of a Bowling.', 'a photo of a Playing Violin.', 'a photo of a Mopping Floor.', 'a photo of a Front Crawl.', 'a photo of a Military Parade.', 'a photo of a Playing Daf.', 'a photo of a Balance Beam.', 'a photo of a Cricket Shot.', 'a photo of a Handstand Pushups.', 'a photo of a Biking.', 'a photo of a Shotput.', 'a photo of a Jump Rope.', 'a photo of a Baseball Pitch.', 'a photo of a Trampoline Jumping.', 'a photo of a Drumming.', 'a photo of a Diving.', 'a photo of a Soccer Juggling.', 'a photo of a Breast Stroke.', 'a photo of a Writing On Board.', 'a photo of a Knitting.', 'a photo of a Clean And Jerk.', 'a photo of a Salsa Spin.', 'a photo of a Juggling Balls.', 'a photo of a Brushing Teeth.', 'a photo of a Sumo Wrestling.', 'a photo of a Tai Chi.', 'a photo of a Boxing Punching Bag.', 'a photo of a Apply Eye Makeup.', 'a photo of a Parallel Bars.']
+Turning off gradients in both the image and the text encoder
+prompt_learner.ctx
+prompt_learner.meta_net.linear1.weight
+prompt_learner.meta_net.linear1.bias
+prompt_learner.meta_net.linear2.weight
+prompt_learner.meta_net.linear2.bias
+Loading evaluator: Classification
+['prompt_learner']
+Loading weights to prompt_learner from "output/imagenet/TCP/vit_b16_c4_ep10_batch4_cross_dataset_16shots/seed1/prompt_learner/model.pth.tar-10" (epoch = 10)
+Evaluate on the *test* set
+=> result
+* total: 2,856
+* correct: 2,412
+* accuracy: 84.5%
+* error: 15.5%
+* macro_f1: 83.6%

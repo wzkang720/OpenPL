@@ -1,0 +1,371 @@
+***************
+** Arguments **
+***************
+backbone: 
+config_file: configs/trainers/TCP/vit_b16_c4_ep10_batch4_cross_dataset.yaml
+cross_dataset: False
+dataset_config_file: configs/datasets/imagenet.yaml
+dataset_var: SUN397
+eval_only: True
+head: 
+load_epoch: 10
+mix_distribution: False
+model_dir: output/imagenet/TCP/vit_b16_c4_ep10_batch4_cross_dataset_16shots/seed3
+no_train: False
+opts: ['TRAINER.COOP.N_CTX', '4', 'TRAINER.COOP.CSC', 'False', 'TRAINER.COOP.W', '8.0', 'TRAINER.COOP.CLASS_TOKEN_POSITION', 'end', 'DATASET.NUM_SHOTS', '16', 'DATASET.SUBSAMPLE_CLASSES', 'new_ratio5']
+output_dir: output/evaluation/TCP/vit_b16_c4_ep10_batch4_cross_dataset_16shots/SUN397/new_ratio5/seed3
+resume: 
+root: /home/wzk/DATA
+seed: 3
+source_domains: None
+target_domains: None
+trainer: TCP
+transforms: None
+************
+** Config **
+************
+CROSS_DATASET: True
+DATALOADER:
+  K_TRANSFORMS: 1
+  NUM_WORKERS: 8
+  RETURN_IMG0: False
+  TEST:
+    BATCH_SIZE: 100
+    SAMPLER: SequentialSampler
+  TRAIN_U:
+    BATCH_SIZE: 32
+    N_DOMAIN: 0
+    N_INS: 16
+    SAME_AS_X: True
+    SAMPLER: RandomSampler
+  TRAIN_X:
+    BATCH_SIZE: 4
+    N_DOMAIN: 0
+    N_INS: 16
+    SAMPLER: RandomSampler
+DATASET:
+  ALL_AS_UNLABELED: False
+  CIFAR_C_LEVEL: 1
+  CIFAR_C_TYPE: 
+  NAME: ImageNet
+  NAME_VAR: SUN397
+  NUM_LABELED: -1
+  NUM_SHOTS: 16
+  PROMPT: a photo of a _.
+  ROOT: /home/wzk/DATA
+  SOURCE_DOMAINS: ()
+  STL10_FOLD: -1
+  SUBSAMPLE_CLASSES: new_ratio5
+  TARGET_DOMAINS: ()
+  VAL_PERCENT: 0.1
+INPUT:
+  COLORJITTER_B: 0.4
+  COLORJITTER_C: 0.4
+  COLORJITTER_H: 0.1
+  COLORJITTER_S: 0.4
+  CROP_PADDING: 4
+  CUTOUT_LEN: 16
+  CUTOUT_N: 1
+  GB_K: 21
+  GB_P: 0.5
+  GN_MEAN: 0.0
+  GN_STD: 0.15
+  INTERPOLATION: bicubic
+  NO_TRANSFORM: False
+  PIXEL_MEAN: [0.48145466, 0.4578275, 0.40821073]
+  PIXEL_STD: [0.26862954, 0.26130258, 0.27577711]
+  RANDAUGMENT_M: 10
+  RANDAUGMENT_N: 2
+  RGS_P: 0.2
+  RRCROP_SCALE: (0.08, 1.0)
+  SIZE: (224, 224)
+  TRANSFORMS: ('random_resized_crop', 'random_flip', 'normalize')
+LOSS:
+  ALPHA: 0.0
+  GM: False
+  LAMBDA: 1.0
+  NAME: 
+  T: 1.0
+MIX_DISTRIBUTION: False
+MODEL:
+  BACKBONE:
+    NAME: ViT-B/16
+    PRETRAINED: True
+  HEAD:
+    ACTIVATION: relu
+    BN: True
+    DROPOUT: 0.0
+    HIDDEN_LAYERS: ()
+    NAME: 
+  INIT_WEIGHTS: 
+OPTIM:
+  ADAM_BETA1: 0.9
+  ADAM_BETA2: 0.999
+  BASE_LR_MULT: 0.1
+  GAMMA: 0.1
+  LR: 0.002
+  LR_SCHEDULER: cosine
+  MAX_EPOCH: 10
+  MOMENTUM: 0.9
+  NAME: sgd
+  NEW_LAYERS: ()
+  RMSPROP_ALPHA: 0.99
+  SGD_DAMPNING: 0
+  SGD_NESTEROV: False
+  STAGED_LR: False
+  STEPSIZE: (-1,)
+  WARMUP_CONS_LR: 1e-05
+  WARMUP_EPOCH: 1
+  WARMUP_MIN_LR: 1e-05
+  WARMUP_RECOUNT: True
+  WARMUP_TYPE: constant
+  WEIGHT_DECAY: 0.0005
+OUTPUT_DIR: output/evaluation/TCP/vit_b16_c4_ep10_batch4_cross_dataset_16shots/SUN397/new_ratio5/seed3
+RESUME: 
+SEED: 3
+TEST:
+  COMPUTE_CMAT: False
+  EVALUATOR: Classification
+  FINAL_MODEL: last_step
+  NO_TEST: False
+  PER_CLASS_RESULT: False
+  SPLIT: test
+TRAIN:
+  CHECKPOINT_FREQ: 0
+  COUNT_ITER: train_x
+  PRINT_FREQ: 20
+TRAINER:
+  CDAC:
+    CLASS_LR_MULTI: 10
+    P_THRESH: 0.95
+    RAMPUP_COEF: 30
+    RAMPUP_ITRS: 1000
+    STRONG_TRANSFORMS: ()
+    TOPK_MATCH: 5
+  COCOOP:
+    CTX_INIT: False
+    N_CTX: 16
+    PREC: fp16
+  COOP:
+    ALPHA: 1.0
+    CLASS_TOKEN_POSITION: end
+    CSC: False
+    CTX_INIT: False
+    N_CTX: 4
+    PREC: fp16
+    W: 8.0
+  CROSSGRAD:
+    ALPHA_D: 0.5
+    ALPHA_F: 0.5
+    EPS_D: 1.0
+    EPS_F: 1.0
+  DAEL:
+    CONF_THRE: 0.95
+    STRONG_TRANSFORMS: ()
+    WEIGHT_U: 0.5
+  DAELDG:
+    CONF_THRE: 0.95
+    STRONG_TRANSFORMS: ()
+    WEIGHT_U: 0.5
+  DDAIG:
+    ALPHA: 0.5
+    CLAMP: False
+    CLAMP_MAX: 1.0
+    CLAMP_MIN: -1.0
+    G_ARCH: 
+    LMDA: 0.3
+    WARMUP: 0
+  DOMAINMIX:
+    ALPHA: 1.0
+    BETA: 1.0
+    TYPE: crossdomain
+  ENTMIN:
+    LMDA: 0.001
+  FIXMATCH:
+    CONF_THRE: 0.95
+    STRONG_TRANSFORMS: ()
+    WEIGHT_U: 1.0
+  LP:
+    PREC: fp16
+    PROMPT: A photo of a {cls_name}
+  M3SDA:
+    LMDA: 0.5
+    N_STEP_F: 4
+  MCD:
+    N_STEP_F: 4
+  MEANTEACHER:
+    EMA_ALPHA: 0.999
+    RAMPUP: 5
+    WEIGHT_U: 1.0
+  MIXMATCH:
+    MIXUP_BETA: 0.75
+    RAMPUP: 20000
+    TEMP: 2.0
+    WEIGHT_U: 100.0
+  MME:
+    LMDA: 0.1
+  NAME: TCP
+  RPO:
+    CTX_INIT: 
+    K: 1
+    PREC: fp16
+  SE:
+    CONF_THRE: 0.95
+    EMA_ALPHA: 0.999
+    RAMPUP: 300
+USE_CUDA: True
+VERBOSE: True
+VERSION: 1
+Collecting env info ...
+** System info **
+PyTorch version: 2.4.1
+Is debug build: False
+CUDA used to build PyTorch: 12.1
+ROCM used to build PyTorch: N/A
+
+OS: Ubuntu 22.04.4 LTS (x86_64)
+GCC version: (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0
+Clang version: Could not collect
+CMake version: Could not collect
+Libc version: glibc-2.35
+
+Python version: 3.8.19 (default, Mar 20 2024, 19:58:24)  [GCC 11.2.0] (64-bit runtime)
+Python platform: Linux-6.8.0-40-generic-x86_64-with-glibc2.17
+Is CUDA available: True
+CUDA runtime version: Could not collect
+CUDA_MODULE_LOADING set to: LAZY
+GPU models and configuration: 
+GPU 0: NVIDIA RTX 6000 Ada Generation
+GPU 1: NVIDIA RTX 6000 Ada Generation
+GPU 2: NVIDIA RTX 6000 Ada Generation
+GPU 3: NVIDIA RTX 6000 Ada Generation
+GPU 4: NVIDIA RTX 6000 Ada Generation
+GPU 5: NVIDIA RTX 6000 Ada Generation
+GPU 6: NVIDIA RTX 6000 Ada Generation
+GPU 7: NVIDIA RTX 6000 Ada Generation
+
+Nvidia driver version: 535.183.01
+cuDNN version: Could not collect
+HIP runtime version: N/A
+MIOpen runtime version: N/A
+Is XNNPACK available: True
+
+CPU:
+Architecture:                         x86_64
+CPU op-mode(s):                       32-bit, 64-bit
+Address sizes:                        52 bits physical, 57 bits virtual
+Byte Order:                           Little Endian
+CPU(s):                               96
+On-line CPU(s) list:                  0-95
+Vendor ID:                            AuthenticAMD
+Model name:                           AMD EPYC 9754 128-Core Processor
+CPU family:                           25
+Model:                                160
+Thread(s) per core:                   1
+Core(s) per socket:                   48
+Socket(s):                            2
+Stepping:                             2
+Frequency boost:                      enabled
+CPU max MHz:                          3100.3411
+CPU min MHz:                          1500.0000
+BogoMIPS:                             4492.93
+Flags:                                fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good amd_lbr_v2 nopl nonstop_tsc cpuid extd_apicid aperfmperf rapl pni pclmulqdq monitor ssse3 fma cx16 pcid sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs skinit wdt tce topoext perfctr_core perfctr_nb bpext perfctr_llc mwaitx cpb cat_l3 cdp_l3 hw_pstate ssbd mba perfmon_v2 ibrs ibpb stibp ibrs_enhanced vmmcall fsgsbase bmi1 avx2 smep bmi2 erms invpcid cqm rdt_a avx512f avx512dq rdseed adx smap avx512ifma clflushopt clwb avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local user_shstk avx512_bf16 clzero irperf xsaveerptr rdpru wbnoinvd amd_ppin cppc arat npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold avic v_vmsave_vmload vgif x2avic v_spec_ctrl vnmi avx512vbmi umip pku ospke avx512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg avx512_vpopcntdq la57 rdpid overflow_recov succor smca fsrm flush_l1d debug_swap
+Virtualization:                       AMD-V
+L1d cache:                            3 MiB (96 instances)
+L1i cache:                            3 MiB (96 instances)
+L2 cache:                             96 MiB (96 instances)
+L3 cache:                             512 MiB (32 instances)
+NUMA node(s):                         2
+NUMA node0 CPU(s):                    0-47
+NUMA node1 CPU(s):                    48-95
+Vulnerability Gather data sampling:   Not affected
+Vulnerability Itlb multihit:          Not affected
+Vulnerability L1tf:                   Not affected
+Vulnerability Mds:                    Not affected
+Vulnerability Meltdown:               Not affected
+Vulnerability Mmio stale data:        Not affected
+Vulnerability Reg file data sampling: Not affected
+Vulnerability Retbleed:               Not affected
+Vulnerability Spec rstack overflow:   Mitigation; Safe RET
+Vulnerability Spec store bypass:      Mitigation; Speculative Store Bypass disabled via prctl
+Vulnerability Spectre v1:             Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:             Mitigation; Enhanced / Automatic IBRS; IBPB conditional; STIBP disabled; RSB filling; PBRSB-eIBRS Not affected; BHI Not affected
+Vulnerability Srbds:                  Not affected
+Vulnerability Tsx async abort:        Not affected
+
+Versions of relevant libraries:
+[pip3] flake8==3.7.9
+[pip3] numpy==1.24.3
+[pip3] torch==2.4.1
+[pip3] torchaudio==2.4.1
+[pip3] torchvision==0.19.1
+[pip3] triton==3.0.0
+[conda] blas                      1.0                         mkl  
+[conda] ffmpeg                    4.3                  hf484d3e_0    pytorch
+[conda] libjpeg-turbo             2.0.0                h9bf148f_0    pytorch
+[conda] mkl                       2023.1.0         h213fc3f_46344  
+[conda] mkl-service               2.4.0            py38h5eee18b_1  
+[conda] mkl_fft                   1.3.8            py38h5eee18b_0  
+[conda] mkl_random                1.2.4            py38hdb19cb5_0  
+[conda] numpy                     1.24.3           py38hf6e8229_1  
+[conda] numpy-base                1.24.3           py38h060ed82_1  
+[conda] pytorch                   2.4.1           py3.8_cuda12.1_cudnn9.1.0_0    pytorch
+[conda] pytorch-cuda              12.1                 ha16c6d3_5    pytorch
+[conda] pytorch-mutex             1.0                        cuda    pytorch
+[conda] torchaudio                2.4.1                py38_cu121    pytorch
+[conda] torchtriton               3.0.0                      py38    pytorch
+[conda] torchvision               0.19.1               py38_cu121    pytorch
+        Pillow (10.4.0)
+
+Loading trainer: TCP
+Loading dataset: ImageNet
+Loading preprocessed few-shot data from /home/wzk/DATA/imagenet/split_fewshot/shot_16_shuffled-seed_3.pkl
+Cross dataset
+Loading dataset: SUN397
+Reading split from /home/wzk/DATA/sun397/split_zhou_SUN397.json
+Loading preprocessed few-shot data from /home/wzk/DATA/sun397/split_fewshot/shot_16_shuffled-seed_3.pkl
+CROSS DATASET SUBSAMPLE NEW_RATIO5 CLASSES!
+16
+6352
+50
+19850
+Building transform_train
++ random resized crop (size=(224, 224), scale=(0.08, 1.0))
++ random flip
++ to torch tensor of range [0, 1]
++ normalization (mean=[0.48145466, 0.4578275, 0.40821073], std=[0.26862954, 0.26130258, 0.27577711])
+Building transform_test
++ resize the smaller edge to 224
++ 224x224 center crop
++ to torch tensor of range [0, 1]
++ normalization (mean=[0.48145466, 0.4578275, 0.40821073], std=[0.26862954, 0.26130258, 0.27577711])
+---------  --------
+Dataset    ImageNet
+# classes  397
+# train_x  6,352
+# val      19,850
+# test     19,850
+---------  --------
+['indoor cloister', 'outdoor synagogue', 'fountain', 'computer_room', 'food_court', 'restaurant', 'childs_room', 'vehicle dinette', 'crosswalk', 'jewelry_shop', 'butchers_shop', 'veterinarians_office', 'sauna', 'corn_field', 'office_building', 'wind_farm', 'indoor apse', 'lecture_room', 'limousine_interior', 'veranda', 'amusement_arcade', 'outdoor track', 'garbage_dump', 'indoor pilothouse', 'music_studio', 'biology_laboratory', 'vegetable_garden', 'game_room', 'cafeteria', 'nursery', 'outdoor apartment_building', 'aquarium', 'butte', 'platform train_station', 'mountain', 'office cubicle', 'outdoor hotel', 'vineyard', 'indoor swimming_pool', 'building_facade', 'indoor factory', 'pharmacy', 'carrousel', 'indoor kennel', 'motel', 'backseat car_interior', 'outdoor cabin', 'boardwalk', 'playroom', 'hotel_room', 'hospital', 'pond', 'control_room', 'server_room', 'hayfield', 'picnic_area', 'barndoor', 'interior elevator', 'cliff', 'burial_chamber', 'shoe_shop', 'phone_booth', 'indoor brewery', 'indoor_seats theater', 'outdoor swimming_pool', 'urban canal', 'public atrium', 'baseball_field', 'indoor escalator', 'industrial_area', 'hospital_room', 'promenade_deck', 'park', 'forest_road', 'hill', 'bullring', 'indoor warehouse', 'kitchen', 'trench', 'wave', 'indoor booth', 'locker_room', 'heliport', 'igloo', 'shed', 'toll_plaza', 'galley', 'swamp', 'throne_room', 'schoolhouse', 'patio', 'construction_site', 'outdoor bow_window', 'pulpit', 'indoor podium', 'castle', 'outdoor planetarium', 'south_asia temple', 'arch', 'outdoor observatory', 'pavilion', 'bowling_alley', 'gift_shop', 'art_gallery', 'racecourse', 'home_office', 'badlands', 'campsite', 'mountain_snowy', 'van_interior', 'courthouse', 'interior balcony', 'ruin', 'outdoor cathedral', 'sky', 'elevator_shaft', 'palace', 'formal_garden', 'jail_cell', 'outdoor monastery', 'lobby', 'indoor general_store', 'outdoor athletic_field', 'outdoor inn', 'squash_court', 'indoor bistro', 'natural lake', 'outdoor oil_refinery', 'exterior balcony', 'railroad_track', 'indoor library', 'shower', 'lock_chamber', 'outdoor library', 'dining_room', 'catacomb', 'bedroom', 'physics_laboratory', 'discotheque', 'home dinette', 'toyshop', 'topiary_garden', 'aqueduct', 'videostore', 'outdoor hot_tub', 'corridor', 'supermarket', 'indoor greenhouse', 'fishpond', 'auditorium', 'marsh', 'berth', 'assembly_line', 'outdoor greenhouse', 'barn', 'rainforest', 'water moat', 'banquet_hall', 'medina', 'herb_garden', 'manufactured_home', 'courtyard', 'frontseat car_interior', 'harbor', 'indoor wrestling_ring', 'vegetation desert', 'outdoor parking_garage', 'highway', 'reception', 'playground', 'cemetery', 'boxing_ring', 'outdoor podium', 'ski_resort', 'rock_arch', 'conference_room', 'oilrig', 'indoor jacuzzi', 'indoor museum', 'oast_house', 'putting_green', 'dam', 'football stadium', 'subway_interior', 'shopfront', 'clothing_store', 'pantry', 'mansion', 'street', 'stable', 'natural canal', 'hot_spring', 'dining_car', 'wheat_field', 'outdoor ice_skating_rink', 'pagoda', 'coast', 'airport_terminal', 'indoor church', 'thriftshop', 'exterior covered_bridge', 'ice_shelf', 'chalet', 'baggage_claim', 'indoor cavern', 'beach', 'landing_deck', 'volcano', 'music_store', 'indoor parking_garage', 'driveway', 'outdoor nuclear_power_plant', 'landfill', 'amusement_park', 'campus', 'bayou', 'indoor market', 'electrical_substation', 'dorm_room', 'chemistry_lab', 'corral', 'ticket_booth', 'forest_path', 'bus_interior', 'exterior gazebo', 'raft', 'lift_bridge', 'indoor cathedral', 'fire_station', 'raceway', 'ice_cream_parlor', 'needleleaf forest', 'outdoor basketball_court', 'sea_cliff', 'ball_pit', 'indoor movie_theater', 'outdoor power_plant', 'indoor volleyball_court', 'drugstore', 'indoor synagogue', 'canyon', 'cottage_garden', 'utility_room', 'block waterfall', 'outdoor bazaar', 'cultivated field', 'yard', 'coral_reef underwater', 'art_studio', 'ice_floe', 'pasture', 'outdoor driving_range', 'conference_center', 'orchard', 'slum', 'boat_deck', 'crevasse', 'bar', 'skatepark', 'auto_factory', 'outdoor church', 'classroom', 'indoor shopping_mall', 'ocean', 'outdoor tennis_court', 'indoor gymnasium', 'runway', 'outdoor general_store', 'outdoor hunting_lodge', 'wet_bar', 'attic', 'closet', 'watering_hole', 'clean_room', 'viaduct', 'sandbar', 'outdoor volleyball_court', 'bathroom', 'door elevator', 'delicatessen', 'airplane_cabin', 'outdoor mosque', 'fan waterfall', 'iceberg', 'lighthouse', 'outdoor control_tower', 'ski_lodge', 'train_railway', 'rope_bridge', 'indoor stage', 'tower', 'bamboo_forest', 'basilica', 'restaurant_kitchen', 'skyscraper', 'sandbox', 'indoor diner', 'gas_station', 'laundromat', 'outdoor outhouse', 'outdoor tent', 'bridge', 'outdoor hangar', 'tree_house', 'riding_arena', 'home poolroom', 'martial_arts_gym', 'fire_escape', 'amphitheater', 'fastfood_restaurant', 'cheese_factory', 'indoor garage', 'indoor badminton_court', 'broadleaf forest', 'outdoor market', 'mausoleum', 'rice_paddy', 'house', 'ballroom', 'botanical_garden', 'outdoor chicken_coop', 'television_studio', 'engine_room', 'abbey', 'shop bakery', 'art_school', 'indoor_procenium theater', 'indoor tennis_court', 'outdoor lido_deck', 'dentists_office', 'indoor mosque', 'windmill', 'kasbah', 'snowfield', 'platform subway_station', 'kitchenette', 'beauty_salon', 'fairway', 'bottle_storage wine_cellar', 'youth_hostel', 'outdoor arrival_gate', 'plunge waterfall', 'operating_room', 'parlor', 'establishment poolroom', 'batters_box', 'wild field', 'indoor jail', 'dock', 'indoor firing_range', 'cockpit', 'parking_lot', 'indoor bazaar', 'courtroom', 'residential_neighborhood', 'indoor bow_window', 'indoor florist_shop', 'waiting_room', 'sushi_bar', 'coffee_shop', 'office', 'ski_slope', 'kindergarden_classroom', 'islet', 'baseball stadium', 'indoor ice_skating_rink', 'recreation_room', 'tree_farm', 'indoor casino', 'candy_store', 'anechoic_chamber', 'sand desert', 'restaurant_patio', 'barrel_storage wine_cellar', 'creek', 'water_tower', 'living_room', 'golf_course', 'bookstore', 'basement', 'village', 'excavation', 'east_asia temple', 'outdoor doorway', 'valley', 'river', 'outdoor diner', 'indoor pub', 'boathouse', 'plaza', 'staircase', 'alley', 'outdoor labyrinth', 'indoor hangar', 'archive', 'indoor chicken_coop', 'outdoor kennel']
+Loading CLIP (backbone: ViT-B/16)
+Building custom CLIP
+Initializing a generic context
+Initial context: "X X X X"
+Number of context words (tokens): 4
+['a photo of a indoor cloister.', 'a photo of a outdoor synagogue.', 'a photo of a fountain.', 'a photo of a computer room.', 'a photo of a food court.', 'a photo of a restaurant.', 'a photo of a childs room.', 'a photo of a vehicle dinette.', 'a photo of a crosswalk.', 'a photo of a jewelry shop.', 'a photo of a butchers shop.', 'a photo of a veterinarians office.', 'a photo of a sauna.', 'a photo of a corn field.', 'a photo of a office building.', 'a photo of a wind farm.', 'a photo of a indoor apse.', 'a photo of a lecture room.', 'a photo of a limousine interior.', 'a photo of a veranda.', 'a photo of a amusement arcade.', 'a photo of a outdoor track.', 'a photo of a garbage dump.', 'a photo of a indoor pilothouse.', 'a photo of a music studio.', 'a photo of a biology laboratory.', 'a photo of a vegetable garden.', 'a photo of a game room.', 'a photo of a cafeteria.', 'a photo of a nursery.', 'a photo of a outdoor apartment building.', 'a photo of a aquarium.', 'a photo of a butte.', 'a photo of a platform train station.', 'a photo of a mountain.', 'a photo of a office cubicle.', 'a photo of a outdoor hotel.', 'a photo of a vineyard.', 'a photo of a indoor swimming pool.', 'a photo of a building facade.', 'a photo of a indoor factory.', 'a photo of a pharmacy.', 'a photo of a carrousel.', 'a photo of a indoor kennel.', 'a photo of a motel.', 'a photo of a backseat car interior.', 'a photo of a outdoor cabin.', 'a photo of a boardwalk.', 'a photo of a playroom.', 'a photo of a hotel room.', 'a photo of a hospital.', 'a photo of a pond.', 'a photo of a control room.', 'a photo of a server room.', 'a photo of a hayfield.', 'a photo of a picnic area.', 'a photo of a barndoor.', 'a photo of a interior elevator.', 'a photo of a cliff.', 'a photo of a burial chamber.', 'a photo of a shoe shop.', 'a photo of a phone booth.', 'a photo of a indoor brewery.', 'a photo of a indoor seats theater.', 'a photo of a outdoor swimming pool.', 'a photo of a urban canal.', 'a photo of a public atrium.', 'a photo of a baseball field.', 'a photo of a indoor escalator.', 'a photo of a industrial area.', 'a photo of a hospital room.', 'a photo of a promenade deck.', 'a photo of a park.', 'a photo of a forest road.', 'a photo of a hill.', 'a photo of a bullring.', 'a photo of a indoor warehouse.', 'a photo of a kitchen.', 'a photo of a trench.', 'a photo of a wave.', 'a photo of a indoor booth.', 'a photo of a locker room.', 'a photo of a heliport.', 'a photo of a igloo.', 'a photo of a shed.', 'a photo of a toll plaza.', 'a photo of a galley.', 'a photo of a swamp.', 'a photo of a throne room.', 'a photo of a schoolhouse.', 'a photo of a patio.', 'a photo of a construction site.', 'a photo of a outdoor bow window.', 'a photo of a pulpit.', 'a photo of a indoor podium.', 'a photo of a castle.', 'a photo of a outdoor planetarium.', 'a photo of a south asia temple.', 'a photo of a arch.', 'a photo of a outdoor observatory.', 'a photo of a pavilion.', 'a photo of a bowling alley.', 'a photo of a gift shop.', 'a photo of a art gallery.', 'a photo of a racecourse.', 'a photo of a home office.', 'a photo of a badlands.', 'a photo of a campsite.', 'a photo of a mountain snowy.', 'a photo of a van interior.', 'a photo of a courthouse.', 'a photo of a interior balcony.', 'a photo of a ruin.', 'a photo of a outdoor cathedral.', 'a photo of a sky.', 'a photo of a elevator shaft.', 'a photo of a palace.', 'a photo of a formal garden.', 'a photo of a jail cell.', 'a photo of a outdoor monastery.', 'a photo of a lobby.', 'a photo of a indoor general store.', 'a photo of a outdoor athletic field.', 'a photo of a outdoor inn.', 'a photo of a squash court.', 'a photo of a indoor bistro.', 'a photo of a natural lake.', 'a photo of a outdoor oil refinery.', 'a photo of a exterior balcony.', 'a photo of a railroad track.', 'a photo of a indoor library.', 'a photo of a shower.', 'a photo of a lock chamber.', 'a photo of a outdoor library.', 'a photo of a dining room.', 'a photo of a catacomb.', 'a photo of a bedroom.', 'a photo of a physics laboratory.', 'a photo of a discotheque.', 'a photo of a home dinette.', 'a photo of a toyshop.', 'a photo of a topiary garden.', 'a photo of a aqueduct.', 'a photo of a videostore.', 'a photo of a outdoor hot tub.', 'a photo of a corridor.', 'a photo of a supermarket.', 'a photo of a indoor greenhouse.', 'a photo of a fishpond.', 'a photo of a auditorium.', 'a photo of a marsh.', 'a photo of a berth.', 'a photo of a assembly line.', 'a photo of a outdoor greenhouse.', 'a photo of a barn.', 'a photo of a rainforest.', 'a photo of a water moat.', 'a photo of a banquet hall.', 'a photo of a medina.', 'a photo of a herb garden.', 'a photo of a manufactured home.', 'a photo of a courtyard.', 'a photo of a frontseat car interior.', 'a photo of a harbor.', 'a photo of a indoor wrestling ring.', 'a photo of a vegetation desert.', 'a photo of a outdoor parking garage.', 'a photo of a highway.', 'a photo of a reception.', 'a photo of a playground.', 'a photo of a cemetery.', 'a photo of a boxing ring.', 'a photo of a outdoor podium.', 'a photo of a ski resort.', 'a photo of a rock arch.', 'a photo of a conference room.', 'a photo of a oilrig.', 'a photo of a indoor jacuzzi.', 'a photo of a indoor museum.', 'a photo of a oast house.', 'a photo of a putting green.', 'a photo of a dam.', 'a photo of a football stadium.', 'a photo of a subway interior.', 'a photo of a shopfront.', 'a photo of a clothing store.', 'a photo of a pantry.', 'a photo of a mansion.', 'a photo of a street.', 'a photo of a stable.', 'a photo of a natural canal.', 'a photo of a hot spring.', 'a photo of a dining car.', 'a photo of a wheat field.', 'a photo of a outdoor ice skating rink.', 'a photo of a pagoda.', 'a photo of a coast.', 'a photo of a airport terminal.', 'a photo of a indoor church.', 'a photo of a thriftshop.', 'a photo of a exterior covered bridge.', 'a photo of a ice shelf.', 'a photo of a chalet.', 'a photo of a baggage claim.', 'a photo of a indoor cavern.', 'a photo of a beach.', 'a photo of a landing deck.', 'a photo of a volcano.', 'a photo of a music store.', 'a photo of a indoor parking garage.', 'a photo of a driveway.', 'a photo of a outdoor nuclear power plant.', 'a photo of a landfill.', 'a photo of a amusement park.', 'a photo of a campus.', 'a photo of a bayou.', 'a photo of a indoor market.', 'a photo of a electrical substation.', 'a photo of a dorm room.', 'a photo of a chemistry lab.', 'a photo of a corral.', 'a photo of a ticket booth.', 'a photo of a forest path.', 'a photo of a bus interior.', 'a photo of a exterior gazebo.', 'a photo of a raft.', 'a photo of a lift bridge.', 'a photo of a indoor cathedral.', 'a photo of a fire station.', 'a photo of a raceway.', 'a photo of a ice cream parlor.', 'a photo of a needleleaf forest.', 'a photo of a outdoor basketball court.', 'a photo of a sea cliff.', 'a photo of a ball pit.', 'a photo of a indoor movie theater.', 'a photo of a outdoor power plant.', 'a photo of a indoor volleyball court.', 'a photo of a drugstore.', 'a photo of a indoor synagogue.', 'a photo of a canyon.', 'a photo of a cottage garden.', 'a photo of a utility room.', 'a photo of a block waterfall.', 'a photo of a outdoor bazaar.', 'a photo of a cultivated field.', 'a photo of a yard.', 'a photo of a coral reef underwater.', 'a photo of a art studio.', 'a photo of a ice floe.', 'a photo of a pasture.', 'a photo of a outdoor driving range.', 'a photo of a conference center.', 'a photo of a orchard.', 'a photo of a slum.', 'a photo of a boat deck.', 'a photo of a crevasse.', 'a photo of a bar.', 'a photo of a skatepark.', 'a photo of a auto factory.', 'a photo of a outdoor church.', 'a photo of a classroom.', 'a photo of a indoor shopping mall.', 'a photo of a ocean.', 'a photo of a outdoor tennis court.', 'a photo of a indoor gymnasium.', 'a photo of a runway.', 'a photo of a outdoor general store.', 'a photo of a outdoor hunting lodge.', 'a photo of a wet bar.', 'a photo of a attic.', 'a photo of a closet.', 'a photo of a watering hole.', 'a photo of a clean room.', 'a photo of a viaduct.', 'a photo of a sandbar.', 'a photo of a outdoor volleyball court.', 'a photo of a bathroom.', 'a photo of a door elevator.', 'a photo of a delicatessen.', 'a photo of a airplane cabin.', 'a photo of a outdoor mosque.', 'a photo of a fan waterfall.', 'a photo of a iceberg.', 'a photo of a lighthouse.', 'a photo of a outdoor control tower.', 'a photo of a ski lodge.', 'a photo of a train railway.', 'a photo of a rope bridge.', 'a photo of a indoor stage.', 'a photo of a tower.', 'a photo of a bamboo forest.', 'a photo of a basilica.', 'a photo of a restaurant kitchen.', 'a photo of a skyscraper.', 'a photo of a sandbox.', 'a photo of a indoor diner.', 'a photo of a gas station.', 'a photo of a laundromat.', 'a photo of a outdoor outhouse.', 'a photo of a outdoor tent.', 'a photo of a bridge.', 'a photo of a outdoor hangar.', 'a photo of a tree house.', 'a photo of a riding arena.', 'a photo of a home poolroom.', 'a photo of a martial arts gym.', 'a photo of a fire escape.', 'a photo of a amphitheater.', 'a photo of a fastfood restaurant.', 'a photo of a cheese factory.', 'a photo of a indoor garage.', 'a photo of a indoor badminton court.', 'a photo of a broadleaf forest.', 'a photo of a outdoor market.', 'a photo of a mausoleum.', 'a photo of a rice paddy.', 'a photo of a house.', 'a photo of a ballroom.', 'a photo of a botanical garden.', 'a photo of a outdoor chicken coop.', 'a photo of a television studio.', 'a photo of a engine room.', 'a photo of a abbey.', 'a photo of a shop bakery.', 'a photo of a art school.', 'a photo of a indoor procenium theater.', 'a photo of a indoor tennis court.', 'a photo of a outdoor lido deck.', 'a photo of a dentists office.', 'a photo of a indoor mosque.', 'a photo of a windmill.', 'a photo of a kasbah.', 'a photo of a snowfield.', 'a photo of a platform subway station.', 'a photo of a kitchenette.', 'a photo of a beauty salon.', 'a photo of a fairway.', 'a photo of a bottle storage wine cellar.', 'a photo of a youth hostel.', 'a photo of a outdoor arrival gate.', 'a photo of a plunge waterfall.', 'a photo of a operating room.', 'a photo of a parlor.', 'a photo of a establishment poolroom.', 'a photo of a batters box.', 'a photo of a wild field.', 'a photo of a indoor jail.', 'a photo of a dock.', 'a photo of a indoor firing range.', 'a photo of a cockpit.', 'a photo of a parking lot.', 'a photo of a indoor bazaar.', 'a photo of a courtroom.', 'a photo of a residential neighborhood.', 'a photo of a indoor bow window.', 'a photo of a indoor florist shop.', 'a photo of a waiting room.', 'a photo of a sushi bar.', 'a photo of a coffee shop.', 'a photo of a office.', 'a photo of a ski slope.', 'a photo of a kindergarden classroom.', 'a photo of a islet.', 'a photo of a baseball stadium.', 'a photo of a indoor ice skating rink.', 'a photo of a recreation room.', 'a photo of a tree farm.', 'a photo of a indoor casino.', 'a photo of a candy store.', 'a photo of a anechoic chamber.', 'a photo of a sand desert.', 'a photo of a restaurant patio.', 'a photo of a barrel storage wine cellar.', 'a photo of a creek.', 'a photo of a water tower.', 'a photo of a living room.', 'a photo of a golf course.', 'a photo of a bookstore.', 'a photo of a basement.', 'a photo of a village.', 'a photo of a excavation.', 'a photo of a east asia temple.', 'a photo of a outdoor doorway.', 'a photo of a valley.', 'a photo of a river.', 'a photo of a outdoor diner.', 'a photo of a indoor pub.', 'a photo of a boathouse.', 'a photo of a plaza.', 'a photo of a staircase.', 'a photo of a alley.', 'a photo of a outdoor labyrinth.', 'a photo of a indoor hangar.', 'a photo of a archive.', 'a photo of a indoor chicken coop.', 'a photo of a outdoor kennel.']
+Turning off gradients in both the image and the text encoder
+prompt_learner.ctx
+prompt_learner.meta_net.linear1.weight
+prompt_learner.meta_net.linear1.bias
+prompt_learner.meta_net.linear2.weight
+prompt_learner.meta_net.linear2.bias
+Loading evaluator: Classification
+['prompt_learner']
+Loading weights to prompt_learner from "output/imagenet/TCP/vit_b16_c4_ep10_batch4_cross_dataset_16shots/seed3/prompt_learner/model.pth.tar-10" (epoch = 10)
+Evaluate on the *test* set
+=> result
+* total: 19,850
+* correct: 13,194
+* accuracy: 66.5%
+* error: 33.5%
+* macro_f1: 65.2%
