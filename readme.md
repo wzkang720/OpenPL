@@ -1,5 +1,8 @@
 # OpenPL
 This is a benchmark for prompt learning in VLM based on Dynamic Classes Changes, Dynamic Distribution Shifts and Dynamic Co-evolution of Distribution and Class Variation.
+
+## Prompt learning methods
+Including [CoOp](https://github.com/KaiyangZhou/CoOp), [CoCoOp](https://github.com/KaiyangZhou/CoOp), VPT, [MaPLe](https://github.com/muzairkhattak/multimodal-prompt-learning), [PromptSRC](https://github.com/muzairkhattak/PromptSRC), [ProDA](https://github.com/bbbdylan/proda), [TCP](https://github.com/htyao89/Textual-based_Class-aware_prompt_tuning), [ProGrad](https://github.com/BeierZhu/Prompt-align), [KgCoOp](https://github.com/htyao89/KgCoOp) and [RPO](https://github.com/mlvlab/RPO).
 # How to training and evaluating prompt learning methods
 
 ## Environment
